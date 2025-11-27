@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Enter Words</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <a href="#" class="menu-link">Quit</a>
+
+    <h1>HANGMAN</h1>
+
+    <div>
+      <a href="#" class="menu-link">Help</a>
+      <a href="#" class="menu-link">About</a>
+    </div>
+  </div>
+
+  <!-- PAGE CONTENT -->
+  <div class="words-container">
+
+    <h2 class="words-title">Enter Words</h2>
+
+    <!-- MESSAGE BOX  -->
+    <p id="msg" class="msg-box"></p>
+
+    <div class="word-input-row">
+      <input id="wordInput" type="text" placeholder="Enter word" class="word-input">
+      <button id="addBtn" class="add-word-btn">Add</button>
+    </div>
+
+    <div class="words-list-box">
+      <p><strong>Words:</strong></p>
+      <div id="wordList" class="word-list"></div>
+    </div>
+
+    <button id="startBtn" class="start-game-btn">Start Game</button>
+  </div>
+
+  <script src="js/words.js"></script>
+</body>
+</html>
