@@ -1,3 +1,9 @@
+// Author: Aicha El Hali
+// Course: Computer Science and Design (Web Technologie)
+// Semester: 3rd Semester
+// File: layout.tsx
+// Description: Root layout component providing global page structure including header, footer, and global styles.
+
 import "./globals.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";

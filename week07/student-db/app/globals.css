@@ -1,3 +1,12 @@
+/* 
+  Author: Aicha El Hali
+  Course: Computer Science and Design (Web Technologie)
+  Semester: 3rd Semester
+  File: globals.css
+  Description: Global styling for layout, typography, components and responsive behavior.
+*/
+
+
 /* ============================
    GLOBAL RESET & BASE STYLES
 ============================ */
@@ -197,4 +206,109 @@ section {
   .student-image-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Larger title only for the imprint page */
+.imprint-title {
+  font-size: 2.6rem;
+  margin-bottom: 40px;
+}
+
+/* =====================================
+   IMPRINT PAGE — Pinterest Style
+===================================== */
+
+.imprint-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.imprint-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #f29f39; /* Orange accent */
+  margin-bottom: 40px;
+}
+
+.imprint-layout {
+  display: flex;
+  gap: 50px;
+  align-items: flex-start;
+}
+
+/* -------- COLLAGE LEFT -------- */
+
+.imprint-collage {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.collage-top {
+  display: flex;
+  gap: 20px;
+}
+
+.collage-img {
+  object-fit: cover;
+  border-radius: 8px;
+  background: #222;
+}
+
+.collage-img.small {
+  width: 160px;
+  height: 160px;
+}
+
+.collage-img.large {
+  width: 340px;
+  height: 380px;
+}
+
+/* -------- TEXT RIGHT -------- */
+
+.imprint-text {
+  max-width: 520px;
+}
+
+.about-title {
+  font-size: 1.6rem;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.about-desc {
+  font-size: 0.95rem;
+  color: #ccc;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.about-note {
+  margin-top: 20px;
+  font-size: 0.85rem;
+  color: #999;
+  line-height: 1.4;
+}
+
+/* -------- STATS -------- */
+
+.imprint-stats {
+  display: flex;
+  gap: 40px;
+  margin-top: 30px;
+}
+
+.stat-number {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #f29f39;
+}
+
+.stat-label {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #ccc;
 }

@@ -1,6 +1,14 @@
+// Author: Aicha El Hali
+// Course: Computer Science and Design (Web Technologie)
+// Semester: 3rd Semester
+// File: components/Header.tsx
+// Description: Header component containing site navigation links.
+
+
 import Link from "next/link";
 
 export default function Header() {
+  // Render header with logo and navigation menu
   return (
     <header className="site-header">
       <div className="site-header-inner">

@@ -1,3 +1,8 @@
+// Author: Aicha El Hali
+// Course: Computer Science and Design (Web Technologie)
+// File: filter/page.tsx
+// Description: Shows 9 filtered students (3×3) using RandomUser API.
+
 import StudentGrid from "../../components/StudentGrid";
 
 type SearchParams = {
@@ -17,28 +22,45 @@ export default async function FilterPage({
 }: {
   searchParams?: SearchParams;
 }) {
-  const gender = searchParams?.gender ?? "female"; // default filter
+  // Read gender parameter from URL (default: female)
+  const gender = searchParams?.gender ?? "female";
 
+  // Build API request URL using gender filter
   const url = `https://randomuser.me/api/?results=9&gender=${gender}`;
 
-  const res = await fetch(url);
-  const data = await res.json();
+  // Fetch until we collect 9 unique students (avoid duplicates)
+  const uniqueResults: ApiUser[] = [];
+  const seenEmails = new Set<string>();
 
-  const students = data.results.map((user: ApiUser, index: number) => ({
+  for (let i = 0; i < 5 && uniqueResults.length < 9; i++) {
+    const res = await fetch(url);
+    const data = await res.json();
+
+    for (const user of data.results) {
+      if (!seenEmails.has(user.email)) {
+        seenEmails.add(user.email);
+        uniqueResults.push(user);
+      }
+      if (uniqueResults.length === 9) break;
+    }
+  }
+
+  // Convert API users into internal student objects
+  const students = uniqueResults.slice(0, 9).map((user: ApiUser, index: number) => ({
     id: user.email || index,
     name: `${user.name.first} ${user.name.last}`,
     email: user.email,
     imageUrl: user.picture.large,
   }));
 
-  // Split into 3 groups like in Students page
+  // Split students into 3 groups for display
   const design = students.slice(0, 3);
   const digitalEngineering = students.slice(3, 6);
   const geodataScience = students.slice(6, 9);
 
   return (
     <section>
-      {/* HERO AREA FOR FILTER */}
+      {/* HERO */}
       <div className="hero">
         <h1 className="hero-title">Filtered Students</h1>
 
@@ -51,21 +73,20 @@ export default async function FilterPage({
           </div>
 
           <p className="hero-right-text">
-            These results show students filtered by the selected criteria from
-            the Random User API.
+            These results show students filtered by the selected criteria from the Random User API.
           </p>
         </div>
       </div>
 
-      {/* BLOCK 1 — DESIGN */}
+      {/* BLOCK 1 */}
       <h2 className="major-title">Computer Science and Design</h2>
       <StudentGrid students={design} />
 
-      {/* BLOCK 2 — DIGITAL ENGINEERING */}
+      {/* BLOCK 2 */}
       <h2 className="major-title">Digital Engineering</h2>
       <StudentGrid students={digitalEngineering} />
 
-      {/* BLOCK 3 — GEODATA SCIENCE */}
+      {/* BLOCK 3 */}
       <h2 className="major-title">Geodata Science</h2>
       <StudentGrid students={geodataScience} />
     </section>

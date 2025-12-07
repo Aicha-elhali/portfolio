@@ -1,17 +1,21 @@
+// Author: Aicha El Hali
+// Course: Computer Science and Design (Web Technologie)
+// Semester: 3rd Semester
+// File: students/page.tsx
+// Description: Displays 9 students (3×3) grouped into three majors using RandomUser API.
+
+
 import StudentGrid from "../../components/StudentGrid";
 
-type ApiUser = {
-  name: { first: string; last: string };
-  email: string;
-  picture: { large: string };
-};
-
+// Enable dynamic rendering for fresh API data on each request
 export const dynamic = "force-dynamic";
 
 export default async function StudentsPage() {
+  // Fetch 9 random users from the API
   const res = await fetch("https://randomuser.me/api/?results=9");
   const data = await res.json();
 
+  // Convert API users into internal student objects
   const students = data.results.map((user, index) => ({
     id: user.email || index,
     name: `${user.name.first} ${user.name.last}`,
@@ -19,11 +23,12 @@ export default async function StudentsPage() {
     imageUrl: user.picture.large,
   }));
 
-  // Split into 3 groups
+  // Split the 9 students into three groups for display
   const design = students.slice(0, 3);
   const digitalEngineering = students.slice(3, 6);
   const geodataScience = students.slice(6, 9);
 
+  // Render hero section and all three major groups
   return (
     <section>
       {/* HERO */}
