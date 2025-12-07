@@ -1,0 +1,16 @@
+# macOS system files
+.DS_Store
+**/.DS_Store
+
+# Node / Next.js files
+node_modules/
+.next/
+out/
+
+# Logs
+npm-debug.log
+yarn-error.log
+
+# Env files
+.env
+.env.local
