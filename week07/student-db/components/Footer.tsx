@@ -1,19 +1,16 @@
-"use client";
-
-import { useEffect, useState } from "react";
-
 export default function Footer() {
-  const [loadedAt, setLoadedAt] = useState<string>("");
+  const now = new Date();
 
-  useEffect(() => {
-    const now = new Date().toLocaleString();
-    setLoadedAt(now);
-  }, []);
+  // Format: 7. Dezember 2025 um 16:45:12
+  const formatted = now.toLocaleString("de-DE", {
+    dateStyle: "long",
+    timeStyle: "medium",
+  });
 
   return (
     <footer className="site-footer">
       <div className="site-footer-inner">
-        © 2025 Student Database · Page loaded at {loadedAt}
+        © {new Date().getFullYear()} Studio X — Aufgerufen am {formatted}
       </div>
     </footer>
   );

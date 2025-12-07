@@ -1,26 +1,17 @@
-import StudentCard from "./StudentCard";
-
-export type Student = {
-  id: string;
-  name: string;
-  email: string;
-  imageUrl: string;
-};
-
-type StudentGridProps = {
-  students: Student[];
-};
-
-export default function StudentGrid({ students }: StudentGridProps) {
+export default function StudentGrid({ students }) {
   return (
-    <div className="student-grid">
+    <div className="student-image-grid">
       {students.map((student) => (
-        <StudentCard
-          key={student.id}
-          name={student.name}
-          email={student.email}
-          imageUrl={student.imageUrl}
-        />
+        <div key={student.id} className="student-item">
+          <img
+            src={student.imageUrl}
+            alt={student.name}
+            className="student-image"
+          />
+
+          <p className="student-name">{student.name}</p>
+          <p className="student-email">{student.email}</p>
+        </div>
       ))}
     </div>
   );
