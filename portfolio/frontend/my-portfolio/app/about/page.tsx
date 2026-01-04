@@ -53,6 +53,36 @@ function ScrambleLink({ href, children, hasBrackets = false }: { href: string; c
   );
 }
 
+// ScrambleTitle: small component that reuses scramble logic for plain text
+function ScrambleTitle({ text, className = "", speed = 40 }: { text: string; className?: string; speed?: number }) {
+  const [displayText, setDisplayText] = useState(text);
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+  useEffect(() => {
+    let iteration = 0;
+    const interval = setInterval(() => {
+      const scrambled = text
+        .split("")
+        .map((char, index) => {
+          if (char === " ") return " ";
+          if (iteration > index * 0.8) return char;
+          return characters[Math.floor(Math.random() * characters.length)];
+        })
+        .join("");
+      setDisplayText(scrambled);
+      iteration += 1;
+      if (iteration > text.length + 10) {
+        clearInterval(interval);
+        setDisplayText(text);
+      }
+    }, speed);
+
+    return () => clearInterval(interval);
+  }, [text, speed]);
+
+  return <span className={className}>{displayText}</span>;
+}
+
 export default function About() {
   return (
     <div className={styles.page}>
@@ -82,7 +112,7 @@ export default function About() {
       <main className={styles.main}>
         {/* Left Column */}
         <div className={styles.leftColumn}>
-          <h1 className={styles.title}>ABOUT</h1>
+          <h1 className={styles.title}><ScrambleTitle text="ABOUT" className="" /></h1>
           
           <div className={styles.description}>
             <p>
@@ -101,7 +131,7 @@ export default function About() {
         <div className={styles.rightColumn}>
           {/* Image Placeholder */}
           <div className={styles.imageContainer}>
-            {/* Add your image here when ready */}
+            <img src="/images/IMG_0668.jpg" alt="Aicha El Hali" className={styles.profileImage} />
           </div>
 
           {/* Contact Links */}
@@ -133,11 +163,9 @@ export default function About() {
 
       {/* Footer */}
       <footer className={styles.footer}>
-        <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span className={styles.copyright}>© 2026</span>
-          <div className={styles.footerLinks}>
-            <Link href="/imprint" className={styles.footerLink}>IMPRINT & DATA PRIVACY</Link>
-          </div>
+        <span className={styles.copyright}>© 2026</span>
+        <div className={styles.footerLinks}>
+          <Link href="/imprint" className={styles.footerLink}>IMPRINT & DATA PRIVACY</Link>
         </div>
         <span className={styles.credit}>DESIGN & DEVELOPMENT BY AICHA EL HALI</span>
       </footer>
