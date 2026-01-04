@@ -32,6 +32,17 @@ const projects = [
 export default function ProjectsPage() {
   return (
     <div className={styles.page}>
+      {/* Background Strokes */}
+      <div className={styles.backgroundStrokes}>
+        {[...Array(5)].map((_, i) => (
+          <div key={i} className={styles.column}>
+            <div className={styles.lineLeft}></div>
+            <div className={styles.lineMiddleLeft}></div>
+            <div className={styles.lineMiddleRight}></div>
+            <div className={styles.lineRight}></div>
+          </div>
+        ))}
+      </div>
       <SiteHeader />
       <main className={styles.main}>
         <aside className={styles.left}> 

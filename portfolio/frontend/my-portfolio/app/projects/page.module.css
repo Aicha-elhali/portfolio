@@ -6,6 +6,52 @@
   box-sizing: border-box;
 }
 
+/* Background Strokes - reuse the same pattern as Home/About */
+.backgroundStrokes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  pointer-events: none;
+  z-index: 1;
+  padding: 0 40px;
+}
+
+.column {
+  flex: 1;
+  height: 100%;
+  position: relative;
+  margin-right: 16px;
+}
+
+.column:last-child {
+  margin-right: 0;
+}
+
+.lineLeft,
+.lineMiddleLeft,
+.lineMiddleRight,
+.lineRight {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.07) 0px,
+    rgba(255, 255, 255, 0.07) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+}
+
+.lineLeft { left: 0; }
+.lineMiddleLeft { left: calc(50% - 10px); }
+.lineMiddleRight { left: calc(50% + 10px); }
+.lineRight { right: 0; }
+
 .main {
   display: grid;
   grid-template-columns: 360px 1fr;
@@ -13,11 +59,14 @@
   align-items: start;
   /* make room for the fixed header so header stays visible */
   padding-top: 120px;
+  /* ensure main content stacks above the background strokes */
+  position: relative;
+  z-index: 2;
 }
 
 .left {
   padding-top: 24px;
-  padding-left: 40px;
+  padding-left: 0; /* start content at page padding so title aligns with left stroke */
 }
 
 .title {
@@ -27,9 +76,15 @@
   margin: 0;
 }
 
+/* Ensure title starts flush with column's left edge */
+.title { margin-left: 0; }
+
 .grid {
   /* stack cards vertically so images are under each other */
   display: block;
+  /* constrain the stack width and push it to the right */
+  max-width: 920px;
+  margin: 0 0 0 auto; /* align the grid to the right edge */
 }
 
 .card {
@@ -42,7 +97,11 @@
   box-shadow: 0 6px 18px rgba(0,0,0,0.6);
   transition: transform 0.28s ease, box-shadow 0.28s ease;
   width: 100%;
-  margin-bottom: 28px;
+  margin: 0 0 28px 0; /* cards align within right-aligned grid */
+  max-width: 920px;
+  /* make sure cards are above the background strokes */
+  position: relative;
+  z-index: 5;
 }
 
 .card:hover {
@@ -56,6 +115,11 @@
   background-size: cover;
   background-position: center;
   background-color: #222;
+  max-width: 900px;
+  margin: 0 0 0 auto; /* align image to the right inside card */
+  /* ensure image area is opaque and sits above strokes */
+  position: relative;
+  z-index: 6;
 }
 
 .cardMeta {
