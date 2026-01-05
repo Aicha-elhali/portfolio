@@ -1,12 +1,18 @@
+/**
+ * Project Detail Page Styles
+ * Autor: Aicha El Hali
+ * Webtechnologien WS 2025/26
+ */
+
 .page {
   min-height: 100vh;
   background: #0a0a0a;
   color: #fff;
-  padding: 40px;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
-/* Background Strokes - same visual as home/about */
+/* Background Strokes */
 .backgroundStrokes {
   position: fixed;
   top: 0;
@@ -18,6 +24,7 @@
   z-index: 1;
   padding: 0 40px;
 }
+
 .column {
   flex: 1;
   height: 100%;
@@ -29,7 +36,6 @@
   margin-right: 0;
 }
 
-/* Shared line style */
 .lineLeft,
 .lineMiddleLeft,
 .lineMiddleRight,
@@ -51,94 +57,390 @@
 .lineMiddleLeft { left: calc(50% - 10px); }
 .lineMiddleRight { left: calc(50% + 10px); }
 .lineRight { right: 0; }
-.lineRight {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.07) 0px,
-    rgba(255, 255, 255, 0.07) 2px,
-    transparent 2px,
-    transparent 4px
-  );
-}
 
-.lineLeft { left: 0; }
-.lineMiddleLeft { left: calc(50% - 10px); }
-.lineMiddleRight { left: calc(50% + 10px); }
-.lineRight { right: 0; }
-
+/* Main Content */
 .main {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: 24px;
-  align-items: start;
-  /* ensure main content stacks above the background strokes */
   position: relative;
   z-index: 2;
+  padding: 140px 80px 80px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-.left {
-  padding-top: 20px;
-  padding-left: 0; /* start content at page padding so title aligns with left stroke */
+/* Back Link */
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 60px;
+  transition: color 0.3s ease;
 }
 
-.title {
-  font-size: clamp(56px, 10vw, 120px);
-  margin: 0 0 28px 0;
+.backLink:hover {
+  color: #fff;
 }
 
-/* Ensure title starts flush with column's left edge */
-.title { margin-left: 0; }
+.backArrow {
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
 
-.metaList {
-  display: flex;
-  flex-direction: column;
+.backLink:hover .backArrow {
+  transform: translateX(-5px);
+}
+
+/* Hero Section */
+.hero {
+  margin-bottom: 60px;
+}
+
+.heroContent {
+  max-width: 800px;
+}
+
+.projectYear {
+  display: inline-block;
+  font-size: 13px;
+  color: #6366f1;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  font-family: monospace;
+}
+
+.projectTitle {
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 400;
+  letter-spacing: -3px;
+  margin: 0 0 24px 0;
+  line-height: 1;
+}
+
+.projectTagline {
+  font-size: 20px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 20px 0;
+  max-width: 600px;
+}
+
+.projectServices {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Main Image */
+.mainImageWrapper {
+  width: 100%;
+  margin-bottom: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.mainImage {
+  width: 100%;
+  height: 500px;
+  background-size: cover;
+  background-position: center;
+  background-color: #1a1a2e;
+}
+
+/* Details Section */
+.details {
+  margin-bottom: 80px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 80px;
+}
+
+.sectionTitle {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0 0 24px 0;
+  font-weight: 500;
+}
+
+.overview {
+  max-width: 700px;
+}
+
+.fullDescription {
+  font-size: 17px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0 0 30px 0;
+}
+
+.projectLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #6366f1;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: gap 0.3s ease;
+}
+
+.projectLink:hover {
   gap: 12px;
 }
 
-.metaRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #9b9b9b;
-  font-size: 13px;
-}
- 
-
-.right {
+/* Info Column */
+.info {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  /* constrain right column and push it to the right */
-  max-width: 920px;
-  margin-left: auto;
+  gap: 40px;
 }
 
-.heroImage {
+.infoBlock {
+  padding-bottom: 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.infoBlock:last-child {
+  border-bottom: none;
+}
+
+.infoTitle {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0 0 16px 0;
+  font-weight: 500;
+}
+
+.infoValue {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.toolsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.toolTag {
+  display: inline-block;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+}
+
+.toolTag:hover {
+  background: rgba(99, 102, 241, 0.1);
+  border-color: rgba(99, 102, 241, 0.3);
+  color: #6366f1;
+}
+
+/* Challenge & Solution */
+.challengeSolution {
+  margin-bottom: 80px;
+  padding: 60px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.csGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+}
+
+.csBlock {
+  max-width: 500px;
+}
+
+.csTitle {
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  margin: 0 0 20px 0;
+  color: #fff;
+}
+
+.csText {
+  font-size: 16px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+}
+
+/* Gallery */
+.gallery {
+  margin-bottom: 80px;
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.galleryImage {
   width: 100%;
-  height: 520px;
+  aspect-ratio: 16 / 10;
   background-size: cover;
   background-position: center;
+  background-color: #1a1a2e;
   border-radius: 6px;
-  background-color: #3a3a3a; /* ensure visible placeholder and opaque background */
-  position: relative;
-  z-index: 5; /* sit above background strokes */
-  margin: 0 0 0 auto; /* align the hero to the right edge */
+  transition: transform 0.3s ease;
 }
 
-.textBlock {
-  max-width: 760px;
+.galleryImage:hover {
+  transform: scale(1.02);
 }
 
-.lead {
-  font-size: 20px;
-  color: #e0e0e0;
+.galleryImage:first-child {
+  grid-column: span 2;
+  aspect-ratio: 21 / 9;
+}
+
+/* Project Navigation */
+.projectNav {
+  display: flex;
+  justify-content: center;
+  padding-top: 60px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.navButton:hover {
+  background: #fff;
+  color: #0a0a0a;
+  border-color: #fff;
+}
+
+/* Responsive Design */
+@media (max-width: 1100px) {
+  .main {
+    padding: 120px 50px 60px;
+  }
+
+  .detailsGrid {
+    gap: 60px;
+  }
+
+  .csGrid {
+    gap: 60px;
+  }
+
+  .mainImage {
+    height: 400px;
+  }
 }
 
 @media (max-width: 900px) {
-  .main { grid-template-columns: 1fr; }
-  .heroImage { height: 320px; }
+  .main {
+    padding: 120px 40px 60px;
+  }
+
+  .detailsGrid {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .csGrid {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .csBlock {
+    max-width: 100%;
+  }
+
+  .projectTitle {
+    font-size: clamp(40px, 10vw, 72px);
+  }
+
+  .mainImage {
+    height: 350px;
+  }
+
+  .galleryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .galleryImage:first-child {
+    grid-column: span 1;
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (max-width: 600px) {
+  .main {
+    padding: 100px 24px 50px;
+  }
+
+  .backLink {
+    margin-bottom: 40px;
+  }
+
+  .projectTitle {
+    font-size: 36px;
+    letter-spacing: -1px;
+  }
+
+  .projectTagline {
+    font-size: 17px;
+  }
+
+  .mainImage {
+    height: 280px;
+  }
+
+  .fullDescription {
+    font-size: 15px;
+  }
+
+  .csTitle {
+    font-size: 20px;
+  }
+
+  .csText {
+    font-size: 15px;
+  }
+
+  .toolTag {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
 }

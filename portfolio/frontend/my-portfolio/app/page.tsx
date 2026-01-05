@@ -1,3 +1,9 @@
+/**
+ * Portfolio Homepage
+ * Autor: Aicha El Hali
+ * Webtechnologien WS 2025/26
+ */
+
 "use client";
 
 import styles from "./page.module.css";
@@ -52,6 +58,40 @@ function ScrambleLink({ href, children, hasBrackets = false }: { href: string; c
     </Link>
   );
 }
+
+// SkillRating Komponente für das Punkte-System
+interface SkillRatingProps {
+  rating: number; // 1-5, unterstützt halbe Punkte (z.B. 3.5)
+  maxRating?: number;
+}
+
+function SkillRating({ rating, maxRating = 5 }: SkillRatingProps) {
+  const dots = [];
+  
+  for (let i = 1; i <= maxRating; i++) {
+    let dotClass = styles.dot;
+    
+    if (i <= Math.floor(rating)) {
+      // Voller Punkt
+      dotClass = `${styles.dot} ${styles.dotFilled}`;
+    } else if (i === Math.ceil(rating) && rating % 1 !== 0) {
+      // Halber Punkt
+      dotClass = `${styles.dot} ${styles.dotHalf}`;
+    }
+    
+    dots.push(<span key={i} className={dotClass}></span>);
+  }
+  
+  return <div className={styles.skillRating}>{dots}</div>;
+}
+
+// Skills Daten - vorbereitet für späteres Backend
+const skillsData = [
+  { id: 1, name: "FIGMA DESIGN-TOOL", rating: 5 },
+  { id: 2, name: "PYTHON", rating: 4 },
+  { id: 3, name: "PHOTOSHOP & ILLUSTRATOR", rating: 4 },
+  { id: 4, name: "REACT", rating: 3.5 },
+];
 
 export default function Home() {
   const [currentTime, setCurrentTime] = useState("");
@@ -130,6 +170,7 @@ export default function Home() {
     }
   }, [hoveredProject, scrambleText]);
 
+  // Projekte Daten - vorbereitet für späteres Backend
   const projects = [
     { id: "01", name: "Project One", tags: ["BRANDING", "DESIGN", "DEVELOPMENT"], year: "2024", image: "/images/project1.jpg" },
     { id: "02", name: "Project Two", tags: ["UI/UX", "DESIGN"], year: "2024", image: "/images/project2.jpg" },
@@ -224,6 +265,23 @@ export default function Home() {
               </div>
             </Link>
           ))}
+        </section>
+
+        {/* Skills Section - unter den Projekten */}
+        <section className={styles.skillsSection}>
+          <div className={styles.skillsIntro}>
+            <p className={styles.skillsText}>
+              Combining programming skills with Figma design tools, I build simple, thoughtful digital experiences.
+            </p>
+          </div>
+          <div className={styles.skillsList}>
+            {skillsData.map((skill) => (
+              <div key={skill.id} className={styles.skillItem}>
+                <span className={styles.skillName}>{skill.name}</span>
+                <SkillRating rating={skill.rating} />
+              </div>
+            ))}
+          </div>
         </section>
       </main>
     </div>

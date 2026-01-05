@@ -1,12 +1,18 @@
+/**
+ * Projects Page Styles
+ * Autor: Aicha El Hali
+ * Webtechnologien WS 2025/26
+ */
+
 .page {
   min-height: 100vh;
   background: #0a0a0a;
   color: #fff;
-  padding: 40px;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
-/* Background Strokes - reuse the same pattern as Home/About */
+/* Background Strokes */
 .backgroundStrokes {
   position: fixed;
   top: 0;
@@ -52,116 +58,309 @@
 .lineMiddleRight { left: calc(50% + 10px); }
 .lineRight { right: 0; }
 
+/* Main Layout */
 .main {
-  display: grid;
-  grid-template-columns: 360px 1fr;
-  gap: 24px;
-  align-items: start;
-  /* make room for the fixed header so header stays visible */
-  padding-top: 120px;
-  /* ensure main content stacks above the background strokes */
   position: relative;
   z-index: 2;
+  min-height: 100vh;
+  display: flex;
 }
 
-.left {
-  padding-top: 24px;
-  padding-left: 0; /* start content at page padding so title aligns with left stroke */
+/* Fixed Left Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 340px;
+  height: 100vh;
+  padding: 140px 40px 50px 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+.sidebarContent {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
 .title {
-  font-size: clamp(48px, 8vw, 96px);
+  font-size: clamp(56px, 6vw, 72px);
   font-weight: 400;
   letter-spacing: -2px;
   margin: 0;
+  line-height: 1;
 }
 
-/* Ensure title starts flush with column's left edge */
-.title { margin-left: 0; }
+.titleLine {
+  display: inline;
+}
 
-.grid {
-  /* stack cards vertically so images are under each other */
-  display: block;
-  /* constrain the stack width and push it to the right */
+.subtitle {
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0;
+  max-width: 280px;
+  letter-spacing: 0.2px;
+}
+
+.projectCount {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.countNumber {
+  font-size: 48px;
+  font-weight: 300;
+  letter-spacing: -2px;
+  color: #6366f1;
+}
+
+.countLabel {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Scrollable Projects List */
+.projectsList {
+  margin-left: auto;
+  margin-right: 40px;
+  padding: 130px 0 80px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  width: 58vw;
   max-width: 920px;
-  margin: 0 0 0 auto; /* align the grid to the right edge */
+  min-width: 500px;
 }
 
-.card {
-  display: block;
-  background: #0d0d0d;
-  border-radius: 6px;
-  overflow: hidden;
+/* Project Card */
+.projectCard {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 16px;
   text-decoration: none;
   color: inherit;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
-  transition: transform 0.28s ease, box-shadow 0.28s ease;
-  width: 100%;
-  margin: 0 0 28px 0; /* cards align within right-aligned grid */
-  max-width: 920px;
-  /* make sure cards are above the background strokes */
   position: relative;
-  z-index: 5;
 }
 
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.7);
+.projectIndex {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 1px;
+  padding-top: 8px;
+  font-family: monospace;
 }
 
-.cardImage {
+.projectImageWrapper {
+  position: relative;
   width: 100%;
-  height: 420px;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 16 / 10;
+}
+
+.projectImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-size: cover;
   background-position: center;
-  background-color: #222;
-  max-width: 900px;
-  margin: 0 0 0 auto; /* align image to the right inside card */
-  /* ensure image area is opaque and sits above strokes */
-  position: relative;
-  z-index: 6;
+  background-color: #1a1a2e;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.cardMeta {
+.projectOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
-  gap: 16px;
-  padding: 18px;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.metaLeft {
-  min-width: 120px;
-  color: #9b9b9b;
+.projectCard:hover .projectOverlay {
+  opacity: 1;
+}
+
+.projectCard:hover .projectImage {
+  transform: scale(1.05);
+}
+
+.viewText {
   font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 12px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
 }
 
-.metaLabel {
+.projectCard:hover .viewText {
+  background: #fff;
+  color: #0a0a0a;
+  border-color: #fff;
+}
+
+.projectInfo {
+  padding: 20px 0 30px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  grid-column: 2;
+}
+
+.projectHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+
+.projectTitle {
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.projectCard:hover .projectTitle {
+  color: #6366f1;
+}
+
+.projectYear {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: monospace;
+}
+
+.projectDescription {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0 0 16px 0;
+  max-width: 500px;
+}
+
+.projectServices {
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-top: 6px;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.35);
 }
 
-.metaValue {
-  margin-top: 4px;
-  font-weight: 600;
-}
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .sidebar {
+    width: 300px;
+    padding: 130px 30px 40px 40px;
+  }
 
-.metaRight {
-  flex: 1;
-}
+  .projectsList {
+    margin-left: 320px;
+    padding: 130px 30px 60px 0;
+    max-width: 550px;
+  }
 
-.cardTitle {
-  margin: 0 0 6px 0;
-  font-size: 28px;
-}
-
-.cardDesc {
-  margin: 0;
-  color: #cfcfcf;
+  .title {
+    font-size: clamp(38px, 5vw, 48px);
+  }
 }
 
 @media (max-width: 900px) {
-  .main { grid-template-columns: 1fr; padding-top: 100px; }
-  .grid { display: block; }
-  .cardImage { height: 260px; }
+  .main {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 120px 40px 50px 40px;
+  }
+
+  .sidebarContent {
+    gap: 20px;
+  }
+
+  .title {
+    font-size: clamp(48px, 12vw, 72px);
+  }
+
+  .titleLine {
+    display: inline;
+  }
+
+  .projectCount {
+    margin-top: 20px;
+    padding-top: 20px;
+  }
+
+  .countNumber {
+    font-size: 36px;
+  }
+
+  .projectsList {
+    margin-left: 0;
+    padding: 0 40px 60px 40px;
+    gap: 40px;
+    max-width: 100%;
+  }
+
+  .projectCard {
+    grid-template-columns: 40px 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    padding: 100px 24px 40px 24px;
+  }
+
+  .subtitle {
+    max-width: 100%;
+  }
+
+  .projectsList {
+    padding: 0 24px 50px 24px;
+    gap: 35px;
+  }
+
+  .projectCard {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .projectIndex {
+    padding-top: 0;
+  }
+
+  .projectInfo {
+    grid-column: 1;
+    padding: 16px 0 24px 0;
+  }
+
+  .projectTitle {
+    font-size: 22px;
+  }
+
+  .projectDescription {
+    font-size: 13px;
+  }
 }

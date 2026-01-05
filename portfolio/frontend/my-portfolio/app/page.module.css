@@ -1,3 +1,9 @@
+/**
+ * Portfolio Homepage Styles
+ * Autor: Aicha El Hali
+ * Webtechnologien WS 2025/26
+ */
+
 /* Page Container */
 .page {
   min-height: 100vh;
@@ -205,6 +211,102 @@
   font-weight: 500;
 }
 
+/* ==================== */
+/* Skills Section       */
+/* ==================== */
+.skillsSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-top: 100px;
+  padding: 60px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.skillsIntro {
+  display: flex;
+  align-items: flex-start;
+  padding-right: 40px;
+}
+
+.skillsText {
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  max-width: 400px;
+}
+
+.skillsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.skillItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.skillItem:first-child {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.skillItem:hover {
+  padding-left: 10px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.skillName {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+/* Skill Rating Dots */
+.skillRating {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.dotFilled {
+  background-color: #ffffff;
+  border-color: #ffffff;
+}
+
+.dotHalf {
+  background: linear-gradient(90deg, #ffffff 50%, rgba(255, 255, 255, 0.15) 50%);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Hover effect on skill item */
+.skillItem:hover .dotFilled {
+  background-color: #6366f1;
+  border-color: #6366f1;
+}
+
+.skillItem:hover .dotHalf {
+  background: linear-gradient(90deg, #6366f1 50%, rgba(255, 255, 255, 0.15) 50%);
+  border-color: rgba(99, 102, 241, 0.5);
+}
+
 /* Projects Grid */
 .projects {
   display: grid;
@@ -314,6 +416,10 @@
   .projects {
     grid-template-columns: repeat(4, 1fr);
   }
+
+  .skillsSection {
+    gap: 40px;
+  }
 }
 
 @media (max-width: 900px) {
@@ -334,6 +440,19 @@
   .name {
     font-size: clamp(48px, 10vw, 80px);
     letter-spacing: -1px;
+  }
+
+  .skillsSection {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .skillsIntro {
+    padding-right: 0;
+  }
+
+  .skillsText {
+    max-width: 100%;
   }
 }
 
@@ -363,6 +482,24 @@
     font-size: 48px;
     letter-spacing: -1px;
   }
+
+  .skillsSection {
+    padding: 40px 0;
+    margin-bottom: 60px;
+  }
+
+  .skillItem {
+    padding: 16px 0;
+  }
+
+  .skillName {
+    font-size: 12px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -384,5 +521,23 @@
 
   .stroke:nth-child(odd) {
     display: none;
+  }
+
+  .skillsText {
+    font-size: 14px;
+  }
+
+  .skillName {
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+
+  .skillRating {
+    gap: 4px;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
   }
 }
