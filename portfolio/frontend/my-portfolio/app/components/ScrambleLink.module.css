@@ -1,0 +1,22 @@
+/**
+ * ScrambleLink Styles
+ * Autor: Aicha El Hali
+ * Webtechnologien WS 2025/26
+ */
+
+.link {
+  font-size: 12px;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: opacity 0.3s ease;
+}
+
+.link:hover {
+  opacity: 0.7;
+}
+
+.bracket {
+  color: #6366f1;
+}

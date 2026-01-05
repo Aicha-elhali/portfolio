@@ -1,57 +1,16 @@
+/**
+ * Contact Page
+ * Autor: Aicha El Hali
+ * Webtechnologien WS 2025/26
+ */
+
 "use client";
 
 import styles from "./page.module.css";
-import Link from "next/link";
-import { useState, useEffect } from "react";
-
-// NavLink component with scramble effect
-function ScrambleLink({ href, children, hasBrackets = false }: { href: string; children: string; hasBrackets?: boolean }) {
-  const [displayText, setDisplayText] = useState(children);
-  const [isHovered, setIsHovered] = useState(false);
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-  useEffect(() => {
-    if (!isHovered) {
-      setDisplayText(children);
-      return;
-    }
-
-    let iteration = 0;
-    const interval = setInterval(() => {
-      const scrambled = children
-        .split("")
-        .map((char, index) => {
-          if (char === " ") return " ";
-          if (iteration > index * 0.8) return char;
-          return characters[Math.floor(Math.random() * characters.length)];
-        })
-        .join("");
-      
-      setDisplayText(scrambled);
-      iteration += 1;
-      
-      if (iteration > children.length + 10) {
-        clearInterval(interval);
-        setDisplayText(children);
-      }
-    }, 40);
-
-    return () => clearInterval(interval);
-  }, [isHovered, children]);
-
-  return (
-    <Link 
-      href={href} 
-      className={styles.navLink}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {hasBrackets && <span className={styles.bracket}>[</span>}
-      {hasBrackets ? ` ${displayText} ` : displayText}
-      {hasBrackets && <span className={styles.bracket}>]</span>}
-    </Link>
-  );
-}
+import { useState } from "react";
+import SiteHeader from "../components/SiteHeader";
+import BackgroundStrokes from "../components/BackgroundStrokes";
+import Footer from "../components/Footer";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -109,7 +68,7 @@ export default function Contact() {
 
     setIsSubmitting(true);
     
-    // Simulate form submission
+    // Simulate form submission - vorbereitet für späteres Backend
     await new Promise(resolve => setTimeout(resolve, 1000));
     
     setIsSubmitting(false);
@@ -128,27 +87,11 @@ export default function Contact() {
 
   return (
     <div className={styles.page}>
-      {/* Background Strokes */}
-      <div className={styles.backgroundStrokes}>
-        {[...Array(5)].map((_, i) => (
-          <div key={i} className={styles.column}>
-            <div className={styles.lineLeft}></div>
-            <div className={styles.lineMiddleLeft}></div>
-            <div className={styles.lineMiddleRight}></div>
-            <div className={styles.lineRight}></div>
-          </div>
-        ))}
-      </div>
+      {/* Background Strokes Komponente */}
+      <BackgroundStrokes />
 
-      {/* Header */}
-      <header className={styles.header}>
-        <Link href="/" className={styles.logo}>AICHA EL HALI</Link>
-        <nav className={styles.nav}>
-          <ScrambleLink href="/">HOME</ScrambleLink>
-          <ScrambleLink href="/about">ABOUT</ScrambleLink>
-          <ScrambleLink href="/projects">PROJECTS</ScrambleLink>
-        </nav>
-      </header>
+      {/* Header Komponente */}
+      <SiteHeader />
 
       {/* Main Content */}
       <main className={styles.main}>
@@ -222,14 +165,8 @@ export default function Contact() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className={styles.footer}>
-        <span className={styles.copyright}>© 2026</span>
-        <div className={styles.footerLinks}>
-          <Link href="/imprint" className={styles.footerLink}>IMPRINT & DATA PRIVACY</Link>
-        </div>
-        <span className={styles.credit}>DESIGN & DEVELOPMENT BY AICHA EL HALI</span>
-      </footer>
+      {/* Footer Komponente */}
+      <Footer />
     </div>
   );
 }

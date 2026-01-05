@@ -1,0 +1,57 @@
+/**
+ * SkillRating Styles
+ * Autor: Aicha El Hali
+ * Webtechnologien WS 2025/26
+ */
+
+.skillRating {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.dot {
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+/* Größen */
+.small {
+  width: 8px;
+  height: 8px;
+}
+
+.medium {
+  width: 10px;
+  height: 10px;
+}
+
+.large {
+  width: 12px;
+  height: 12px;
+}
+
+/* Gefüllter Punkt */
+.dotFilled {
+  background-color: #ffffff;
+  border-color: #ffffff;
+}
+
+/* Halber Punkt */
+.dotHalf {
+  background: linear-gradient(90deg, #ffffff 50%, rgba(255, 255, 255, 0.15) 50%);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Hover-Effekt (wenn Parent :hover hat) */
+.skillRating:hover .dotFilled {
+  background-color: #6366f1;
+  border-color: #6366f1;
+}
+
+.skillRating:hover .dotHalf {
+  background: linear-gradient(90deg, #6366f1 50%, rgba(255, 255, 255, 0.15) 50%);
+  border-color: rgba(99, 102, 241, 0.5);
+}

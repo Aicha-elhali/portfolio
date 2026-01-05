@@ -1,0 +1,59 @@
+/**
+ * Footer Styles
+ * Autor: Aicha El Hali
+ * Webtechnologien WS 2025/26
+ */
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 2;
+}
+
+.copyright {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 1px;
+}
+
+.footerLinks {
+  display: flex;
+  gap: 30px;
+}
+
+.footerLink {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  text-decoration: none;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.footerLink:hover {
+  color: #fff;
+}
+
+.credit {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 1px;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .footer {
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    text-align: center;
+  }
+
+  .footerLinks {
+    order: -1;
+  }
+}

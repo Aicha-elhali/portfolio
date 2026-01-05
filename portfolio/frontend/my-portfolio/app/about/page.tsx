@@ -1,118 +1,35 @@
+/**
+ * About Page
+ * Autor: Aicha El Hali
+ * Webtechnologien WS 2025/26
+ */
+
 "use client";
 
 import styles from "./page.module.css";
 import Link from "next/link";
-import { useState, useEffect } from "react";
-
-// NavLink component with scramble effect
-function ScrambleLink({ href, children, hasBrackets = false }: { href: string; children: string; hasBrackets?: boolean }) {
-  const [displayText, setDisplayText] = useState(children);
-  const [isHovered, setIsHovered] = useState(false);
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-  useEffect(() => {
-    if (!isHovered) {
-      setDisplayText(children);
-      return;
-    }
-
-    let iteration = 0;
-    const interval = setInterval(() => {
-      const scrambled = children
-        .split("")
-        .map((char, index) => {
-          if (char === " ") return " ";
-          if (iteration > index * 0.8) return char;
-          return characters[Math.floor(Math.random() * characters.length)];
-        })
-        .join("");
-      
-      setDisplayText(scrambled);
-      iteration += 1;
-      
-      if (iteration > children.length + 10) {
-        clearInterval(interval);
-        setDisplayText(children);
-      }
-    }, 40);
-
-    return () => clearInterval(interval);
-  }, [isHovered, children]);
-
-  return (
-    <Link 
-      href={href} 
-      className={styles.navLink}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {hasBrackets && <span className={styles.bracket}>[</span>}
-      {hasBrackets ? ` ${displayText} ` : displayText}
-      {hasBrackets && <span className={styles.bracket}>]</span>}
-    </Link>
-  );
-}
-
-// ScrambleTitle: small component that reuses scramble logic for plain text
-function ScrambleTitle({ text, className = "", speed = 40 }: { text: string; className?: string; speed?: number }) {
-  const [displayText, setDisplayText] = useState(text);
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-  useEffect(() => {
-    let iteration = 0;
-    const interval = setInterval(() => {
-      const scrambled = text
-        .split("")
-        .map((char, index) => {
-          if (char === " ") return " ";
-          if (iteration > index * 0.8) return char;
-          return characters[Math.floor(Math.random() * characters.length)];
-        })
-        .join("");
-      setDisplayText(scrambled);
-      iteration += 1;
-      if (iteration > text.length + 10) {
-        clearInterval(interval);
-        setDisplayText(text);
-      }
-    }, speed);
-
-    return () => clearInterval(interval);
-  }, [text, speed]);
-
-  return <span className={className}>{displayText}</span>;
-}
+import SiteHeader from "../components/SiteHeader";
+import BackgroundStrokes from "../components/BackgroundStrokes";
+import Footer from "../components/Footer";
+import SocialLinks from "../components/SocialLinks";
+import ScrambleText from "../components/ScrambleText";
 
 export default function About() {
   return (
     <div className={styles.page}>
-      {/* Background Strokes */}
-      <div className={styles.backgroundStrokes}>
-        {[...Array(5)].map((_, i) => (
-          <div key={i} className={styles.column}>
-            <div className={styles.lineLeft}></div>
-            <div className={styles.lineMiddleLeft}></div>
-            <div className={styles.lineMiddleRight}></div>
-            <div className={styles.lineRight}></div>
-          </div>
-        ))}
-      </div>
+      {/* Background Strokes Komponente */}
+      <BackgroundStrokes />
 
-      {/* Header */}
-      <header className={styles.header}>
-        <Link href="/" className={styles.logo}>AICHA EL HALI</Link>
-        <nav className={styles.nav}>
-          <ScrambleLink href="/">HOME</ScrambleLink>
-          <ScrambleLink href="/about" hasBrackets>ABOUT</ScrambleLink>
-          <ScrambleLink href="/projects">PROJECTS</ScrambleLink>
-        </nav>
-      </header>
+      {/* Header Komponente */}
+      <SiteHeader />
 
       {/* Main Content */}
       <main className={styles.main}>
         {/* Left Column */}
         <div className={styles.leftColumn}>
-          <h1 className={styles.title}><ScrambleTitle text="ABOUT" className="" /></h1>
+          <h1 className={styles.title}>
+            <ScrambleText text="ABOUT" />
+          </h1>
           
           <div className={styles.description}>
             <p>
@@ -129,29 +46,18 @@ export default function About() {
 
         {/* Right Column */}
         <div className={styles.rightColumn}>
-          {/* Image Placeholder */}
+          {/* Profile Image */}
           <div className={styles.imageContainer}>
-            <img src="/images/IMG_0668.jpg" alt="Aicha El Hali" className={styles.profileImage} />
+            <img 
+              src="/images/IMG_0668.jpg" 
+              alt="Aicha El Hali" 
+              className={styles.profileImage} 
+            />
           </div>
 
-          {/* Contact Links */}
+          {/* Social Links Komponente */}
           <div className={styles.contactSection}>
-            <div className={styles.contactItem}>
-              <span className={styles.contactLabel}>Email ↗</span>
-              <a href="mailto:a.elhali03@gmail.com" className={styles.contactLink}>A.ELHALI03@GMAIL.COM</a>
-            </div>
-            <div className={styles.contactItem}>
-              <span className={styles.contactLabel}>LinkedIn ↗</span>
-              <a href="https://linkedin.com/in/aicha-elhali" target="_blank" rel="noopener noreferrer" className={styles.contactLink}>/IN/AICHA-ELHALI</a>
-            </div>
-            <div className={styles.contactItem}>
-              <span className={styles.contactLabel}>GitHub ↗</span>
-              <a href="https://github.com/aicha-elhali" target="_blank" rel="noopener noreferrer" className={styles.contactLink}>/AICHA-ELHALI</a>
-            </div>
-            <div className={styles.contactItem}>
-              <span className={styles.contactLabel}>Instagram ↗</span>
-              <a href="https://instagram.com/aicha.elhy" target="_blank" rel="noopener noreferrer" className={styles.contactLink}>@AICHA.ELHY</a>
-            </div>
+            <SocialLinks layout="vertical" showLabels={true} />
           </div>
 
           {/* Let's Talk Button */}
@@ -161,14 +67,8 @@ export default function About() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className={styles.footer}>
-        <span className={styles.copyright}>© 2026</span>
-        <div className={styles.footerLinks}>
-          <Link href="/imprint" className={styles.footerLink}>IMPRINT & DATA PRIVACY</Link>
-        </div>
-        <span className={styles.credit}>DESIGN & DEVELOPMENT BY AICHA EL HALI</span>
-      </footer>
+      {/* Footer Komponente */}
+      <Footer />
     </div>
   );
 }

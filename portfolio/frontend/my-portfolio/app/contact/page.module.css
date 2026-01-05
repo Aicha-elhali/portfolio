@@ -1,3 +1,9 @@
+/**
+ * Contact Page Styles
+ * Autor: Aicha El Hali
+ * Webtechnologien WS 2025/26
+ */
+
 /* Page Container */
 .page {
   min-height: 100vh;
@@ -6,112 +12,6 @@
   font-family: var(--font-geist-sans), "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
   position: relative;
   overflow-x: hidden;
-}
-
-/* Background Strokes */
-.backgroundStrokes {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  pointer-events: none;
-  z-index: 1;
-  padding: 0 40px;
-}
-
-.column {
-  flex: 1;
-  height: 100%;
-  position: relative;
-  margin-right: 16px;
-}
-
-.column:last-child {
-  margin-right: 0;
-}
-
-.lineLeft,
-.lineMiddleLeft,
-.lineMiddleRight,
-.lineRight {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.07) 0px,
-    rgba(255, 255, 255, 0.07) 2px,
-    transparent 2px,
-    transparent 4px
-  );
-}
-
-.lineLeft {
-  left: 0;
-}
-
-.lineMiddleLeft {
-  left: calc(50% - 10px);
-}
-
-.lineMiddleRight {
-  left: calc(50% + 10px);
-}
-
-.lineRight {
-  right: 0;
-}
-
-/* Header */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 24px 40px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  background: transparent;
-}
-
-.logo {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: #fff;
-}
-
-.nav {
-  display: flex;
-  gap: 40px;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.navLink {
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #ffffff;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.navLink:hover {
-  color: #fff;
-}
-
-.bracket {
-  color: #8B5CF6;
 }
 
 /* Main Content */
@@ -175,7 +75,7 @@
 .input:focus,
 .textarea:focus {
   outline: none;
-  border-color: #8B5CF6;
+  border-color: #6366f1;
 }
 
 .input::placeholder,
@@ -214,7 +114,7 @@
 }
 
 .submitButton:hover {
-  background: #8B5CF6;
+  background: #6366f1;
   color: #fff;
 }
 
@@ -257,52 +157,21 @@
 }
 
 .resetButton:hover {
-  border-color: #8B5CF6;
-  color: #8B5CF6;
+  border-color: #6366f1;
+  color: #6366f1;
 }
 
-/* Footer */
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 24px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 100;
-}
+/* Responsive */
+@media (max-width: 600px) {
+  .main {
+    padding: 120px 24px 100px;
+  }
 
-.copyright {
-  font-size: 11px;
-  letter-spacing: 1px;
-  color: #555;
-}
+  .title {
+    margin-bottom: 40px;
+  }
 
-.footerLinks {
-  display: flex;
-  gap: 24px;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.footerLink {
-  font-size: 11px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #555;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.footerLink:hover {
-  color: #fff;
-}
-
-.credit {
-  font-size: 11px;
-  letter-spacing: 1px;
-  color: #555;
+  .form {
+    gap: 24px;
+  }
 }

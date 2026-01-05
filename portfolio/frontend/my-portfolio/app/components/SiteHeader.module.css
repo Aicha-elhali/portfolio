@@ -1,0 +1,165 @@
+/**
+ * SiteHeader Styles
+ * Autor: Aicha El Hali
+ * Webtechnologien WS 2025/26
+ */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 40px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: transparent;
+}
+
+.logo {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.logo:hover {
+  opacity: 0.7;
+}
+
+.nav {
+  display: flex;
+  gap: 40px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.navLink {
+  font-size: 12px;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: opacity 0.3s ease;
+}
+
+.navLink:hover {
+  opacity: 0.7;
+}
+
+.bracket {
+  color: #6366f1;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .header {
+    padding: 20px 24px;
+  }
+
+  .nav {
+    gap: 24px;
+  }
+
+  .navLink {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav {
+    gap: 16px;
+  }
+
+  .navLink {
+    font-size: 10px;
+    letter-spacing: 0.5px;
+  }
+}/**
+ * SiteHeader Styles
+ * Autor: Aicha El Hali
+ * Webtechnologien WS 2025/26
+ */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 40px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: transparent;
+}
+
+.logo {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.logo:hover {
+  opacity: 0.7;
+}
+
+.nav {
+  display: flex;
+  gap: 40px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.navLink {
+  font-size: 12px;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: opacity 0.3s ease;
+}
+
+.navLink:hover {
+  opacity: 0.7;
+}
+
+.bracket {
+  color: #6366f1;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .header {
+    padding: 20px 24px;
+  }
+
+  .nav {
+    gap: 24px;
+  }
+
+  .navLink {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav {
+    gap: 16px;
+  }
+
+  .navLink {
+    font-size: 10px;
+    letter-spacing: 0.5px;
+  }
+}

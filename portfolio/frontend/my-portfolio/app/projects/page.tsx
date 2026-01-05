@@ -6,6 +6,7 @@
 
 import styles from './page.module.css'
 import SiteHeader from '../components/SiteHeader'
+import BackgroundStrokes from '../components/BackgroundStrokes'
 import Link from 'next/link'
 
 // Projekte Daten - vorbereitet für späteres Backend
@@ -63,7 +64,7 @@ const projects = [
     title: 'Hangman',
     year: '2025',
     services: 'React · Playful',
-    description: 'Check out my hangman game i made the day it was due.',
+    description: 'Check out my hangman game i made the day it was due..',
     image: '/images/hangman.jpg'
   }
 ]
@@ -71,18 +72,10 @@ const projects = [
 export default function ProjectsPage() {
   return (
     <div className={styles.page}>
-      {/* Background Strokes */}
-      <div className={styles.backgroundStrokes}>
-        {[...Array(5)].map((_, i) => (
-          <div key={i} className={styles.column}>
-            <div className={styles.lineLeft}></div>
-            <div className={styles.lineMiddleLeft}></div>
-            <div className={styles.lineMiddleRight}></div>
-            <div className={styles.lineRight}></div>
-          </div>
-        ))}
-      </div>
+      {/* Background Strokes Komponente */}
+      <BackgroundStrokes />
       
+      {/* Header Komponente */}
       <SiteHeader />
       
       <main className={styles.main}>

@@ -1,46 +1,57 @@
+/**
+ * SiteHeader Component
+ * Wiederverwendbarer Header mit Navigation
+ * Autor: Aicha El Hali
+ * Webtechnologien WS 2025/26
+ */
+
 "use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import headerStyles from "../page.module.css";
+import styles from "./SiteHeader.module.css";
+
+// Navigation Links - vorbereitet für späteres Backend
+const navLinks = [
+  { href: "/", label: "HOME" },
+  { href: "/about", label: "ABOUT" },
+  { href: "/projects", label: "PROJECTS" },
+  { href: "/contact", label: "CONTACT" },
+];
 
 export default function SiteHeader() {
   const pathname = usePathname() || "/";
 
-  const isActive = (path: string) => {
-    if (path === "/projects") return pathname.startsWith("/projects");
-    return pathname === path;
+  // Prüft ob ein Link aktiv ist
+  const isActive = (path: string): boolean => {
+    if (path === "/") return pathname === "/";
+    return pathname.startsWith(path);
   };
 
   return (
-    <header className={headerStyles.header}>
-      <Link href="/" className={headerStyles.logo}>
+    <header className={styles.header}>
+      <Link href="/" className={styles.logo}>
         AICHA EL HALI
       </Link>
-      <nav className={headerStyles.nav}>
-        <Link href="/" className={headerStyles.navLink}>
-          HOME
-        </Link>
-
-        <Link href="/about" className={headerStyles.navLink}>
-          {isActive("/about") ? (
-            <>
-              <span className={headerStyles.bracket}>[</span> ABOUT <span className={headerStyles.bracket}>]</span>
-            </>
-          ) : (
-            "ABOUT"
-          )}
-        </Link>
-
-        <Link href="/projects" className={headerStyles.navLink}>
-          {isActive("/projects") ? (
-            <>
-              <span className={headerStyles.bracket}>[</span> PROJECTS <span className={headerStyles.bracket}>]</span>
-            </>
-          ) : (
-            "PROJECTS"
-          )}
-        </Link>
+      
+      <nav className={styles.nav}>
+        {navLinks.map((link) => (
+          <Link 
+            key={link.href}
+            href={link.href} 
+            className={styles.navLink}
+          >
+            {isActive(link.href) ? (
+              <>
+                <span className={styles.bracket}>[</span>
+                {` ${link.label} `}
+                <span className={styles.bracket}>]</span>
+              </>
+            ) : (
+              link.label
+            )}
+          </Link>
+        ))}
       </nav>
     </header>
   );

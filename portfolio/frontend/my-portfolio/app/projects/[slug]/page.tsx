@@ -6,6 +6,8 @@
 
 import styles from './page.module.css'
 import SiteHeader from '../../components/SiteHeader'
+import BackgroundStrokes from '../../components/BackgroundStrokes'
+import Footer from '../../components/Footer'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
@@ -131,18 +133,10 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
   return (
     <div className={styles.page}>
-      {/* Background Strokes */}
-      <div className={styles.backgroundStrokes}>
-        {[...Array(5)].map((_, i) => (
-          <div key={i} className={styles.column}>
-            <div className={styles.lineLeft}></div>
-            <div className={styles.lineMiddleLeft}></div>
-            <div className={styles.lineMiddleRight}></div>
-            <div className={styles.lineRight}></div>
-          </div>
-        ))}
-      </div>
+      {/* Background Strokes Komponente */}
+      <BackgroundStrokes />
 
+      {/* Header Komponente */}
       <SiteHeader />
 
       <main className={styles.main}>
@@ -251,6 +245,9 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           </Link>
         </nav>
       </main>
+
+      {/* Footer Komponente */}
+      <Footer />
     </div>
   )
 }
