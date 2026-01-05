@@ -33,8 +33,8 @@ const projectsData: Record<string, {
     challenge: 'The main challenge was to preserve the recognizable HARIBO brand identity while completely shifting its market positioning. How do you take a brand synonymous with sugary treats and make it credible in the health supplement space? The design needed to bridge the gap between indulgence and wellness.',
     solution: 'The solution embraced the 80s aesthetic with bold neon colors, geometric patterns, and retro typography. The iconic HARIBO bear was reimagined as a muscular fitness mascot. Product packaging features vibrant gradients and chrome effects typical of 80s design, while maintaining the playful spirit that makes HARIBO beloved worldwide.',
     tools: ['Figma', 'Adobe Illustrator', 'Adobe Photoshop', 'Blender'],
-    gallery: ['/images/haribo.jpg', '/images/haribo-2.jpg', '/images/haribo-3.jpg'],
-    link: 'https://figma.com/haribo-redesign'
+    gallery: ['/images/font.jpg', '/images/haribo_products.jpg', '/images/palette.jpg'],
+    link: 'https://www.figma.com/slides/YvAJxE97Wij40s5lMsDBxq/Haribo-retro?node-id=32-287&t=O9DH4tKoP3lU1XOu-0'
   },
   'social media agents': {
     title: 'Social Media Agents',
