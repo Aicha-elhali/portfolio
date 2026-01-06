@@ -24,17 +24,18 @@ const skillsData = [
 
 // Projekte Daten - vorbereitet für späteres Backend
 const projects = [
-  { id: "01", name: "Project One", tags: ["BRANDING", "DESIGN", "DEVELOPMENT"], year: "2024", image: "/images/project1.jpg" },
-  { id: "02", name: "Project Two", tags: ["UI/UX", "DESIGN"], year: "2024", image: "/images/project2.jpg" },
-  { id: "03", name: "Project Three", tags: ["DEVELOPMENT", "REACT"], year: "2023", image: "/images/project3.jpg" },
-  { id: "04", name: "Project Four", tags: ["BRANDING", "IDENTITY"], year: "2023", image: "/images/project4.jpg" },
-  { id: "05", name: "Project Five", tags: ["WEB", "DESIGN"], year: "2024", image: "/images/project5.jpg" },
+  { id: "01", name: "HARIBO", tags: ["BRANDING", "REDESIGN"], year: "2025", image: "/images/haribo.jpg" },
+  { id: "02", name: "StyleMate", tags: ["UI/UX", "CHATBOT"], year: "2024", image: "/images/stylemate.jpg" },
+  { id: "03", name: "Spacey", tags: ["PRODUCT", "UI"], year: "2025", image: "/images/spacey.jpg" },
+  { id: "04", name: "Moosburg", tags: ["PROTOTYPE", "RESEARCH"], year: "2025", image: "/images/moosburg.jpg" },
+  { id: "05", name: "Hangman", tags: ["REACT", "GAME"], year: "2025", image: "/images/hangman.jpg" },
 ];
 
 export default function Home() {
   const [currentTime, setCurrentTime] = useState("");
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   const [displayName, setDisplayName] = useState({ line1: "AICHA", line2: "EL HALI" });
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -65,6 +66,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    setIsLoaded(true);
     const updateTime = () => {
       const now = new Date();
       setCurrentTime(now.toLocaleTimeString("en-GB", { hour12: false }));
@@ -111,82 +113,150 @@ export default function Home() {
 
       {/* Main Content */}
       <main className={styles.main}>
-        {/* Hero Name Section */}
+        {/* Hero Section */}
         <section className={styles.hero}>
-          <h1 className={styles.name}>
-            <span className={styles.nameLine}>
-              {displayName.line1}
-            </span>
-            <br />
-            <span className={styles.nameLine}>
-              {displayName.line2}
-            </span>
-          </h1>
-          <div className={styles.heroInfo}>
-            <div className={styles.infoItem}>
-              {hoveredProject ? (
-                projects.find(p => p.id === hoveredProject)?.tags.map((tag, i) => (
-                  <span key={i} className={styles.infoLabel}>{tag}</span>
-                ))
-              ) : (
-                <>
-                  <span className={styles.infoLabelBright}>DESIGNER &</span>
-                  <span className={styles.infoLabelBright}>DEVELOPER</span>
-                </>
-              )}
+          <div className={styles.heroContent}>
+            {/* Decorative Element */}
+            <div className={styles.heroDecor}>
+              <span className={styles.decorLine}></span>
+              <span className={styles.decorText}>PORTFOLIO 2025</span>
             </div>
-            <div className={styles.infoItem}>
-              {hoveredProject ? (
-                <span className={styles.infoLabel}>{projects.find(p => p.id === hoveredProject)?.year}</span>
-              ) : (
-                <>
-                  <span className={styles.infoLabelBright}>MUNICH, DE</span>
-                  <span className={styles.infoTime}>{currentTime}</span>
-                </>
-              )}
+
+            {/* Main Name */}
+            <h1 className={`${styles.name} ${isLoaded ? styles.nameVisible : ''}`}>
+              <span className={styles.nameLine} style={{ animationDelay: '0.1s' }}>
+                {displayName.line1}
+              </span>
+              <span className={styles.nameLine} style={{ animationDelay: '0.2s' }}>
+                {displayName.line2}
+              </span>
+            </h1>
+
+            {/* Tagline */}
+            <p className={`${styles.tagline} ${isLoaded ? styles.taglineVisible : ''}`}>
+              Designer & Developer creating thoughtful digital experiences
+            </p>
+
+            {/* Hero Info */}
+            <div className={styles.heroInfo}>
+              <div className={styles.infoItem}>
+                <span className={styles.infoLabel}>BASED IN</span>
+                <span className={styles.infoValue}>MUNICH, DE</span>
+              </div>
+              <div className={styles.infoDivider}></div>
+              <div className={styles.infoItem}>
+                <span className={styles.infoLabel}>LOCAL TIME</span>
+                <span className={styles.infoValue}>{currentTime}</span>
+              </div>
+              <div className={styles.infoDivider}></div>
+              <div className={styles.infoItem}>
+                <span className={styles.infoLabel}>STATUS</span>
+                <span className={styles.infoValueHighlight}>
+                  <span className={styles.statusDot}></span>
+                  AVAILABLE
+                </span>
+              </div>
+            </div>
+
+            {/* Scroll Indicator */}
+            <div className={styles.scrollIndicator}>
+              <span className={styles.scrollText}>SCROLL TO EXPLORE</span>
+              <div className={styles.scrollLine}>
+                <div className={styles.scrollDot}></div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Projects Grid */}
-        <section className={`${styles.projects} ${hoveredProject ? styles.hasHover : ''}`}>
-          {projects.map((project) => (
-            <Link 
-              href={`/work/${project.id}`} 
-              key={project.id} 
-              className={`${styles.projectCard} ${hoveredProject === project.id ? styles.active : ''} ${hoveredProject && hoveredProject !== project.id ? styles.blurred : ''}`}
-              onMouseEnter={() => setHoveredProject(project.id)}
-              onMouseLeave={() => setHoveredProject(null)}
-            >
-              <div className={styles.projectImage}>
-                <div className={styles.projectOverlay}>
-                  <span className={styles.projectName}>{project.name}</span>
+        {/* Featured Projects Section */}
+        <section className={styles.projectsSection}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionLabel}>FEATURED WORK</span>
+            <h2 className={styles.sectionTitle}>Selected Projects</h2>
+          </div>
+
+          <div className={styles.projectsGrid}>
+            {projects.map((project, index) => (
+              <Link 
+                href={`/projects/${project.name.toLowerCase().replace(' ', '-')}`} 
+                key={project.id} 
+                className={`${styles.projectCard} ${hoveredProject === project.id ? styles.active : ''} ${hoveredProject && hoveredProject !== project.id ? styles.blurred : ''}`}
+                onMouseEnter={() => setHoveredProject(project.id)}
+                onMouseLeave={() => setHoveredProject(null)}
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className={styles.projectImageWrapper}>
+                  <div 
+                    className={styles.projectImage}
+                    style={{ backgroundImage: `url(${project.image})` }}
+                  />
+                  <div className={styles.projectOverlay}>
+                    <span className={styles.viewProject}>
+                      <span>VIEW</span>
+                      <span className={styles.viewArrow}>→</span>
+                    </span>
+                  </div>
+                  <div className={styles.projectIndex}>{project.id}</div>
                 </div>
-              </div>
-              <div className={styles.projectMeta}>
-                <span className={styles.projectId}>[{project.id}]</span>
-                {hoveredProject === project.id && (
-                  <span className={styles.viewProject}>VIEW PROJECT →</span>
-                )}
-              </div>
+                <div className={styles.projectInfo}>
+                  <h3 className={styles.projectName}>{project.name}</h3>
+                  <div className={styles.projectTags}>
+                    {project.tags.map((tag, i) => (
+                      <span key={i} className={styles.projectTag}>{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* View All Link */}
+          <div className={styles.viewAllWrapper}>
+            <Link href="/projects" className={styles.viewAllLink}>
+              <span>VIEW ALL PROJECTS</span>
+              <span className={styles.viewAllArrow}>→</span>
             </Link>
-          ))}
+          </div>
         </section>
 
-        {/* Skills Section - SkillRating Komponente */}
+        {/* Skills Section */}
         <section className={styles.skillsSection}>
-          <div className={styles.skillsIntro}>
+          <div className={styles.skillsHeader}>
+            <span className={styles.sectionLabel}>EXPERTISE</span>
+            <h2 className={styles.sectionTitle}>Skills & Tools</h2>
             <p className={styles.skillsText}>
-              Combining programming skills with Figma design tools, I build simple, thoughtful digital experiences.
+              Combining programming skills with design tools to build simple, thoughtful digital experiences.
             </p>
           </div>
-          <div className={styles.skillsList}>
-            {skillsData.map((skill) => (
-              <div key={skill.id} className={styles.skillItem}>
+
+          <div className={styles.skillsGrid}>
+            {skillsData.map((skill, index) => (
+              <div 
+                key={skill.id} 
+                className={styles.skillCard}
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className={styles.skillHeader}>
+                  <span className={styles.skillIndex}>0{skill.id}</span>
+                  <SkillRating rating={skill.rating} />
+                </div>
                 <span className={styles.skillName}>{skill.name}</span>
-                <SkillRating rating={skill.rating} />
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className={styles.ctaSection}>
+          <div className={styles.ctaContent}>
+            <h2 className={styles.ctaTitle}>Let's work together</h2>
+            <p className={styles.ctaText}>
+              Have a project in mind? I'd love to hear about it.
+            </p>
+            <Link href="/contact" className={styles.ctaButton}>
+              <span>GET IN TOUCH</span>
+              <span className={styles.ctaArrow}>→</span>
+            </Link>
           </div>
         </section>
       </main>
