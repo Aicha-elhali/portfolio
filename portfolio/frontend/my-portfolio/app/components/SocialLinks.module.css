@@ -5,45 +5,30 @@
  */
 
 .socialLinks {
-  display: flex;
-}
-
-/* Layout Varianten */
-.vertical {
-  flex-direction: column;
-  gap: 20px;
-}
-
-.horizontal {
-  flex-direction: row;
-  gap: 30px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
 }
 
 .socialItem {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-}
-
-.horizontal .socialItem {
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
+  gap: 4px;
 }
 
 .socialLabel {
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.4);
+  font-size: 14px;
+  font-weight: 500;
   letter-spacing: 1px;
   text-transform: uppercase;
+  color: #fff;
 }
 
 .socialLink {
-  font-size: 13px;
-  color: #fff;
+  font-size: 11px;
+  color: #888;
   text-decoration: none;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   transition: color 0.3s ease;
 }
@@ -52,15 +37,24 @@
   color: #6366f1;
 }
 
+/* Layout Varianten */
+.vertical {
+  grid-template-columns: 1fr 1fr;
+}
+
+.horizontal {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
 /* Responsive */
 @media (max-width: 600px) {
-  .horizontal {
-    flex-direction: column;
-    gap: 16px;
+  .socialLinks {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 
-  .horizontal .socialItem {
-    flex-direction: column;
-    align-items: flex-start;
+  .horizontal {
+    grid-template-columns: 1fr 1fr;
   }
 }

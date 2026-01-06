@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 import SiteHeader from "./components/SiteHeader";
 import BackgroundStrokes from "./components/BackgroundStrokes";
+import Footer from "./components/Footer";
 import SkillRating from "./components/SkillRating";
 
 // Skills Daten - vorbereitet für späteres Backend
@@ -189,6 +190,9 @@ export default function Home() {
           </div>
         </section>
       </main>
+
+      {/* Footer Komponente */}
+      <Footer />
     </div>
   );
 }
