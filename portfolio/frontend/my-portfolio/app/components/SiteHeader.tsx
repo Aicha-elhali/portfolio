@@ -11,7 +11,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "./SiteHeader.module.css";
 
-// Navigation Links - vorbereitet für späteres Backend
+// Navigation Links, vorbereitet für späteres Backend
 const navLinks = [
   { href: "/", label: "HOME" },
   { href: "/about", label: "ABOUT" },
