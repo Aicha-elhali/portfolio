@@ -20,7 +20,7 @@ const projects = [
     image: '/images/haribo.jpg'
   },
   {
-    slug: 'social media agents',
+    slug: 'social-media-agents',
     title: 'Social Media Agents',
     year: '2025/26',
     services: 'Agents · N8N',

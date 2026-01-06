@@ -38,7 +38,7 @@ const projectsData: Record<string, {
     gallery: ['/images/font.jpg', '/images/haribo_products.jpg', '/images/palette.jpg'],
     link: 'https://www.figma.com/slides/YvAJxE97Wij40s5lMsDBxq/Haribo-retro?node-id=32-287&t=O9DH4tKoP3lU1XOu-0'
   },
-  'social media agents': {
+  'social-media-agents': {
     title: 'Social Media Agents',
     year: '2025/26',
     services: 'Agents · N8N',
