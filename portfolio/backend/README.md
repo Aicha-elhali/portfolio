@@ -4,12 +4,12 @@ A Node.js/Express/Mongoose backend for the portfolio project.
 
 ## Structure
 
-- `src/controllers/` — Business logic
 - `src/models/` — Mongoose schemas
 - `src/routes/` — API routes
 - `src/lib/` — DB connection
 - `src/scripts/` — Seeding scripts
 - `uploads/` — File uploads
+- `dump/` — MongoDB export (mongodump)
 
 ## Setup
 
