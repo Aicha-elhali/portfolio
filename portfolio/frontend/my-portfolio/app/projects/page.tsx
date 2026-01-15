@@ -4,72 +4,52 @@
  * Webtechnologien WS 2025/26
  */
 
+"use client";
+
+import { useState, useEffect } from 'react'
 import styles from './page.module.css'
 import SiteHeader from '../components/SiteHeader'
 import BackgroundStrokes from '../components/BackgroundStrokes'
 import Link from 'next/link'
 
-// Projekte Daten - vorbereitet für späteres Backend
-const projects = [
-  {
-    slug: 'haribo',
-    title: 'HARIBO',
-    year: '2025',
-    services: 'Re-design · Brand',
-    description: 'Redesign of a candy company, turning it into a 80`s supplement provider.',
-    image: '/images/haribo.jpg'
-  },
-  {
-    slug: 'social-media-agents',
-    title: 'Social Media Agents',
-    year: '2025/26',
-    services: 'Agents · N8N',
-    description: 'Automated social media content for the world´s largest shopping engagement platform.',
-    image: '/images/atolls.jpg'
-  },
-  {
-    slug: 'stylemate',
-    title: 'StyleMate',
-    year: '2024',
-    services: 'Chatbot · UI',
-    description: 'A chatbot that specializes on the users personal style for recommendation',
-    image: '/images/stylemate.jpg'
-  },
-  {
-    slug: 'spacey',
-    title: 'Spacey',
-    year: '2025',
-    services: 'Product · UI',
-    description: 'What to do with empty spaces in Munich? Check out the ideas and the prototype',
-    image: '/images/spacey.jpg'
-  },
-  {
-    slug: 'moosburg',
-    title: 'Moosburg',
-    year: '2025/26',
-    services: 'Prototype · Research',
-    description: 'A Prototype for the city Moosburg about historcial sites for the POW',
-    image: '/images/moosburg.jpg'
-  },
-  {
-    slug: 'ebay',
-    title: 'Ebay',
-    year: '2024',
-    services: 'Product · UI',
-    description: 'A redesign of the Ebay product site for a better user experience.',
-    image: '/images/ebay.jpg'
-  },
-  {
-    slug: 'hangman',
-    title: 'Hangman',
-    year: '2025',
-    services: 'React · Playful',
-    description: 'Check out my hangman game i made the day it was due..',
-    image: '/images/hangman.jpg'
-  }
-]
+// Interface für Projekt-Daten
+interface Project {
+  _id: string;
+  slug: string;
+  title: string;
+  year: string;
+  services: string;
+  description: string;
+  image: string;
+  live?: string;
+}
 
 export default function ProjectsPage() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch('http://localhost:5001/api/projects');
+        
+        if (!response.ok) {
+          throw new Error('Fehler beim Laden der Projekte');
+        }
+        
+        const data = await response.json();
+        setProjects(data);
+      } catch (err: any) {
+        setError(err.message || 'Ein Fehler ist aufgetreten');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
   return (
     <div className={styles.page}>
       {/* Background Strokes Komponente */}
@@ -95,19 +75,32 @@ export default function ProjectsPage() {
 
         {/* Scrollable Projects List */}
         <section className={styles.projectsList}>
-          {projects.map((project, index) => (
-            <Link 
-              key={project.slug} 
-              href={`/projects/${project.slug}`} 
-              className={styles.projectCard}
-            >
-              <div className={styles.projectIndex}>
-                [{String(index + 1).padStart(2, '0')}]
-              </div>
-              
-              <div className={styles.projectImageWrapper}>
-                <div 
-                  className={styles.projectImage} 
+          {isLoading ? (
+            <div className={styles.loadingMessage}>
+              Lade Projekte...
+            </div>
+          ) : error ? (
+            <div className={styles.errorMessage}>
+              {error}
+            </div>
+          ) : projects.length === 0 ? (
+            <div className={styles.emptyMessage}>
+              Keine Projekte gefunden.
+            </div>
+          ) : (
+            projects.map((project, index) => (
+              <Link 
+                key={project.slug} 
+                href={`/projects/${project.slug}`} 
+                className={styles.projectCard}
+              >
+                <div className={styles.projectIndex}>
+                  [{String(index + 1).padStart(2, '0')}]
+                </div>
+                
+                <div className={styles.projectImageWrapper}>
+                  <div 
+                    className={styles.projectImage} 
                   style={{ backgroundImage: `url(${project.image})` }} 
                 />
                 <div className={styles.projectOverlay}>
@@ -115,7 +108,7 @@ export default function ProjectsPage() {
                 </div>
               </div>
               
-              <div className={styles.projectInfo}>
+                <div className={styles.projectInfo}>
                 <div className={styles.projectHeader}>
                   <h2 className={styles.projectTitle}>{project.title}</h2>
                   <span className={styles.projectYear}>{project.year}</span>
@@ -124,7 +117,8 @@ export default function ProjectsPage() {
                 <div className={styles.projectServices}>{project.services}</div>
               </div>
             </Link>
-          ))}
+          ))
+          )}
         </section>
       </main>
     </div>

@@ -15,6 +15,7 @@ export interface IProject extends Document {
   description: string;
   image: string;
   live: string;
+  order: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -37,7 +38,7 @@ const ProjectSchema: Schema = new Schema(
     year: { 
       type: String, 
       required: [true, 'Jahr ist erforderlich'],
-      match: [/^\d{4}$/, 'Jahr muss eine 4-stellige Zahl sein']
+      match: [/^\d{4}(\/\d{2})?$/, 'Jahr muss im Format YYYY oder YYYY/YY sein']
     },
     services: { 
       type: String, 
@@ -51,6 +52,7 @@ const ProjectSchema: Schema = new Schema(
     },
     image: { type: String, default: '' },
     live: { type: String, default: '#' },
+    order: { type: Number, default: 0 },
   },
   { timestamps: true }
 );

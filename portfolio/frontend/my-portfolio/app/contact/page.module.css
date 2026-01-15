@@ -161,6 +161,18 @@
   color: #6366f1;
 }
 
+/* Submit Error Message */
+.submitError {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid #ef4444;
+  border-radius: 4px;
+  padding: 16px;
+  color: #ef4444;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 8px;
+}
+
 /* Responsive */
 @media (max-width: 600px) {
   .main {

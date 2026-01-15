@@ -25,6 +25,7 @@ export default function Contact() {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -67,13 +68,39 @@ export default function Contact() {
     if (!validateForm()) return;
 
     setIsSubmitting(true);
+    setSubmitError("");
     
-    // Simulate form submission - vorbereitet für späteres Backend
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    setFormData({ name: "", email: "", message: "" });
+    try {
+      // Sende Nachricht an Backend-API
+      const response = await fetch('http://localhost:5001/api/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        // Fehlerbehandlung vom Backend
+        if (data.errors) {
+          setErrors({
+            name: data.errors.name || "",
+            email: data.errors.email || "",
+            message: data.errors.message || "",
+          });
+        }
+        throw new Error(data.message || 'Fehler beim Senden der Nachricht');
+      }
+
+      setIsSubmitted(true);
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error: any) {
+      setSubmitError(error.message || 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -160,6 +187,12 @@ export default function Contact() {
               >
                 {isSubmitting ? "SENDING..." : "SEND MESSAGE"}
               </button>
+
+              {submitError && (
+                <div className={styles.submitError}>
+                  {submitError}
+                </div>
+              )}
             </form>
           )}
         </div>

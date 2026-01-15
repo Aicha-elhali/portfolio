@@ -13,7 +13,7 @@ const router = express.Router();
 // GET all projects
 router.get('/', async (req: Request, res: Response) => {
   try {
-    const projects = await Project.find().sort({ createdAt: -1 });
+    const projects = await Project.find().sort({ order: 1 });
     res.json(projects);
   } catch (error) {
     res.status(500).json({ message: 'Server error', error });
