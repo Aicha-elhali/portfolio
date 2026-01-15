@@ -91,13 +91,13 @@ export default function Contact() {
             message: data.errors.message || "",
           });
         }
-        throw new Error(data.message || 'Fehler beim Senden der Nachricht');
+        throw new Error(data.message || 'Failed to send message');
       }
 
       setIsSubmitted(true);
       setFormData({ name: "", email: "", message: "" });
     } catch (error: any) {
-      setSubmitError(error.message || 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
+      setSubmitError(error.message || 'An error occurred. Please try again later.');
     } finally {
       setIsSubmitting(false);
     }
@@ -106,7 +106,7 @@ export default function Contact() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    // Clear error when user starts typing
+    // Fehler löschen wenn Benutzer tippt
     if (errors[name as keyof typeof errors]) {
       setErrors(prev => ({ ...prev, [name]: "" }));
     }

@@ -10,7 +10,7 @@ import Message from '../models/Message';
 
 const router = express.Router();
 
-// GET all messages (für Admin-Zwecke)
+// GET - Alle Nachrichten abrufen (für Admin-Zwecke)
 router.get('/', async (req: Request, res: Response) => {
   try {
     const messages = await Message.find().sort({ createdAt: -1 });
@@ -20,7 +20,7 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
-// POST create new message (Kontaktformular absenden)
+// POST - Neue Nachricht erstellen (Kontaktformular absenden)
 router.post('/', async (req: Request, res: Response) => {
   try {
     const { name, email, message } = req.body;
@@ -28,11 +28,11 @@ router.post('/', async (req: Request, res: Response) => {
     // Validierung
     if (!name || !email || !message) {
       return res.status(400).json({ 
-        message: 'Alle Felder sind erforderlich',
+        message: 'All fields are required',
         errors: {
-          name: !name ? 'Name ist erforderlich' : null,
-          email: !email ? 'E-Mail ist erforderlich' : null,
-          message: !message ? 'Nachricht ist erforderlich' : null,
+          name: !name ? 'Name is required' : null,
+          email: !email ? 'Email is required' : null,
+          message: !message ? 'Message is required' : null,
         }
       });
     }
@@ -41,30 +41,30 @@ router.post('/', async (req: Request, res: Response) => {
     const savedMessage = await newMessage.save();
     
     res.status(201).json({ 
-      message: 'Nachricht erfolgreich gesendet',
+      message: 'Message sent successfully',
       data: savedMessage 
     });
   } catch (error: any) {
-    // Mongoose Validation Error
+    // Mongoose Validierungsfehler
     if (error.name === 'ValidationError') {
       const errors: Record<string, string> = {};
       for (const field in error.errors) {
         errors[field] = error.errors[field].message;
       }
-      return res.status(400).json({ message: 'Validierungsfehler', errors });
+      return res.status(400).json({ message: 'Validation error', errors });
     }
     res.status(500).json({ message: 'Server error', error });
   }
 });
 
-// DELETE message by ID
+// DELETE - Nachricht löschen
 router.delete('/:id', async (req: Request, res: Response) => {
   try {
     const message = await Message.findByIdAndDelete(req.params.id);
     if (!message) {
-      return res.status(404).json({ message: 'Nachricht nicht gefunden' });
+      return res.status(404).json({ message: 'Message not found' });
     }
-    res.json({ message: 'Nachricht erfolgreich gelöscht' });
+    res.json({ message: 'Message deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error });
   }

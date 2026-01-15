@@ -24,31 +24,31 @@ const ProjectSchema: Schema = new Schema(
   {
     title: { 
       type: String, 
-      required: [true, 'Titel ist erforderlich'],
-      minlength: [2, 'Titel muss mindestens 2 Zeichen haben'],
-      maxlength: [100, 'Titel darf maximal 100 Zeichen haben']
+      required: [true, 'Title is required'],
+      minlength: [2, 'Title must be at least 2 characters'],
+      maxlength: [100, 'Title must be at most 100 characters']
     },
     slug: { 
       type: String, 
-      required: [true, 'Slug ist erforderlich'], 
+      required: [true, 'Slug is required'], 
       unique: true,
       lowercase: true,
       trim: true
     },
     year: { 
       type: String, 
-      required: [true, 'Jahr ist erforderlich'],
-      match: [/^\d{4}(\/\d{2})?$/, 'Jahr muss im Format YYYY oder YYYY/YY sein']
+      required: [true, 'Year is required'],
+      match: [/^\d{4}(\/\d{2})?$/, 'Year must be in format YYYY or YYYY/YY']
     },
     services: { 
       type: String, 
-      required: [true, 'Services sind erforderlich']
+      required: [true, 'Services are required']
     },
     description: { 
       type: String, 
-      required: [true, 'Beschreibung ist erforderlich'],
-      minlength: [10, 'Beschreibung muss mindestens 10 Zeichen haben'],
-      maxlength: [1000, 'Beschreibung darf maximal 1000 Zeichen haben']
+      required: [true, 'Description is required'],
+      minlength: [10, 'Description must be at least 10 characters'],
+      maxlength: [1000, 'Description must be at most 1000 characters']
     },
     image: { type: String, default: '' },
     live: { type: String, default: '#' },

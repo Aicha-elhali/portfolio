@@ -18,20 +18,20 @@ const MessageSchema: Schema = new Schema(
   {
     name: { 
       type: String, 
-      required: [true, 'Name ist erforderlich'],
-      minlength: [2, 'Name muss mindestens 2 Zeichen haben'],
-      maxlength: [100, 'Name darf maximal 100 Zeichen haben']
+      required: [true, 'Name is required'],
+      minlength: [2, 'Name must be at least 2 characters'],
+      maxlength: [100, 'Name must be at most 100 characters']
     },
     email: { 
       type: String, 
-      required: [true, 'E-Mail ist erforderlich'],
-      match: [/^\S+@\S+\.\S+$/, 'Bitte geben Sie eine gültige E-Mail-Adresse ein']
+      required: [true, 'Email is required'],
+      match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address']
     },
     message: { 
       type: String, 
-      required: [true, 'Nachricht ist erforderlich'],
-      minlength: [10, 'Nachricht muss mindestens 10 Zeichen haben'],
-      maxlength: [5000, 'Nachricht darf maximal 5000 Zeichen haben']
+      required: [true, 'Message is required'],
+      minlength: [10, 'Message must be at least 10 characters'],
+      maxlength: [5000, 'Message must be at most 5000 characters']
     },
   },
   { timestamps: true }

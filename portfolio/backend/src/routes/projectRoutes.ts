@@ -10,7 +10,7 @@ import Project from '../models/Project';
 
 const router = express.Router();
 
-// GET all projects
+// GET - Alle Projekte abrufen
 router.get('/', async (req: Request, res: Response) => {
   try {
     const projects = await Project.find().sort({ order: 1 });
@@ -20,7 +20,7 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
-// GET single project by slug
+// GET - Einzelnes Projekt nach Slug abrufen
 router.get('/:slug', async (req: Request, res: Response) => {
   try {
     const project = await Project.findOne({ slug: req.params.slug });
@@ -33,7 +33,7 @@ router.get('/:slug', async (req: Request, res: Response) => {
   }
 });
 
-// POST create new project
+// POST - Neues Projekt erstellen
 router.post('/', async (req: Request, res: Response) => {
   try {
     const { title, slug, year, services, description, image, live } = req.body;
@@ -41,13 +41,13 @@ router.post('/', async (req: Request, res: Response) => {
     // Validierung
     if (!title || !slug || !year || !services || !description) {
       return res.status(400).json({ 
-        message: 'Pflichtfelder fehlen',
+        message: 'Required fields are missing',
         errors: {
-          title: !title ? 'Titel ist erforderlich' : null,
-          slug: !slug ? 'Slug ist erforderlich' : null,
-          year: !year ? 'Jahr ist erforderlich' : null,
-          services: !services ? 'Services sind erforderlich' : null,
-          description: !description ? 'Beschreibung ist erforderlich' : null,
+          title: !title ? 'Title is required' : null,
+          slug: !slug ? 'Slug is required' : null,
+          year: !year ? 'Year is required' : null,
+          services: !services ? 'Services are required' : null,
+          description: !description ? 'Description is required' : null,
         }
       });
     }
@@ -56,23 +56,23 @@ router.post('/', async (req: Request, res: Response) => {
     const savedProject = await project.save();
     res.status(201).json(savedProject);
   } catch (error: any) {
-    // Mongoose Validation Error
+    // Mongoose Validierungsfehler
     if (error.name === 'ValidationError') {
       const errors: Record<string, string> = {};
       for (const field in error.errors) {
         errors[field] = error.errors[field].message;
       }
-      return res.status(400).json({ message: 'Validierungsfehler', errors });
+      return res.status(400).json({ message: 'Validation error', errors });
     }
-    // Duplicate Key Error (slug already exists)
+    // Duplikatfehler (Slug existiert bereits)
     if (error.code === 11000) {
-      return res.status(400).json({ message: 'Ein Projekt mit diesem Slug existiert bereits' });
+      return res.status(400).json({ message: 'A project with this slug already exists' });
     }
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
 
-// PUT update project
+// PUT - Projekt aktualisieren
 router.put('/:id', async (req: Request, res: Response) => {
   try {
     const project = await Project.findByIdAndUpdate(
@@ -81,27 +81,27 @@ router.put('/:id', async (req: Request, res: Response) => {
       { new: true, runValidators: true }
     );
     if (!project) {
-      return res.status(404).json({ message: 'Projekt nicht gefunden' });
+      return res.status(404).json({ message: 'Project not found' });
     }
     res.json(project);
   } catch (error: any) {
-    // Mongoose Validation Error
+    // Mongoose Validierungsfehler
     if (error.name === 'ValidationError') {
       const errors: Record<string, string> = {};
       for (const field in error.errors) {
         errors[field] = error.errors[field].message;
       }
-      return res.status(400).json({ message: 'Validierungsfehler', errors });
+      return res.status(400).json({ message: 'Validation error', errors });
     }
-    // Invalid ObjectId
+    // Ungültige ObjectId
     if (error.name === 'CastError') {
-      return res.status(400).json({ message: 'Ungültige Projekt-ID' });
+      return res.status(400).json({ message: 'Invalid project ID' });
     }
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
 
-// DELETE project
+// DELETE - Projekt löschen
 router.delete('/:id', async (req: Request, res: Response) => {
   try {
     const project = await Project.findByIdAndDelete(req.params.id);

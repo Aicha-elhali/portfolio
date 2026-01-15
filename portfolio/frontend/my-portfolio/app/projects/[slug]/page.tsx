@@ -112,7 +112,7 @@ const projectsData: Record<string, {
   }
 }
 
-// Generate static params für alle Projekte
+// Statische Parameter für alle Projekte generieren
 export function generateStaticParams() {
   return Object.keys(projectsData).map((slug) => ({
     slug: slug,

@@ -35,13 +35,13 @@ export default function ProjectsPage() {
         const response = await fetch('http://localhost:5001/api/projects');
         
         if (!response.ok) {
-          throw new Error('Fehler beim Laden der Projekte');
+          throw new Error('Failed to load projects');
         }
         
         const data = await response.json();
         setProjects(data);
       } catch (err: any) {
-        setError(err.message || 'Ein Fehler ist aufgetreten');
+        setError(err.message || 'An error occurred');
       } finally {
         setIsLoading(false);
       }
@@ -77,7 +77,7 @@ export default function ProjectsPage() {
         <section className={styles.projectsList}>
           {isLoading ? (
             <div className={styles.loadingMessage}>
-              Lade Projekte...
+              Loading projects...
             </div>
           ) : error ? (
             <div className={styles.errorMessage}>
@@ -85,7 +85,7 @@ export default function ProjectsPage() {
             </div>
           ) : projects.length === 0 ? (
             <div className={styles.emptyMessage}>
-              Keine Projekte gefunden.
+              No projects found.
             </div>
           ) : (
             projects.map((project, index) => (
