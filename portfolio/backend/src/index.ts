@@ -11,6 +11,7 @@ import dotenv from 'dotenv';
 import { connectDB } from './lib/db';
 import projectRoutes from './routes/projectRoutes';
 import messageRoutes from './routes/messageRoutes';
+import authRoutes from './routes/authRoutes';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(cors());
 app.use(express.json());
 
 // API-Routen
+app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/messages', messageRoutes);
 

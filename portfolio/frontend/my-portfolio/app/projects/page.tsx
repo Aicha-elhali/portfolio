@@ -11,6 +11,7 @@ import styles from './page.module.css'
 import SiteHeader from '../components/SiteHeader'
 import BackgroundStrokes from '../components/BackgroundStrokes'
 import Link from 'next/link'
+import { getAuthHeader } from '../contexts/AuthContext'
 
 // Interface für Projekt-Daten
 interface Project {
@@ -32,7 +33,12 @@ export default function ProjectsPage() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch('http://localhost:5001/api/projects');
+        // API-Aufruf mit Auth-Token
+        const response = await fetch('http://localhost:5001/api/projects', {
+          headers: {
+            ...getAuthHeader(),
+          },
+        });
         
         if (!response.ok) {
           throw new Error('Failed to load projects');

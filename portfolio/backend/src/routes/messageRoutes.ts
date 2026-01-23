@@ -7,11 +7,12 @@
 
 import express, { Request, Response } from 'express';
 import Message from '../models/Message';
+import { authMiddleware } from '../middleware/auth';
 
 const router = express.Router();
 
-// GET - Alle Nachrichten abrufen (für Admin-Zwecke)
-router.get('/', async (req: Request, res: Response) => {
+// GET - Alle Nachrichten abrufen (geschützt - nur für Admin)
+router.get('/', authMiddleware, async (req: Request, res: Response) => {
   try {
     const messages = await Message.find().sort({ createdAt: -1 });
     res.json(messages);
@@ -20,8 +21,8 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
-// POST - Neue Nachricht erstellen (Kontaktformular absenden)
-router.post('/', async (req: Request, res: Response) => {
+// POST - Neue Nachricht erstellen (geschützt)
+router.post('/', authMiddleware, async (req: Request, res: Response) => {
   try {
     const { name, email, message } = req.body;
 
@@ -57,8 +58,8 @@ router.post('/', async (req: Request, res: Response) => {
   }
 });
 
-// DELETE - Nachricht löschen
-router.delete('/:id', async (req: Request, res: Response) => {
+// DELETE - Nachricht löschen (geschützt)
+router.delete('/:id', authMiddleware, async (req: Request, res: Response) => {
   try {
     const message = await Message.findByIdAndDelete(req.params.id);
     if (!message) {

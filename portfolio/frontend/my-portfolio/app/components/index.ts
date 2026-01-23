@@ -15,3 +15,6 @@ export { default as ScrambleLink } from "./ScrambleLink";
 export { default as ScrambleText } from "./ScrambleText";
 export { default as SkillRating } from "./SkillRating";
 export { default as SocialLinks } from "./SocialLinks";
+
+// Auth Komponenten
+export { Providers } from "./Providers";

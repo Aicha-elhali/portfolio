@@ -7,11 +7,12 @@
 
 import express, { Request, Response } from 'express';
 import Project from '../models/Project';
+import { authMiddleware } from '../middleware/auth';
 
 const router = express.Router();
 
-// GET - Alle Projekte abrufen
-router.get('/', async (req: Request, res: Response) => {
+// GET - Alle Projekte abrufen (geschützt)
+router.get('/', authMiddleware, async (req: Request, res: Response) => {
   try {
     const projects = await Project.find().sort({ order: 1 });
     res.json(projects);
@@ -20,8 +21,8 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
-// GET - Einzelnes Projekt nach Slug abrufen
-router.get('/:slug', async (req: Request, res: Response) => {
+// GET - Einzelnes Projekt nach Slug abrufen (geschützt)
+router.get('/:slug', authMiddleware, async (req: Request, res: Response) => {
   try {
     const project = await Project.findOne({ slug: req.params.slug });
     if (!project) {
@@ -33,8 +34,8 @@ router.get('/:slug', async (req: Request, res: Response) => {
   }
 });
 
-// POST - Neues Projekt erstellen
-router.post('/', async (req: Request, res: Response) => {
+// POST - Neues Projekt erstellen (geschützt)
+router.post('/', authMiddleware, async (req: Request, res: Response) => {
   try {
     const { title, slug, year, services, description, image, live } = req.body;
 
@@ -72,8 +73,8 @@ router.post('/', async (req: Request, res: Response) => {
   }
 });
 
-// PUT - Projekt aktualisieren
-router.put('/:id', async (req: Request, res: Response) => {
+// PUT - Projekt aktualisieren (geschützt)
+router.put('/:id', authMiddleware, async (req: Request, res: Response) => {
   try {
     const project = await Project.findByIdAndUpdate(
       req.params.id,
@@ -101,8 +102,8 @@ router.put('/:id', async (req: Request, res: Response) => {
   }
 });
 
-// DELETE - Projekt löschen
-router.delete('/:id', async (req: Request, res: Response) => {
+// DELETE - Projekt löschen (geschützt)
+router.delete('/:id', authMiddleware, async (req: Request, res: Response) => {
   try {
     const project = await Project.findByIdAndDelete(req.params.id);
     if (!project) {
