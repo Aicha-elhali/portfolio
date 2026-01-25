@@ -1,7 +1,7 @@
 /**
  * Project Detail Page
- * Autor: Aicha El Hali
- * Webtechnologien WS 2025/26
+ * Author: Aicha El Hali
+ * Web Technologies WS 2025/26
  */
 
 import styles from './page.module.css'
@@ -11,7 +11,7 @@ import Footer from '../../components/Footer'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-// Projekte Daten - vorbereitet für späteres Backend
+// Projects data - prepared for future backend
 const projectsData: Record<string, {
   title: string;
   year: string;
@@ -112,7 +112,7 @@ const projectsData: Record<string, {
   }
 }
 
-// Statische Parameter für alle Projekte generieren
+// Generate static params for all projects
 export function generateStaticParams() {
   return Object.keys(projectsData).map((slug) => ({
     slug: slug,
@@ -133,10 +133,10 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
   return (
     <div className={styles.page}>
-      {/* Background Strokes Komponente */}
+      {/* Background Strokes Component */}
       <BackgroundStrokes />
 
-      {/* Header Komponente */}
+      {/* Header Component */}
       <SiteHeader />
 
       <main className={styles.main}>
@@ -246,7 +246,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         </nav>
       </main>
 
-      {/* Footer Komponente */}
+      {/* Footer Component */}
       <Footer />
     </div>
   )

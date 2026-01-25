@@ -1,8 +1,8 @@
 /**
  * ScrambleLink Component
- * Wiederverwendbarer Link mit Text-Scramble-Effekt
- * Autor: Aicha El Hali
- * Webtechnologien WS 2025/26
+ * Reusable link with text scramble effect
+ * Author: Aicha El Hali
+ * Web Technologies WS 2025/26
  */
 
 "use client";
@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import styles from "./ScrambleLink.module.css";
 
-// Interface für die Props der Komponente
+// Interface for component props
 interface ScrambleLinkProps {
   href: string;
   children: string;
@@ -19,7 +19,7 @@ interface ScrambleLinkProps {
   className?: string;
 }
 
-// Konstante für die Scramble-Zeichen
+// Constant for scramble characters
 const SCRAMBLE_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 export default function ScrambleLink({ 

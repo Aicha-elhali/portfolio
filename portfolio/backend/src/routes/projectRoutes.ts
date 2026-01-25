@@ -1,8 +1,8 @@
 /**
  * Project Routes
- * API-Routen für CRUD-Operationen auf Projekte
- * Autor: Aicha El Hali
- * Webtechnologien WS 2025/26
+ * API routes for CRUD operations on projects
+ * Author: Aicha El Hali
+ * Web Technologies WS 2025/26
  */
 
 import express, { Request, Response } from 'express';
@@ -11,7 +11,7 @@ import { authMiddleware } from '../middleware/auth';
 
 const router = express.Router();
 
-// GET - Alle Projekte abrufen (geschützt)
+// GET - Retrieve all projects (protected)
 router.get('/', authMiddleware, async (req: Request, res: Response) => {
   try {
     const projects = await Project.find().sort({ order: 1 });
@@ -21,7 +21,7 @@ router.get('/', authMiddleware, async (req: Request, res: Response) => {
   }
 });
 
-// GET - Einzelnes Projekt nach Slug abrufen (geschützt)
+// GET - Retrieve single project by slug (protected)
 router.get('/:slug', authMiddleware, async (req: Request, res: Response) => {
   try {
     const project = await Project.findOne({ slug: req.params.slug });
@@ -34,12 +34,12 @@ router.get('/:slug', authMiddleware, async (req: Request, res: Response) => {
   }
 });
 
-// POST - Neues Projekt erstellen (geschützt)
+// POST - Create new project (protected)
 router.post('/', authMiddleware, async (req: Request, res: Response) => {
   try {
     const { title, slug, year, services, description, image, live } = req.body;
 
-    // Validierung
+    // Validation
     if (!title || !slug || !year || !services || !description) {
       return res.status(400).json({ 
         message: 'Required fields are missing',
@@ -57,7 +57,7 @@ router.post('/', authMiddleware, async (req: Request, res: Response) => {
     const savedProject = await project.save();
     res.status(201).json(savedProject);
   } catch (error: any) {
-    // Mongoose Validierungsfehler
+    // Mongoose validation error
     if (error.name === 'ValidationError') {
       const errors: Record<string, string> = {};
       for (const field in error.errors) {
@@ -65,7 +65,7 @@ router.post('/', authMiddleware, async (req: Request, res: Response) => {
       }
       return res.status(400).json({ message: 'Validation error', errors });
     }
-    // Duplikatfehler (Slug existiert bereits)
+    // Duplicate error (slug already exists)
     if (error.code === 11000) {
       return res.status(400).json({ message: 'A project with this slug already exists' });
     }
@@ -73,7 +73,7 @@ router.post('/', authMiddleware, async (req: Request, res: Response) => {
   }
 });
 
-// PUT - Projekt aktualisieren (geschützt)
+// PUT - Update project (protected)
 router.put('/:id', authMiddleware, async (req: Request, res: Response) => {
   try {
     const project = await Project.findByIdAndUpdate(
@@ -86,7 +86,7 @@ router.put('/:id', authMiddleware, async (req: Request, res: Response) => {
     }
     res.json(project);
   } catch (error: any) {
-    // Mongoose Validierungsfehler
+    // Mongoose validation error
     if (error.name === 'ValidationError') {
       const errors: Record<string, string> = {};
       for (const field in error.errors) {
@@ -94,7 +94,7 @@ router.put('/:id', authMiddleware, async (req: Request, res: Response) => {
       }
       return res.status(400).json({ message: 'Validation error', errors });
     }
-    // Ungültige ObjectId
+    // Invalid ObjectId
     if (error.name === 'CastError') {
       return res.status(400).json({ message: 'Invalid project ID' });
     }
@@ -102,7 +102,7 @@ router.put('/:id', authMiddleware, async (req: Request, res: Response) => {
   }
 });
 
-// DELETE - Projekt löschen (geschützt)
+// DELETE - Remove project (protected)
 router.delete('/:id', authMiddleware, async (req: Request, res: Response) => {
   try {
     const project = await Project.findByIdAndDelete(req.params.id);

@@ -1,14 +1,14 @@
 /**
  * Footer Component
- * Wiederverwendbarer Footer für alle Seiten
- * Autor: Aicha El Hali
- * Webtechnologien WS 2025/26
+ * Reusable footer for all pages
+ * Author: Aicha El Hali
+ * Web Technologies WS 2025/26
  */
 
 import Link from "next/link";
 import styles from "./Footer.module.css";
 
-// Interface für die Props der Komponente
+// Interface for component props
 interface FooterProps {
   showImprint?: boolean;
 }

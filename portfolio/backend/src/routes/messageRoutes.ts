@@ -1,8 +1,8 @@
 /**
  * Message Routes
- * API-Routen für Kontaktformular-Nachrichten
- * Autor: Aicha El Hali
- * Webtechnologien WS 2025/26
+ * API routes for contact form messages
+ * Author: Aicha El Hali
+ * Web Technologies WS 2025/26
  */
 
 import express, { Request, Response } from 'express';
@@ -11,7 +11,7 @@ import { authMiddleware } from '../middleware/auth';
 
 const router = express.Router();
 
-// GET - Alle Nachrichten abrufen (geschützt - nur für Admin)
+// GET - Retrieve all messages (protected - admin only)
 router.get('/', authMiddleware, async (req: Request, res: Response) => {
   try {
     const messages = await Message.find().sort({ createdAt: -1 });
@@ -21,12 +21,12 @@ router.get('/', authMiddleware, async (req: Request, res: Response) => {
   }
 });
 
-// POST - Neue Nachricht erstellen (geschützt)
+// POST - Create new message (protected)
 router.post('/', authMiddleware, async (req: Request, res: Response) => {
   try {
     const { name, email, message } = req.body;
 
-    // Validierung
+    // Validation
     if (!name || !email || !message) {
       return res.status(400).json({ 
         message: 'All fields are required',
@@ -46,7 +46,7 @@ router.post('/', authMiddleware, async (req: Request, res: Response) => {
       data: savedMessage 
     });
   } catch (error: any) {
-    // Mongoose Validierungsfehler
+    // Mongoose validation error
     if (error.name === 'ValidationError') {
       const errors: Record<string, string> = {};
       for (const field in error.errors) {
@@ -58,7 +58,7 @@ router.post('/', authMiddleware, async (req: Request, res: Response) => {
   }
 });
 
-// DELETE - Nachricht löschen (geschützt)
+// DELETE - Remove message (protected)
 router.delete('/:id', authMiddleware, async (req: Request, res: Response) => {
   try {
     const message = await Message.findByIdAndDelete(req.params.id);

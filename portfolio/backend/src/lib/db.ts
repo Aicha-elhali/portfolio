@@ -1,8 +1,8 @@
 /**
  * Database Connection
- * MongoDB-Verbindung über Mongoose
- * Autor: Aicha El Hali
- * Webtechnologien WS 2025/26
+ * MongoDB connection via Mongoose
+ * Author: Aicha El Hali
+ * Web Technologies WS 2025/26
  */
 
 import mongoose from 'mongoose';

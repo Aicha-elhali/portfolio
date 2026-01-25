@@ -1,7 +1,7 @@
 /**
  * Portfolio Homepage
- * Autor: Aicha El Hali
- * Webtechnologien WS 2025/26
+ * Author: Aicha El Hali
+ * Web Technologies WS 2025/26
  */
 
 "use client";
@@ -14,7 +14,7 @@ import BackgroundStrokes from "./components/BackgroundStrokes";
 import Footer from "./components/Footer";
 import SkillRating from "./components/SkillRating";
 
-// Skills Daten - vorbereitet für späteres Backend
+// Skills data - prepared for future backend
 const skillsData = [
   { id: 1, name: "FIGMA DESIGN-TOOL", rating: 5 },
   { id: 2, name: "PYTHON", rating: 4 },
@@ -22,7 +22,7 @@ const skillsData = [
   { id: 4, name: "REACT", rating: 3.5 },
 ];
 
-// Projekte Daten - vorbereitet für späteres Backend
+// Projects data - prepared for future backend
 const projects = [
   { id: "01", name: "HARIBO", tags: ["BRANDING", "REDESIGN"], year: "2025", image: "/images/haribo.jpg" },
   { id: "02", name: "StyleMate", tags: ["UI/UX", "CHATBOT"], year: "2024", image: "/images/stylemate.jpg" },
@@ -105,10 +105,10 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
-      {/* Background Strokes Komponente */}
+      {/* Background Strokes Component */}
       <BackgroundStrokes />
 
-      {/* Header Komponente */}
+      {/* Header Component */}
       <SiteHeader />
 
       {/* Main Content */}
@@ -261,7 +261,7 @@ export default function Home() {
         </section>
       </main>
 
-      {/* Footer Komponente */}
+      {/* Footer Component */}
       <Footer />
     </div>
   );

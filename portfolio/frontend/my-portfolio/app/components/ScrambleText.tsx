@@ -1,15 +1,15 @@
 /**
  * ScrambleText Component
- * Wiederverwendbarer Text mit Scramble-Animation beim Laden
- * Autor: Aicha El Hali
- * Webtechnologien WS 2025/26
+ * Reusable text with scramble animation on load
+ * Author: Aicha El Hali
+ * Web Technologies WS 2025/26
  */
 
 "use client";
 
 import { useState, useEffect } from "react";
 
-// Interface für die Props der Komponente
+// Interface for component props
 interface ScrambleTextProps {
   text: string;
   className?: string;
@@ -17,7 +17,7 @@ interface ScrambleTextProps {
   triggerOnHover?: boolean;
 }
 
-// Konstante für die Scramble-Zeichen
+// Constant for scramble characters
 const SCRAMBLE_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 export default function ScrambleText({ 

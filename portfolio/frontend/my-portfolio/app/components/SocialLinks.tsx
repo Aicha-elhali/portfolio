@@ -1,27 +1,27 @@
 /**
  * SocialLinks Component
- * Wiederverwendbare Social Media Links
- * Autor: Aicha El Hali
- * Webtechnologien WS 2025/26
+ * Reusable social media links
+ * Author: Aicha El Hali
+ * Web Technologies WS 2025/26
  */
 
 import styles from "./SocialLinks.module.css";
 
-// Interface für einzelne Social Links
+// Interface for individual social links
 interface SocialLink {
   label: string;
   href: string;
   displayText: string;
 }
 
-// Interface für die Props der Komponente
+// Interface for component props
 interface SocialLinksProps {
   links?: SocialLink[];
   layout?: "vertical" | "horizontal";
   showLabels?: boolean;
 }
 
-// Standard Social Links - vorbereitet für späteres Backend
+// Default social links - prepared for future backend
 const defaultLinks: SocialLink[] = [
   {
     label: "Email",

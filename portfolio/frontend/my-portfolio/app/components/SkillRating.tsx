@@ -1,16 +1,16 @@
 /**
  * SkillRating Component
- * Wiederverwendbare Skill-Bewertung mit Punkten (1-5)
- * Autor: Aicha El Hali
- * Webtechnologien WS 2025/26
+ * Reusable skill rating with dots (1-5)
+ * Author: Aicha El Hali
+ * Web Technologies WS 2025/26
  */
 
 import styles from "./SkillRating.module.css";
 
-// Interface für die Props der Komponente
+// Interface for component props
 interface SkillRatingProps {
-  rating: number;      // 1-5, unterstützt halbe Punkte (z.B. 3.5)
-  maxRating?: number;  // Standard: 5
+  rating: number;      // 1-5, supports half points (e.g. 3.5)
+  maxRating?: number;  // Default: 5
   size?: "small" | "medium" | "large";
 }
 
@@ -25,10 +25,10 @@ export default function SkillRating({
     let dotClass = styles.dot;
     
     if (i <= Math.floor(rating)) {
-      // Voller Punkt
+      // Full dot
       dotClass = `${styles.dot} ${styles.dotFilled}`;
     } else if (i === Math.ceil(rating) && rating % 1 !== 0) {
-      // Halber Punkt
+      // Half dot
       dotClass = `${styles.dot} ${styles.dotHalf}`;
     }
     

@@ -1,8 +1,8 @@
 /**
  * Message Model
- * Mongoose-Schema für Kontaktformular-Nachrichten
- * Autor: Aicha El Hali
- * Webtechnologien WS 2025/26
+ * Mongoose schema for contact form messages
+ * Author: Aicha El Hali
+ * Web Technologies WS 2025/26
  */
 
 import mongoose, { Schema, Document } from 'mongoose';

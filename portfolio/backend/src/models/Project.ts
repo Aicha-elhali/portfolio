@@ -1,8 +1,8 @@
 /**
  * Project Model
- * Mongoose-Schema für Projekte
- * Autor: Aicha El Hali
- * Webtechnologien WS 2025/26
+ * Mongoose schema for projects
+ * Author: Aicha El Hali
+ * Web Technologies WS 2025/26
  */
 
 import mongoose, { Schema, Document } from 'mongoose';

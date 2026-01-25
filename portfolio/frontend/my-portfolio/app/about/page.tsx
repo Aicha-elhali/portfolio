@@ -1,7 +1,7 @@
 /**
  * About Page
- * Autor: Aicha El Hali
- * Webtechnologien WS 2025/26
+ * Author: Aicha El Hali
+ * Web Technologies WS 2025/26
  */
 
 "use client";
@@ -17,10 +17,10 @@ import ScrambleText from "../components/ScrambleText";
 export default function About() {
   return (
     <div className={styles.page}>
-      {/* Background Strokes Komponente */}
+      {/* Background Strokes Component */}
       <BackgroundStrokes />
 
-      {/* Header Komponente */}
+      {/* Header Component */}
       <SiteHeader />
 
       {/* Main Content */}
@@ -112,7 +112,7 @@ export default function About() {
         </section>
       </main>
 
-      {/* Footer Komponente */}
+      {/* Footer Component */}
       <Footer />
     </div>
   );

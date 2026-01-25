@@ -1,8 +1,8 @@
 /**
  * SiteHeader Component
- * Wiederverwendbarer Header mit Navigation
- * Autor: Aicha El Hali
- * Webtechnologien WS 2025/26
+ * Reusable header with navigation
+ * Author: Aicha El Hali
+ * Web Technologies WS 2025/26
  */
 
 "use client";
@@ -12,7 +12,7 @@ import { usePathname } from "next/navigation";
 import styles from "./SiteHeader.module.css";
 import { useAuth } from "../contexts/AuthContext";
 
-// Navigation Links, vorbereitet für späteres Backend
+// Navigation links, prepared for future backend
 const navLinks = [
   { href: "/", label: "HOME" },
   { href: "/about", label: "ABOUT" },

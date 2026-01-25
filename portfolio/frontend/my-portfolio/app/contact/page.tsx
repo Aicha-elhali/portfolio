@@ -1,7 +1,7 @@
 /**
  * Contact Page
- * Autor: Aicha El Hali
- * Webtechnologien WS 2025/26
+ * Author: Aicha El Hali
+ * Web Technologies WS 2025/26
  */
 
 "use client";
@@ -118,7 +118,7 @@ export default function Contact() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    // Fehler löschen wenn Benutzer tippt
+    // Clear error when user types
     if (errors[name as keyof typeof errors]) {
       setErrors(prev => ({ ...prev, [name]: "" }));
     }
@@ -126,10 +126,10 @@ export default function Contact() {
 
   return (
     <div className={styles.page}>
-      {/* Background Strokes Komponente */}
+      {/* Background Strokes Component */}
       <BackgroundStrokes />
 
-      {/* Header Komponente */}
+      {/* Header Component */}
       <SiteHeader />
 
       {/* Main Content */}
@@ -210,7 +210,7 @@ export default function Contact() {
         </div>
       </main>
 
-      {/* Footer Komponente */}
+      {/* Footer Component */}
       <Footer />
     </div>
   );

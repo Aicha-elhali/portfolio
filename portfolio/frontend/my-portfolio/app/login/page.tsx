@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '../contexts/AuthContext';
 import styles from './page.module.css';
 
-// Login-Seite für JWT-Authentifizierung
-// Benutzerkonten werden über Postman/Thunder Client erstellt
+// Login page for JWT authentication
+// User accounts are created via Postman/Thunder Client
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,7 +17,7 @@ export default function LoginPage() {
   const { login, logout, isLoading, isAuthenticated, user, error } = useAuth();
   const router = useRouter();
 
-  // Login-Formular absenden
+  // Submit login form
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLocalError(null);
@@ -30,11 +30,11 @@ export default function LoginPage() {
         router.push('/');
       }, 1000);
     } catch (err) {
-      // Fehler wird im AuthContext gesetzt
+      // Error is set in AuthContext
     }
   };
 
-  // Falls bereits eingeloggt, Logout-Option anzeigen
+  // If already logged in, show logout option
   if (isAuthenticated && user) {
     return (
       <div className={styles.container}>
@@ -66,21 +66,21 @@ export default function LoginPage() {
           Sign in to your account
         </p>
 
-        {/* Fehlermeldung */}
+        {/* Error message */}
         {(error || localError) && (
           <div className={styles.error}>
             {error || localError}
           </div>
         )}
 
-        {/* Erfolgsmeldung */}
+        {/* Success message */}
         {successMessage && (
           <div className={styles.success}>
             {successMessage}
           </div>
         )}
 
-        {/* Login Formular */}
+        {/* Login form */}
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.inputGroup}>
             <label htmlFor="email" className={styles.label}>

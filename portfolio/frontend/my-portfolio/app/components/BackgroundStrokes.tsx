@@ -1,13 +1,13 @@
 /**
  * BackgroundStrokes Component
- * Wiederverwendbarer animierter Linien-Hintergrund
- * Autor: Aicha El Hali
- * Webtechnologien WS 2025/26
+ * Reusable animated line background
+ * Author: Aicha El Hali
+ * Web Technologies WS 2025/26
  */
 
 import styles from "./BackgroundStrokes.module.css";
 
-// Interface für die Props der Komponente
+// Interface for component props
 interface BackgroundStrokesProps {
   columnCount?: number;
 }

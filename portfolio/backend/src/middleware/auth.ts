@@ -1,31 +1,31 @@
 /**
  * Auth Middleware
- * JWT Verification Middleware zum Schutz der Routes
- * Autor: Aicha El Hali
- * Webtechnologien WS 2025/26
+ * JWT verification middleware for route protection
+ * Author: Aicha El Hali
+ * Web Technologies WS 2025/26
  */
 
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import User, { IUser } from '../models/User';
 
-// Erweiterter Request-Typ mit User
+// Extended request type with user
 export interface AuthRequest extends Request {
   user?: IUser;
   userId?: string;
 }
 
-// JWT Secret aus Umgebungsvariablen
+// JWT secret from environment variables
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
-// Middleware zur JWT-Verifizierung
+// Middleware for JWT verification
 export const authMiddleware = async (
   req: AuthRequest,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    // Token aus Header extrahieren
+    // Extract token from header
     const authHeader = req.headers.authorization;
     
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -38,27 +38,27 @@ export const authMiddleware = async (
       return res.status(401).json({ message: 'Access denied. No token provided.' });
     }
 
-    // Token verifizieren
+    // Verify token
     const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
 
-    // Prüfen ob User noch existiert (wichtig für gelöschte Accounts)
+    // Check if user still exists (important for deleted accounts)
     const user = await User.findById(decoded.userId).select('-password');
     
     if (!user) {
       return res.status(401).json({ message: 'User no longer exists.' });
     }
 
-    // User an Request anhängen
+    // Attach user to request
     req.user = user;
     req.userId = decoded.userId;
 
     next();
   } catch (error: any) {
-    // Token abgelaufen
+    // Token expired
     if (error.name === 'TokenExpiredError') {
       return res.status(401).json({ message: 'Token has expired. Please login again.' });
     }
-    // Ungültiger Token
+    // Invalid token
     if (error.name === 'JsonWebTokenError') {
       return res.status(401).json({ message: 'Invalid token.' });
     }
@@ -67,7 +67,7 @@ export const authMiddleware = async (
   }
 };
 
-// Optionale Auth Middleware (erlaubt auch ohne Token, aber fügt User hinzu wenn vorhanden)
+// Optional auth middleware (allows requests without token, but adds user if present)
 export const optionalAuthMiddleware = async (
   req: AuthRequest,
   res: Response,
@@ -96,7 +96,7 @@ export const optionalAuthMiddleware = async (
 
     next();
   } catch (error) {
-    // Bei Fehlern einfach ohne User weitermachen
+    // On errors, continue without user
     next();
   }
 };

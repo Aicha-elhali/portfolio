@@ -1,8 +1,8 @@
 /**
  * Server Entry Point
- * Express-Server mit MongoDB-Anbindung
- * Autor: Aicha El Hali
- * Webtechnologien WS 2025/26
+ * Express server with MongoDB connection
+ * Author: Aicha El Hali
+ * Web Technologies WS 2025/26
  */
 
 import express from 'express';
@@ -18,21 +18,21 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware-Konfiguration
+// Middleware configuration
 app.use(cors());
 app.use(express.json());
 
-// API-Routen
+// API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/messages', messageRoutes);
 
-// Statusprüfung
+// Status check
 app.get('/', (req, res) => {
   res.json({ message: 'Portfolio API is running 🚀' });
 });
 
-// Globaler Fehlerbehandler
+// Global error handler
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.error('❌ Error:', err.message);
   res.status(err.status || 500).json({
@@ -41,7 +41,7 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
   });
 });
 
-// Server starten
+// Start server
 async function start() {
   await connectDB();
   app.listen(PORT, () => {

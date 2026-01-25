@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-// Typen für User und Auth-Context
+// Types for User and Auth Context
 interface User {
   id: string;
   email: string;
@@ -21,20 +21,20 @@ interface AuthContextType {
   clearError: () => void;
 }
 
-// Auth Context erstellen
+// Create Auth Context
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // API Base URL
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
 
-// Auth Provider Komponente
+// Auth Provider Component
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Token aus localStorage laden beim Start
+  // Load token from localStorage on start
   useEffect(() => {
     const storedToken = localStorage.getItem('authToken');
     if (storedToken) {
@@ -45,7 +45,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  // Token verifizieren und User-Daten laden
+  // Verify token and load user data
   const verifyToken = async (tokenToVerify: string) => {
     try {
       const response = await fetch(`${API_BASE_URL}/auth/me`, {
@@ -59,7 +59,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(data.user);
         setToken(tokenToVerify);
       } else {
-        // Token ungültig oder abgelaufen
+        // Token invalid or expired
         localStorage.removeItem('authToken');
         setToken(null);
         setUser(null);
@@ -74,7 +74,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  // Login-Funktion
+  // Login function
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     setError(null);
@@ -94,7 +94,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         throw new Error(data.message || 'Login failed');
       }
 
-      // Token in localStorage speichern
+      // Store token in localStorage
       localStorage.setItem('authToken', data.token);
       setToken(data.token);
       setUser(data.user);
@@ -107,7 +107,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  // Signup-Funktion
+  // Signup function
   const signup = async (name: string, email: string, password: string) => {
     setIsLoading(true);
     setError(null);
@@ -127,7 +127,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         throw new Error(data.message || 'Signup failed');
       }
 
-      // Token in localStorage speichern
+      // Store token in localStorage
       localStorage.setItem('authToken', data.token);
       setToken(data.token);
       setUser(data.user);
@@ -140,14 +140,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  // Logout-Funktion
+  // Logout function
   const logout = () => {
     localStorage.removeItem('authToken');
     setToken(null);
     setUser(null);
   };
 
-  // Fehler löschen
+  // Clear error
   const clearError = () => {
     setError(null);
   };
@@ -167,7 +167,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-// Hook zum Verwenden des Auth Context
+// Hook to use Auth Context
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
@@ -176,7 +176,7 @@ export function useAuth() {
   return context;
 }
 
-// Export für API-Aufrufe mit Token
+// Export for API calls with token
 export function getAuthHeader(): { Authorization: string } | {} {
   const token = localStorage.getItem('authToken');
   if (token) {

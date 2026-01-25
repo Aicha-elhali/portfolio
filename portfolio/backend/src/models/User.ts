@@ -1,8 +1,8 @@
 /**
  * User Model
- * Mongoose-Schema für Benutzer mit Authentifizierung
- * Autor: Aicha El Hali
- * Webtechnologien WS 2025/26
+ * Mongoose schema for users with authentication
+ * Author: Aicha El Hali
+ * Web Technologies WS 2025/26
  */
 
 import mongoose, { Schema, Document } from 'mongoose';
@@ -42,9 +42,9 @@ const UserSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-// Passwort vor dem Speichern hashen
+// Hash password before saving
 UserSchema.pre<IUser>('save', async function(next) {
-  // Nur hashen wenn Passwort geändert wurde
+  // Only hash if password was modified
   if (!this.isModified('password')) return next();
   
   try {
@@ -56,7 +56,7 @@ UserSchema.pre<IUser>('save', async function(next) {
   }
 });
 
-// Methode zum Vergleichen von Passwörtern
+// Method to compare passwords
 UserSchema.methods.comparePassword = async function(candidatePassword: string): Promise<boolean> {
   return bcrypt.compare(candidatePassword, this.password);
 };

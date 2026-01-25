@@ -1,7 +1,7 @@
 /**
  * Projects Page
- * Autor: Aicha El Hali
- * Webtechnologien WS 2025/26
+ * Author: Aicha El Hali
+ * Web Technologies WS 2025/26
  */
 
 "use client";
@@ -14,7 +14,7 @@ import BackgroundStrokes from '../components/BackgroundStrokes'
 import Link from 'next/link'
 import { getAuthHeader } from '../contexts/AuthContext'
 
-// Interface für Projekt-Daten
+// Interface for project data
 interface Project {
   _id: string;
   slug: string;
@@ -66,10 +66,10 @@ export default function ProjectsPage() {
 
   return (
     <div className={styles.page}>
-      {/* Background Strokes Komponente */}
+      {/* Background Strokes Component */}
       <BackgroundStrokes />
       
-      {/* Header Komponente */}
+      {/* Header Component */}
       <SiteHeader />
       
       <main className={styles.main}>

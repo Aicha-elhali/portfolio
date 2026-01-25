@@ -1,8 +1,8 @@
 /**
  * Seed Script
- * Befüllt die Datenbank mit Beispiel-Projekten
- * Autor: Aicha El Hali
- * Webtechnologien WS 2025/26
+ * Populates the database with sample projects
+ * Author: Aicha El Hali
+ * Web Technologies WS 2025/26
  */
 
 import mongoose from 'mongoose';
