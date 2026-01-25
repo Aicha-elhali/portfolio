@@ -7,6 +7,7 @@
 "use client";
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import styles from './page.module.css'
 import SiteHeader from '../components/SiteHeader'
 import BackgroundStrokes from '../components/BackgroundStrokes'
@@ -29,6 +30,7 @@ export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -39,6 +41,12 @@ export default function ProjectsPage() {
             ...getAuthHeader(),
           },
         });
+        
+        // Bei 401 zur Login-Seite weiterleiten
+        if (response.status === 401) {
+          router.push('/login');
+          return;
+        }
         
         if (!response.ok) {
           throw new Error('Failed to load projects');
@@ -54,7 +62,7 @@ export default function ProjectsPage() {
     };
 
     fetchProjects();
-  }, []);
+  }, [router]);
 
   return (
     <div className={styles.page}>
