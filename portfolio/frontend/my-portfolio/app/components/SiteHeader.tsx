@@ -10,7 +10,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "./SiteHeader.module.css";
-import { useAuth } from "../contexts/AuthContext";
 
 // Navigation links, prepared for future backend
 const navLinks = [
@@ -22,7 +21,6 @@ const navLinks = [
 
 export default function SiteHeader() {
   const pathname = usePathname() || "/";
-  const { isAuthenticated, user, logout } = useAuth();
 
   // Prüft ob ein Link aktiv ist
   const isActive = (path: string): boolean => {
@@ -54,32 +52,6 @@ export default function SiteHeader() {
             )}
           </Link>
         ))}
-        
-        {/* Auth-Bereich */}
-        {isAuthenticated ? (
-          <button 
-            onClick={logout} 
-            className={styles.authButton}
-            title={`Logged in as ${user?.name}`}
-          >
-            LOGOUT
-          </button>
-        ) : (
-          <Link 
-            href="/login" 
-            className={styles.navLink}
-          >
-            {isActive("/login") ? (
-              <>
-                <span className={styles.bracket}>[</span>
-                {" LOGIN "}
-                <span className={styles.bracket}>]</span>
-              </>
-            ) : (
-              "LOGIN"
-            )}
-          </Link>
-        )}
       </nav>
     </header>
   );

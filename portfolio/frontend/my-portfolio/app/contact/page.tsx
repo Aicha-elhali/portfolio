@@ -8,11 +8,9 @@
 
 import styles from "./page.module.css";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import SiteHeader from "../components/SiteHeader";
 import BackgroundStrokes from "../components/BackgroundStrokes";
 import Footer from "../components/Footer";
-import { useAuth, getAuthHeader } from "../contexts/AuthContext";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -28,9 +26,6 @@ export default function Contact() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
-  
-  const { isAuthenticated, isLoading } = useAuth();
-  const router = useRouter();
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -76,34 +71,18 @@ export default function Contact() {
     setSubmitError("");
     
     try {
-      // Sende Nachricht an Backend-API mit Auth-Token
-      const response = await fetch('http://localhost:5001/api/messages', {
+      const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          ...getAuthHeader(),
         },
         body: JSON.stringify(formData),
       });
 
-      // Bei 401 zur Login-Seite weiterleiten
-      if (response.status === 401) {
-        router.push('/login');
-        return;
-      }
-
       const data = await response.json();
 
       if (!response.ok) {
-        // Fehlerbehandlung vom Backend
-        if (data.errors) {
-          setErrors({
-            name: data.errors.name || "",
-            email: data.errors.email || "",
-            message: data.errors.message || "",
-          });
-        }
-        throw new Error(data.message || 'Failed to send message');
+        throw new Error(data.error || 'Failed to send message');
       }
 
       setIsSubmitted(true);

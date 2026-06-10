@@ -1,0 +1,116 @@
+/**
+ * WaveName Styles
+ * Helligkeits-Welle über Buchstaben
+ */
+
+.name {
+  margin: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.line {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.space {
+  width: 0.3em;
+}
+
+.letter {
+  display: inline-block;
+  font-size: clamp(5rem, 20vw, 20rem);
+  font-family: var(--font-anton), var(--font-sans), sans-serif;
+  font-weight: 400;
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--fg-primary);
+
+  opacity: 0.3;
+  animation: waveGlow 5s ease-in-out infinite;
+  animation-delay: calc(var(--wave-index) * 0.2s);
+  transform: translateY(0);
+  will-change: opacity, filter, text-shadow;
+}
+
+.visible .letter {
+  animation: 
+    letterEnter 0.8s var(--ease-out-expo) calc(var(--wave-index) * 0.04s) forwards,
+    waveGlow 5s ease-in-out calc(1s + var(--wave-index) * 0.2s) infinite;
+}
+
+@keyframes letterEnter {
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+}
+
+@keyframes waveGlow {
+  0% {
+    opacity: 0.3;
+    filter: brightness(0.7);
+    text-shadow: none;
+  }
+  20% {
+    opacity: 0.9;
+    filter: brightness(1.15);
+    text-shadow: 
+      -2px 0 rgba(99, 102, 241, 0.4),
+       2px 0 rgba(255, 255, 255, 0.1);
+  }
+  25% {
+    opacity: 1;
+    filter: brightness(1.2);
+    text-shadow: 
+      -3px 0 rgba(99, 102, 241, 0.5),
+       3px 0 rgba(129, 140, 248, 0.2),
+       0 0 30px rgba(99, 102, 241, 0.15);
+  }
+  30% {
+    opacity: 0.9;
+    filter: brightness(1.15);
+    text-shadow: 
+      -2px 0 rgba(99, 102, 241, 0.4),
+       2px 0 rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    opacity: 0.3;
+    filter: brightness(0.7);
+    text-shadow: none;
+  }
+  100% {
+    opacity: 0.3;
+    filter: brightness(0.7);
+    text-shadow: none;
+  }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 700px) {
+  .letter {
+    font-size: clamp(4rem, 25vw, 8rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .letter {
+    opacity: 1 !important;
+    filter: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+  .visible .letter {
+    opacity: 1;
+  }
+}

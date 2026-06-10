@@ -6,8 +6,8 @@
 
 .page {
   min-height: 100vh;
-  background: #0a0a0a;
-  color: #fff;
+  background: var(--bg-primary);
+  color: var(--fg-primary);
   box-sizing: border-box;
   overflow-x: hidden;
 }
@@ -46,8 +46,8 @@
   width: 1px;
   background-image: repeating-linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0.07) 0px,
-    rgba(255, 255, 255, 0.07) 2px,
+    var(--border-subtle) 0px,
+    var(--border-subtle) 2px,
     transparent 2px,
     transparent 4px
   );
@@ -88,6 +88,7 @@
 }
 
 .title {
+  font-family: var(--font-anton), var(--font-sans), sans-serif;
   font-size: clamp(56px, 6vw, 72px);
   font-weight: 400;
   letter-spacing: -2px;
@@ -102,7 +103,7 @@
 .subtitle {
   font-size: 16px;
   line-height: 1.7;
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--fg-muted);
   margin: 0;
   max-width: 280px;
   letter-spacing: 0.2px;
@@ -114,21 +115,21 @@
   gap: 12px;
   margin-top: 40px;
   padding-top: 30px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--border-default);
 }
 
 .countNumber {
   font-size: 48px;
   font-weight: 300;
   letter-spacing: -2px;
-  color: #6366f1;
+  color: var(--accent);
 }
 
 .countLabel {
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--fg-muted);
 }
 
 /* Scrollable Projects List */
@@ -155,7 +156,7 @@
 }
 
 .loadingMessage {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--fg-secondary);
 }
 
 .errorMessage {
@@ -181,10 +182,10 @@
 
 .projectIndex {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.3);
+  color: var(--fg-subtle);
   letter-spacing: 1px;
   padding-top: 8px;
-  font-family: monospace;
+  font-family: var(--font-geist-mono), monospace;
 }
 
 .projectImageWrapper {
@@ -204,7 +205,7 @@
   height: 100%;
   background-size: cover;
   background-position: center;
-  background-color: #1a1a2e;
+  background-color: var(--bg-elevated);
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -231,21 +232,21 @@
   font-size: 12px;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--fg-primary);
   padding: 12px 24px;
   border: 1px solid rgba(255, 255, 255, 0.5);
   transition: all 0.3s ease;
 }
 
 .projectCard:hover .viewText {
-  background: #fff;
-  color: #0a0a0a;
-  border-color: #fff;
+  background: var(--fg-primary);
+  color: var(--bg-primary);
+  border-color: var(--fg-primary);
 }
 
 .projectInfo {
   padding: 20px 0 30px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--border-subtle);
   grid-column: 2;
 }
 
@@ -265,19 +266,19 @@
 }
 
 .projectCard:hover .projectTitle {
-  color: #6366f1;
+  color: var(--accent);
 }
 
 .projectYear {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.4);
-  font-family: monospace;
+  color: var(--fg-muted);
+  font-family: var(--font-geist-mono), monospace;
 }
 
 .projectDescription {
   font-size: 14px;
   line-height: 1.7;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--fg-secondary);
   margin: 0 0 16px 0;
   max-width: 500px;
 }
@@ -286,7 +287,7 @@
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: rgba(255, 255, 255, 0.35);
+  color: var(--fg-muted);
 }
 
 /* Responsive Design */

@@ -9,7 +9,7 @@
   min-height: 100vh;
   background-color: #0A0A0A;
   color: #fff;
-  font-family: var(--font-geist-sans), "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-sans);
   position: relative;
   overflow-x: hidden;
 }
@@ -32,9 +32,9 @@
 /* Title */
 .title {
   font-size: clamp(48px, 8vw, 80px);
-  font-weight: 400;
+  font-weight: 800;
   line-height: 0.9;
-  letter-spacing: -2px;
+  letter-spacing: 0;
   margin: 0 0 60px 0;
   text-transform: uppercase;
 }
