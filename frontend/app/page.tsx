@@ -22,7 +22,7 @@ import SkillsGrid from "./components/SkillsGrid";
 // ===========================================
 
 const projects = [
-  { id: "01", name: "HARIBO", tags: ["BRANDING", "REDESIGN"], year: "2025", image: "/images/haribo.jpg", video: "/images/flight_data.mp4" },
+  { id: "01", name: "HARIBO", tags: ["BRANDING", "REDESIGN"], year: "2025", image: "/images/haribo.jpg" /* TODO: re-enable video once added to public — video: "/images/flight_data.mp4" */ },
   { id: "02", name: "StyleMate", tags: ["UI/UX", "CHATBOT"], year: "2024", image: "/images/stylemate.jpg" },
   { id: "03", name: "Spacey", tags: ["PRODUCT", "UI"], year: "2025", image: "/images/spacey.jpg" },
 ];
@@ -213,14 +213,9 @@ export default function Home() {
                 In Progress
               </span>
               </div>
-              <Link href="/projects/fluid-prototyping" className={styles.currentlyLink}>
-                <span>VIEW PROJECT</span>
-                <span className={styles.currentlyArrow}>→</span>
-              </Link>
             </div>
 
             <div className={styles.currentlyRight}>
-              <Link href="/projects/fluid-prototyping" className={styles.currentlyImageLink}>
               <div className={styles.currentlyImageWrapper}>
                 <Image
                 src="/images/fluid-prototyping.jpg"
@@ -231,7 +226,6 @@ export default function Home() {
                 style={{ objectFit: 'cover' }}
                 />
               </div>
-              </Link>
             </div>
           </div>
         </section>

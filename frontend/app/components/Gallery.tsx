@@ -35,18 +35,19 @@ const slides: GallerySlide[] = [
     caption: "Where I found my pace",
     location: "London",
   },
-  {
-    type: "image",
-    src: "/images/trips/morocco.jpg",
-    caption: "My roots, my perspective",
-    location: "Morocco",
-  },
-  {
-    type: "image",
-    src: "/images/trips/munich.jpg",
-    caption: "Home base. Always.",
-    location: "München",
-  },
+  // TODO: re-enable once these files are added to public/images/trips/
+  // {
+  //   type: "image",
+  //   src: "/images/trips/morocco.jpg",
+  //   caption: "My roots, my perspective",
+  //   location: "Morocco",
+  // },
+  // {
+  //   type: "image",
+  //   src: "/images/trips/munich.jpg",
+  //   caption: "Home base. Always.",
+  //   location: "München",
+  // },
 ];
 
 export default function Gallery() {
