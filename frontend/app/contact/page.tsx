@@ -24,8 +24,6 @@ export default function Contact() {
     message: ""
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState("");
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -62,36 +60,14 @@ export default function Contact() {
     return isValid;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
 
-    setIsSubmitting(true);
-    setSubmitError("");
-    
-    try {
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to send message');
-      }
-
-      setIsSubmitted(true);
-      setFormData({ name: "", email: "", message: "" });
-    } catch (error: any) {
-      setSubmitError(error.message || 'An error occurred. Please try again later.');
-    } finally {
-      setIsSubmitting(false);
-    }
+    const subject = encodeURIComponent(`Message from ${formData.name}`);
+    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`);
+    window.location.href = `mailto:a.elhali03@gmail.com?subject=${subject}&body=${body}`;
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -171,19 +147,12 @@ export default function Contact() {
                 {errors.message && <span className={styles.error}>{errors.message}</span>}
               </div>
 
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 className={styles.submitButton}
-                disabled={isSubmitting}
               >
-                {isSubmitting ? "SENDING..." : "SEND MESSAGE"}
+                SEND MESSAGE
               </button>
-
-              {submitError && (
-                <div className={styles.submitError}>
-                  {submitError}
-                </div>
-              )}
             </form>
           )}
         </div>
