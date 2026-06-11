@@ -32,6 +32,7 @@ function useInView<T extends HTMLElement>(threshold = 0.15) {
 
 export default function About() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [aboutText, setAboutText] = useState("ABOUT");
   const introRef = useInView<HTMLDivElement>();
   const journeyRef = useInView<HTMLDivElement>();
   const galleryRef = useInView<HTMLDivElement>();
@@ -40,7 +41,33 @@ export default function About() {
   const stackRef = useInView<HTMLDivElement>();
   const beyondRef = useInView<HTMLDivElement>();
 
-  useEffect(() => { setIsLoaded(true); }, []);
+  useEffect(() => {
+    setIsLoaded(true);
+
+    // Scramble "ABOUT" into place on mount (shared timing with the rest of the site)
+    const target = "ABOUT";
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const maxIterations = 10;
+    let iteration = 0;
+    const interval = setInterval(() => {
+      setAboutText(
+        target
+          .split("")
+          .map((char, index) => {
+            if (char === " ") return " ";
+            return iteration > index * 0.8 ? char : chars[Math.floor(Math.random() * chars.length)];
+          })
+          .join("")
+      );
+      iteration += 1;
+      if (iteration > target.length + maxIterations) {
+        clearInterval(interval);
+        setAboutText(target);
+      }
+    }, 40);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className={styles.page}>
@@ -55,7 +82,7 @@ export default function About() {
             <span className={styles.decorText}>GET TO KNOW ME</span>
           </div>
           <h1 className={`${styles.heroTitle} ${isLoaded ? styles.visible : ''}`}>
-            ABOUT
+            {aboutText}
           </h1>
         </section>
 

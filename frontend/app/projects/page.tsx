@@ -1,130 +1,175 @@
 /**
  * Projects Page - Static Data
+ * Banner hero + vertically stacked projects with an asymmetric, alternating layout.
  * Author: Aicha El Hali
  */
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from './page.module.css';
 import SiteHeader from '../components/SiteHeader';
 import BackgroundStrokes from '../components/BackgroundStrokes';
 import Footer from '../components/Footer';
 import Link from 'next/link';
+import Image from 'next/image';
+import { projects, type Project } from '../data/projects';
 
-const projects = [
-  {
-    slug: 'haribo',
-    title: 'HARIBO',
-    year: '2025',
-    services: 'Re-design · Brand',
-    description: 'Redesign of a candy company, turning it into a 80s supplement provider.',
-    image: '/images/haribo.jpg',
-  },
-  {
-    slug: 'social-media-agents',
-    title: 'Social Media Agents',
-    year: '2025/26',
-    services: 'Agents · N8N',
-    description: 'Automated social media content for the world\'s largest shopping engagement platform.',
-    image: '/images/atolls.jpg',
-  },
-  {
-    slug: 'stylemate',
-    title: 'StyleMate',
-    year: '2024',
-    services: 'Chatbot · UI',
-    description: 'A chatbot that specializes on the users personal style for recommendation.',
-    image: '/images/stylemate.jpg',
-  },
-  {
-    slug: 'spacey',
-    title: 'Spacey',
-    year: '2025',
-    services: 'Product · UI',
-    description: 'What to do with empty spaces in Munich? Check out the ideas and the prototype.',
-    image: '/images/spacey.jpg',
-  },
-  {
-    slug: 'moosburg',
-    title: 'Moosburg',
-    year: '2025/26',
-    services: 'Prototype · Research',
-    description: 'A Prototype for the city Moosburg about historical sites for the POW.',
-    image: '/images/moosburg.jpg',
-  },
-  {
-    slug: 'ebay',
-    title: 'Ebay',
-    year: '2024',
-    services: 'Product · UI',
-    description: 'A redesign of the Ebay product site for a better user experience.',
-    image: '/images/ebay.jpg',
-  },
-  {
-    slug: 'hangman',
-    title: 'Hangman',
-    year: '2025',
-    services: 'React · Playful',
-    description: 'Check out my hangman game I made the day it was due.',
-    image: '/images/hangman.jpg',
-  },
-];
+// Reveal-on-scroll: fade each project row up as it enters the viewport.
+function useInView<T extends HTMLElement>(threshold = 0.2) {
+  const ref = useRef<T>(null);
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.unobserve(element);
+        }
+      },
+      { threshold, rootMargin: '0px 0px -80px 0px' }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [threshold]);
+
+  return { ref, isInView };
+}
+
+function ProjectRow({ project, index }: { project: Project; index: number }) {
+  const { ref, isInView } = useInView<HTMLDivElement>();
+  const reversed = index % 2 === 1;
+
+  const meta = [
+    { label: 'Semester', value: project.semester },
+    { label: 'Duration', value: project.duration },
+    { label: 'Topic', value: project.services },
+  ];
+
+  return (
+    <article
+      ref={ref}
+      className={`${styles.row} ${reversed ? styles.reversed : ''} ${isInView ? styles.revealed : ''}`}
+    >
+      {/* Picture stands alone */}
+      <Link href={`/projects/${project.slug}`} className={styles.mediaLink}>
+        <div className={styles.media}>
+          {project.video ? (
+            <video
+              className={styles.mediaInner}
+              src={project.video}
+              autoPlay
+              muted
+              loop
+              playsInline
+            />
+          ) : (
+            <Image
+              src={project.image}
+              alt={`${project.title} — project preview`}
+              fill
+              sizes="(max-width: 900px) 100vw, 60vw"
+              className={styles.mediaInner}
+              style={{ objectFit: 'cover' }}
+              priority={index < 2}
+            />
+          )}
+        </div>
+      </Link>
+
+      {/* All text + meta on the side */}
+      <aside className={styles.info}>
+        <span className={styles.bigIndex} aria-hidden="true">
+          {String(index + 1).padStart(2, '0')}
+        </span>
+
+        <div className={styles.infoHead}>
+          <h2 className={styles.company}>{project.title}</h2>
+          <p className={styles.description}>{project.description}</p>
+        </div>
+
+        <dl className={styles.metaList}>
+          {meta.map((item) => (
+            <div key={item.label} className={styles.metaItem}>
+              <dt className={styles.metaLabel}>{item.label}</dt>
+              <dd className={styles.metaValue}>{item.value}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <Link href={`/projects/${project.slug}`} className={styles.cta}>
+          <span>VIEW PROJECT</span>
+          <span className={styles.ctaArrow}>→</span>
+        </Link>
+      </aside>
+    </article>
+  );
+}
 
 export default function ProjectsPage() {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  // Scramble "DIVE INTO" into place on mount (spaces preserved)
+  const [diveText, setDiveText] = useState('DIVE INTO');
+
+  useEffect(() => {
+    const target = 'DIVE INTO';
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const maxIterations = 10;
+    let iteration = 0;
+    const interval = setInterval(() => {
+      setDiveText(
+        target
+          .split('')
+          .map((char, index) => {
+            if (char === ' ') return ' ';
+            return iteration > index * 0.8 ? char : chars[Math.floor(Math.random() * chars.length)];
+          })
+          .join('')
+      );
+      iteration += 1;
+      if (iteration > target.length + maxIterations) {
+        clearInterval(interval);
+        setDiveText(target);
+      }
+    }, 40);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className={styles.page}>
       <BackgroundStrokes />
       <SiteHeader />
 
-      <main className={styles.main}>
-        <aside className={styles.sidebar}>
-          <div className={styles.sidebarContent}>
-            <h1 className={styles.title}>PROJECTS</h1>
-            <p className={styles.subtitle}>
-              Browse through my projects from previous semesters
-            </p>
-            <div className={styles.projectCount}>
-              <span className={styles.countNumber}>{projects.length}</span>
-              <span className={styles.countLabel}>Projects</span>
+      <main className={styles.pageMain}>
+        {/* ============== BANNER ============== */}
+        <section className={styles.banner}>
+          <div className={styles.bannerRow}>
+            <div className={styles.bannerLeft}>
+              <div className={styles.eyebrowRow}>
+                <span className={styles.decorLine}></span>
+                <span className={styles.eyebrow}>SELECTED WORK</span>
+              </div>
+              <h1 className={styles.bannerTitle}>
+                <span className={styles.bannerStrong}>{diveText}</span>
+                <span className={styles.bannerSoft}>my recent work.</span>
+              </h1>
             </div>
+            <p className={styles.bannerText}>
+              A selection of projects from my studies and side work — across brand,
+              product, UI and a bit of code. Each one pushed me to dig a little deeper.
+            </p>
           </div>
-        </aside>
+        </section>
 
-        <section className={styles.projectsList}>
+        {/* ============== PROJECTS ============== */}
+        <section className={styles.projects}>
           {projects.map((project, index) => (
-            <Link
-              key={project.slug}
-              href={`/projects/${project.slug}`}
-              className={styles.projectCard}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
-              <div className={styles.projectIndex}>
-                [{String(index + 1).padStart(2, '0')}]
-              </div>
-
-              <div className={styles.projectImageWrapper}>
-                <div
-                  className={styles.projectImage}
-                  style={{ backgroundImage: `url(${project.image})` }}
-                />
-                <div className={styles.projectOverlay}>
-                  <span className={styles.viewText}>VIEW PROJECT</span>
-                </div>
-              </div>
-
-              <div className={styles.projectInfo}>
-                <div className={styles.projectHeader}>
-                  <h2 className={styles.projectTitle}>{project.title}</h2>
-                  <span className={styles.projectYear}>{project.year}</span>
-                </div>
-                <p className={styles.projectDescription}>{project.description}</p>
-                <div className={styles.projectServices}>{project.services}</div>
-              </div>
-            </Link>
+            <ProjectRow key={project.slug} project={project} index={index} />
           ))}
         </section>
       </main>

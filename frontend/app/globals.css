@@ -111,6 +111,9 @@
      ============================================ */
   --container-max: 1600px;
   --container-padding: clamp(1.5rem, 4vw, 3.75rem);
+  /* Shared page gutter — used by content paddings AND the background grid lines,
+     so they always stay aligned. Tight on mobile, more air on large screens. */
+  --gutter: clamp(24px, 5vw, 72px);
   
   --radius-sm: 4px;
   --radius-md: 8px;

@@ -6,116 +6,18 @@
 
 import styles from './page.module.css'
 import SiteHeader from '../../components/SiteHeader'
-import BackgroundStrokes from '../../components/BackgroundStrokes'
 import Footer from '../../components/Footer'
+import PrototypeEmbed from '../../components/PrototypeEmbed'
 import Link from 'next/link'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
-
-// Projects data - prepared for future backend
-const projectsData: Record<string, {
-  title: string;
-  year: string;
-  services: string;
-  description: string;
-  image: string;
-  fullDescription: string;
-  challenge: string;
-  solution: string;
-  tools: string[];
-  gallery: string[];
-  link?: string;
-}> = {
-  'haribo': {
-    title: 'HARIBO',
-    year: '2025',
-    services: 'Re-design · Brand',
-    description: 'Redesign of a candy company, turning it into a 80`s supplement provider.',
-    image: '/images/haribo.jpg',
-    fullDescription: 'HARIBO, the iconic candy brand known for its gummy bears, undergoes a radical transformation in this concept project. The redesign reimagines the brand as a premium 80s-inspired supplement provider, blending nostalgia with modern wellness trends. The project explores how a beloved confectionery brand could pivot to the health and fitness market while maintaining its playful essence.',
-    challenge: 'The main challenge was to preserve the recognizable HARIBO brand identity while completely shifting its market positioning. How do you take a brand synonymous with sugary treats and make it credible in the health supplement space? The design needed to bridge the gap between indulgence and wellness.',
-    solution: 'The solution embraced the 80s aesthetic with bold neon colors, geometric patterns, and retro typography. The iconic HARIBO bear was reimagined as a muscular fitness mascot. Product packaging features vibrant gradients and chrome effects typical of 80s design, while maintaining the playful spirit that makes HARIBO beloved worldwide.',
-    tools: ['Figma', 'Adobe Illustrator', 'Adobe Photoshop', 'Blender'],
-    gallery: ['/images/font.jpg', '/images/haribo_products.jpg', '/images/palette.jpg'],
-    link: 'https://www.figma.com/slides/YvAJxE97Wij40s5lMsDBxq/Haribo-retro?node-id=32-287&t=O9DH4tKoP3lU1XOu-0'
-  },
-  'social-media-agents': {
-    title: 'Social Media Agents',
-    year: '2025/26',
-    services: 'Agents · N8N',
-    description: 'Automated social media content for the world´s largest shopping engagement platform.',
-    image: '/images/atolls.jpg',
-    fullDescription: 'An innovative automation project that leverages AI agents to generate and manage social media content at scale.',
-    challenge: 'Creating consistent, engaging content across multiple platforms while maintaining brand voice.',
-    solution: 'Developed a network of AI agents using N8N that collaborate to create, review, and publish content.',
-    tools: ['N8N', 'OpenAI API', 'Python', 'Zapier'],
-    gallery: ['/images/atolls.jpg'],
-  },
-  'stylemate': {
-    title: 'StyleMate',
-    year: '2024',
-    services: 'Chatbot · UI',
-    description: 'A chatbot that specializes on the users personal style for recommendation',
-    image: '/images/stylemate.jpg',
-    fullDescription: 'StyleMate is an AI-powered fashion assistant that learns your personal style preferences.',
-    challenge: 'Understanding individual style preferences and providing personalized recommendations.',
-    solution: 'Created an intuitive chatbot interface with a style quiz and visual preference learning.',
-    tools: ['React', 'Node.js', 'OpenAI API', 'Figma'],
-    gallery: ['/images/stylemate.jpg'],
-  },
-  'spacey': {
-    title: 'Spacey',
-    year: '2025',
-    services: 'Product · UI',
-    description: 'What to do with empty spaces in Munich? Check out the ideas and the prototype',
-    image: '/images/spacey.jpg',
-    fullDescription: 'Spacey addresses the urban challenge of unused spaces in Munich.',
-    challenge: 'Connecting space owners with creative individuals and businesses looking for temporary venues.',
-    solution: 'A platform that makes discovering and booking temporary spaces simple and accessible.',
-    tools: ['Figma', 'React', 'Next.js', 'Tailwind CSS'],
-    gallery: ['/images/spacey.jpg'],
-  },
-  'moosburg': {
-    title: 'Moosburg',
-    year: '2025/26',
-    services: 'Prototype · Research',
-    description: 'A Prototype for the city Moosburg about historcial sites for the POW',
-    image: '/images/moosburg.jpg',
-    fullDescription: 'A research-driven prototype exploring the historical significance of POW sites in Moosburg.',
-    challenge: 'Presenting sensitive historical information in an accessible and respectful manner.',
-    solution: 'An interactive digital experience that guides users through historical locations.',
-    tools: ['Figma', 'Adobe XD', 'After Effects'],
-    gallery: ['/images/moosburg.jpg'],
-  },
-  'ebay': {
-    title: 'Ebay',
-    year: '2024',
-    services: 'Product · UI',
-    description: 'A redesign of the Ebay product site for a better user experience.',
-    image: '/images/ebay.jpg',
-    fullDescription: 'A comprehensive UX/UI redesign of the Ebay product pages.',
-    challenge: 'Simplifying a complex e-commerce interface while maintaining all necessary functionality.',
-    solution: 'A cleaner, more intuitive design that prioritizes product information and user actions.',
-    tools: ['Figma', 'Adobe Photoshop', 'Maze'],
-    gallery: ['/images/ebay.jpg'],
-  },
-  'hangman': {
-    title: 'Hangman',
-    year: '2025',
-    services: 'React · Playful',
-    description: 'Check out my hangman game i made the day it was due.',
-    image: '/images/hangman.jpg',
-    fullDescription: 'A fun, interactive Hangman game built with React.',
-    challenge: 'Creating an engaging game experience with smooth animations under time pressure.',
-    solution: 'A minimalist but polished game with keyboard support and visual feedback.',
-    tools: ['React', 'TypeScript', 'CSS Animations'],
-    gallery: ['/images/hangman.jpg'],
-  }
-}
+import type { Metadata } from 'next'
+import { projects, getProjectBySlug } from '../../data/projects'
 
 // Generate static params for all projects
 export function generateStaticParams() {
-  return Object.keys(projectsData).map((slug) => ({
-    slug: slug,
+  return projects.map((project) => ({
+    slug: project.slug,
   }))
 }
 
@@ -123,118 +25,414 @@ interface ProjectDetailPageProps {
   params: Promise<{ slug: string }>
 }
 
+// Maps a tool name → icon src. Most use the simple-icons CDN
+// (cdn.simpleicons.org/<slug>/<color>), but Adobe removed its brand icons from
+// simple-icons (trademark), so Photoshop/Illustrator are served locally.
+// Tools without a match render as text only.
+const TOOL_ICONS: Record<string, string> = {
+  Figma: 'https://cdn.simpleicons.org/figma/F24E1E',
+  Photoshop: '/icons/photoshop.svg',
+  'Adobe Photoshop': '/icons/photoshop.svg',
+  Illustrator: '/icons/illustrator.svg',
+  'Adobe Illustrator': '/icons/illustrator.svg',
+  Blender: 'https://cdn.simpleicons.org/blender/E87D0D',
+  React: 'https://cdn.simpleicons.org/react/61DAFB',
+  'Next.js': 'https://cdn.simpleicons.org/nextdotjs/FFFFFF',
+  'Node.js': 'https://cdn.simpleicons.org/nodedotjs/5FA04E',
+  TypeScript: 'https://cdn.simpleicons.org/typescript/3178C6',
+  Python: 'https://cdn.simpleicons.org/python/3776AB',
+  'Tailwind CSS': 'https://cdn.simpleicons.org/tailwindcss/06B6D4',
+  N8N: 'https://cdn.simpleicons.org/n8n/EA4B71',
+  Zapier: 'https://cdn.simpleicons.org/zapier/FF4F00',
+}
+
+// Per-project SEO + social-share metadata
+export async function generateMetadata({ params }: ProjectDetailPageProps): Promise<Metadata> {
+  const { slug } = await params
+  const project = getProjectBySlug(slug)
+
+  if (!project) {
+    return { title: 'Project not found' }
+  }
+
+  const title = `${project.title} — Aicha El Hali`
+
+  return {
+    title,
+    description: project.description,
+    openGraph: {
+      title,
+      description: project.description,
+      images: [{ url: project.image }],
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: project.description,
+      images: [project.image],
+    },
+  }
+}
+
 export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
   const { slug } = await params
-  const project = projectsData[slug]
+  const project = getProjectBySlug(slug)
 
   if (!project) {
     notFound()
   }
 
+  const hasFonts = Boolean(project.fonts?.length)
+  const hasLogo = Boolean(project.logoNote || project.logoImage)
+  const hasIdentity = Boolean(project.paletteNote || project.paletteImage)
+  const hasMockup = Boolean(project.mockupNote || project.mockupImage)
+  const hasProduct = Boolean(project.productNote || project.productImage)
+  const hasRebrand = Boolean(project.rebrandNote || project.rebrandImage)
+
+  const story = [
+    { num: '01', label: 'Context', text: project.context },
+    { num: '02', label: 'Problem', text: project.problem },
+    { num: '03', label: 'Solution', text: project.solution },
+  ]
+
   return (
     <div className={styles.page}>
-      {/* Background Strokes Component */}
-      <BackgroundStrokes />
-
       {/* Header Component */}
       <SiteHeader />
 
-      <main className={styles.main}>
-        {/* Back Link */}
-        <Link href="/projects" className={styles.backLink}>
-          <span className={styles.backArrow}>←</span>
-          <span>Back to Projects</span>
-        </Link>
+      {/* Fixed full-screen hero image — the content slides up over it on scroll */}
+      <header className={styles.heroMedia}>
+        <Image
+          src={project.image}
+          alt={`${project.title} — cover`}
+          fill
+          sizes="100vw"
+          style={{ objectFit: 'cover' }}
+          priority
+        />
+        <div className={styles.heroScrim} />
+        <span className={styles.scrollCue} aria-hidden="true">↓</span>
+      </header>
 
-        {/* Hero Section */}
-        <section className={styles.hero}>
-          <div className={styles.heroContent}>
-            <span className={styles.projectYear}>{project.year}</span>
-            <h1 className={styles.projectTitle}>{project.title}</h1>
-            <p className={styles.projectTagline}>{project.description}</p>
-            <div className={styles.projectServices}>{project.services}</div>
+      {/* Content slides up over the hero image */}
+      <div className={styles.content}>
+        <main className={styles.main}>
+          {/* Back Link */}
+          <Link href="/projects" className={styles.backLink}>
+            <span className={styles.backArrow}>←</span>
+            <span>Back to Projects</span>
+          </Link>
+
+          {/* Overview — title + general info (role / duration / company / year) */}
+          <section className={styles.overview}>
+            <div className={styles.overviewTop}>
+              <div className={styles.overviewLeft}>
+                <h1 className={styles.overviewTitle}>{project.title}</h1>
+                <p className={styles.overviewLead}>{project.description}</p>
+              </div>
+              <dl className={styles.overviewMeta}>
+                <div className={styles.overviewRow}>
+                  <dt className={styles.overviewLabel}>Role</dt>
+                  <dd className={styles.overviewValue}>{project.services}</dd>
+                </div>
+                <div className={styles.overviewRow}>
+                  <dt className={styles.overviewLabel}>Duration</dt>
+                  <dd className={styles.overviewValue}>{project.duration}</dd>
+                </div>
+                <div className={styles.overviewRow}>
+                  <dt className={styles.overviewLabel}>Semester</dt>
+                  <dd className={styles.overviewValue}>{project.semester}</dd>
+                </div>
+                <div className={styles.overviewRow}>
+                  <dt className={styles.overviewLabel}>Year</dt>
+                  <dd className={styles.overviewValue}>{project.year}</dd>
+                </div>
+              </dl>
+            </div>
+          </section>
+
+        {/* Story: Context / Problem / Solution — text only */}
+        <section className={styles.story}>
+          {story.map((block) => (
+            <article key={block.num} className={styles.storyBlock}>
+              <div className={styles.storyTitleRow}>
+                <span className={styles.storyNum}>{block.num}</span>
+                <h2 className={styles.storyTitle}>{block.label}</h2>
+              </div>
+              <p className={styles.storyText}>{block.text}</p>
+            </article>
+          ))}
+        </section>
+
+        {/* Visuals — full-width video (placeholder until a video is added) */}
+        <section className={styles.showcase}>
+          {project.prototype ? (
+            <div className={styles.prototypeLabel}>
+              <span className={styles.prototypeLine} aria-hidden="true" />
+              <h2 className={styles.prototypeTitle}>Test it yourself</h2>
+            </div>
+          ) : (
+            <div className={styles.sectionLabel}>
+              <span className={styles.sectionLabelNum}>—</span>
+              <span>Visuals</span>
+            </div>
+          )}
+          <div className={styles.videoBlock}>
+            {project.prototype ? (
+              <PrototypeEmbed
+                url={project.prototype}
+                title={`${project.title} — Figma prototype`}
+              />
+            ) : project.video ? (
+              <video
+                className={styles.video}
+                src={project.video}
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
+            ) : (
+              <div className={styles.videoPlaceholder}>
+                <span className={styles.playIcon}>▶</span>
+                <span className={styles.videoLabel}>Video coming soon</span>
+              </div>
+            )}
           </div>
         </section>
 
-        {/* Main Image */}
-        <div className={styles.mainImageWrapper}>
-          <div 
-            className={styles.mainImage}
-            style={{ backgroundImage: `url(${project.image})` }}
-          />
-        </div>
+        {/* Rebrand — image left, description right (asymmetry) */}
+        {hasRebrand && (
+          <section className={styles.identity}>
+            <div className={styles.identityHead}>
+              <span className={styles.identityIndex}>04</span>
+              <h2 className={styles.identityTitle}>Rebrand</h2>
+            </div>
 
-        {/* Project Details */}
-        <section className={styles.details}>
-          <div className={styles.detailsGrid}>
-            {/* Left Column - Overview */}
-            <div className={styles.overview}>
-              <h2 className={styles.sectionTitle}>Overview</h2>
-              <p className={styles.fullDescription}>{project.fullDescription}</p>
-              
-              {project.link && (
-                <a 
-                  href={project.link} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className={styles.projectLink}
-                >
-                  View Live Project →
-                </a>
+            {/* Image left (wide), description right (narrow) */}
+            <div className={styles.rebrandGrid}>
+              {project.rebrandImage && (
+                <div className={styles.paletteImage}>
+                  <Image
+                    src={project.rebrandImage}
+                    alt={`${project.title} — rebrand`}
+                    fill
+                    sizes="(max-width: 900px) 100vw, 60vw"
+                    style={{ objectFit: 'cover', objectPosition: 'center' }}
+                  />
+                </div>
+              )}
+              <div className={styles.paletteInfo}>
+                <span className={styles.cardLabel}>Rebrand</span>
+                <p className={styles.paletteDesc}>{project.rebrandNote}</p>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Visual Identity — Palette: description left, image right */}
+        {hasIdentity && (
+          <section className={styles.identity}>
+            <div className={styles.identityHead}>
+              <span className={styles.identityIndex}>05</span>
+              <h2 className={styles.identityTitle}>Visual Identity</h2>
+            </div>
+
+            {/* Description left, big palette image right */}
+            <div className={styles.identityGrid}>
+              <div className={styles.paletteInfo}>
+                <span className={styles.cardLabel}>Palette</span>
+                <p className={styles.paletteDesc}>{project.paletteNote}</p>
+                {project.palette && project.palette.length > 0 && (
+                  <ul className={styles.swatches}>
+                    {project.palette.map((color) => (
+                      <li key={color.hex} className={styles.swatch}>
+                        <span
+                          className={styles.swatchChip}
+                          style={{ background: color.hex }}
+                          aria-hidden="true"
+                        />
+                        <span className={styles.swatchName}>{color.name}</span>
+                        <span className={styles.swatchHex}>{color.hex}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              {project.paletteImage && (
+                <div className={styles.paletteImage}>
+                  <Image
+                    src={project.paletteImage}
+                    alt={`${project.title} — colour palette`}
+                    fill
+                    sizes="(max-width: 900px) 100vw, 60vw"
+                    style={{ objectFit: 'cover', objectPosition: 'center' }}
+                  />
+                </div>
               )}
             </div>
+          </section>
+        )}
 
-            {/* Right Column - Info */}
-            <div className={styles.info}>
-              <div className={styles.infoBlock}>
-                <h3 className={styles.infoTitle}>Tools & Technologies</h3>
-                <div className={styles.toolsList}>
-                  {project.tools.map((tool, index) => (
-                    <span key={index} className={styles.toolTag}>{tool}</span>
-                  ))}
-                </div>
-              </div>
-
-              <div className={styles.infoBlock}>
-                <h3 className={styles.infoTitle}>Year</h3>
-                <p className={styles.infoValue}>{project.year}</p>
-              </div>
-
-              <div className={styles.infoBlock}>
-                <h3 className={styles.infoTitle}>Services</h3>
-                <p className={styles.infoValue}>{project.services}</p>
-              </div>
+        {/* Typography — font specimens (image placeholders) + title & description */}
+        {hasFonts && (
+          <section className={styles.fonts}>
+            <div className={styles.sectionLabel}>
+              <span className={styles.sectionLabelNum}>—</span>
+              <span>Typography</span>
             </div>
-          </div>
-        </section>
-
-        {/* Challenge & Solution */}
-        <section className={styles.challengeSolution}>
-          <div className={styles.csGrid}>
-            <div className={styles.csBlock}>
-              <h2 className={styles.csTitle}>The Challenge</h2>
-              <p className={styles.csText}>{project.challenge}</p>
-            </div>
-            <div className={styles.csBlock}>
-              <h2 className={styles.csTitle}>The Solution</h2>
-              <p className={styles.csText}>{project.solution}</p>
-            </div>
-          </div>
-        </section>
-
-        {/* Gallery */}
-        {project.gallery.length > 1 && (
-          <section className={styles.gallery}>
-            <h2 className={styles.sectionTitle}>Gallery</h2>
-            <div className={styles.galleryGrid}>
-              {project.gallery.map((image, index) => (
-                <div 
-                  key={index}
-                  className={styles.galleryImage}
-                  style={{ backgroundImage: `url(${image})` }}
-                />
+            <div className={styles.fontsGrid}>
+              {project.fonts!.map((font, index) => (
+                <article key={index} className={styles.fontCard}>
+                  <div className={styles.fontImage}>
+                    {font.image ? (
+                      <Image
+                        src={font.image}
+                        alt={`${project.title} — ${font.name} specimen`}
+                        fill
+                        sizes="(max-width: 900px) 100vw, 50vw"
+                        style={{ objectFit: 'cover', objectPosition: 'center' }}
+                      />
+                    ) : (
+                      <div className={styles.fontPlaceholder}>
+                        <span className={styles.fontPlaceholderGlyph}>Aa</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className={styles.fontHead}>
+                    <h3 className={styles.fontName}>{font.name}</h3>
+                    <span className={styles.fontTag}>Font</span>
+                  </div>
+                  <p className={styles.fontDesc}>{font.description}</p>
+                </article>
               ))}
             </div>
+          </section>
+        )}
+
+        {/* Logo — image left, description right */}
+        {hasLogo && (
+          <section className={styles.identity}>
+            <div className={styles.identityHead}>
+              <span className={styles.identityIndex}>06</span>
+              <h2 className={styles.identityTitle}>Logo</h2>
+            </div>
+
+            <div className={styles.rebrandGrid}>
+              {project.logoImage && (
+                <div className={styles.paletteImage}>
+                  <Image
+                    src={project.logoImage}
+                    alt={`${project.title} — logo`}
+                    fill
+                    sizes="(max-width: 900px) 100vw, 60vw"
+                    style={{ objectFit: 'cover', objectPosition: 'center' }}
+                  />
+                </div>
+              )}
+              <div className={styles.paletteInfo}>
+                <span className={styles.cardLabel}>Logo</span>
+                <p className={styles.paletteDesc}>{project.logoNote}</p>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Product summary — description left, image right */}
+        {hasProduct && (
+          <section className={styles.identity}>
+            <div className={styles.identityHead}>
+              <span className={styles.identityIndex}>07</span>
+              <h2 className={styles.identityTitle}>Product Summary</h2>
+            </div>
+
+            <div className={styles.identityGrid}>
+              <div className={styles.paletteInfo}>
+                <span className={styles.cardLabel}>Products</span>
+                <p className={styles.paletteDesc}>{project.productNote}</p>
+              </div>
+              {project.productImage && (
+                <div className={styles.paletteImage}>
+                  <Image
+                    src={project.productImage}
+                    alt={`${project.title} — product summary`}
+                    fill
+                    sizes="(max-width: 900px) 100vw, 60vw"
+                    style={{ objectFit: 'cover', objectPosition: 'center' }}
+                  />
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+
+        {/* Mockup — image left, description right */}
+        {hasMockup && (
+          <section className={styles.identity}>
+            <div className={styles.identityHead}>
+              <span className={styles.identityIndex}>08</span>
+              <h2 className={styles.identityTitle}>Mockup</h2>
+            </div>
+
+            <div className={styles.rebrandGrid}>
+              {project.mockupImage && (
+                <div className={styles.paletteImage}>
+                  <Image
+                    src={project.mockupImage}
+                    alt={`${project.title} — mockup`}
+                    fill
+                    sizes="(max-width: 900px) 100vw, 60vw"
+                    style={{ objectFit: 'cover', objectPosition: 'center' }}
+                  />
+                </div>
+              )}
+              <div className={styles.paletteInfo}>
+                <span className={styles.cardLabel}>Mockup</span>
+                <p className={styles.paletteDesc}>{project.mockupNote}</p>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Tools + Live link */}
+        <section className={styles.meta}>
+          <div className={styles.metaBlock}>
+            <h3 className={styles.metaTitle}>Tools & Technologies</h3>
+            <div className={styles.toolsList}>
+              {project.tools.map((tool, index) => {
+                const icon = TOOL_ICONS[tool]
+                return (
+                  <span key={index} className={styles.toolTag}>
+                    {icon && (
+                      <img
+                        src={icon}
+                        alt=""
+                        className={styles.toolIcon}
+                        width={20}
+                        height={20}
+                        loading="lazy"
+                      />
+                    )}
+                    {tool}
+                  </span>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* Closing CTA — final presentation */}
+        {project.link && (
+          <section className={styles.cta}>
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.projectLink}
+            >
+              View my final presentation →
+            </a>
           </section>
         )}
 
@@ -244,10 +442,11 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             ← All Projects
           </Link>
         </nav>
-      </main>
+        </main>
 
-      {/* Footer Component */}
-      <Footer />
+        {/* Footer Component */}
+        <Footer />
+      </div>
     </div>
   )
 }

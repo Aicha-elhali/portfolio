@@ -1,5 +1,6 @@
 /**
  * Projects Page Styles
+ * Banner hero + vertically stacked, asymmetric alternating project rows.
  * Author: Aicha El Hali
  * Web Technologies WS 2025/26
  */
@@ -12,381 +13,388 @@
   overflow-x: hidden;
 }
 
-/* Background Strokes */
-.backgroundStrokes {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  pointer-events: none;
-  z-index: 1;
-  padding: 0 40px;
-}
-
-.column {
-  flex: 1;
-  height: 100%;
-  position: relative;
-  margin-right: 16px;
-}
-
-.column:last-child {
-  margin-right: 0;
-}
-
-.lineLeft,
-.lineMiddleLeft,
-.lineMiddleRight,
-.lineRight {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    var(--border-subtle) 0px,
-    var(--border-subtle) 2px,
-    transparent 2px,
-    transparent 4px
-  );
-}
-
-.lineLeft { left: 0; }
-.lineMiddleLeft { left: calc(50% - 10px); }
-.lineMiddleRight { left: calc(50% + 10px); }
-.lineRight { right: 0; }
-
-/* Main Layout */
-.main {
+.pageMain {
   position: relative;
   z-index: 2;
-  min-height: 100vh;
-  display: flex;
-}
-
-/* Fixed Left Sidebar */
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 340px;
-  height: 100vh;
-  padding: 140px 40px 50px 40px;
+  max-width: var(--container-max, 1400px);
+  margin: 0 auto;
+  padding: 160px var(--gutter) 100px;
   box-sizing: border-box;
+}
+
+/* ============================================
+   BANNER
+   ============================================ */
+.banner {
+  min-height: 75vh;
   display: flex;
-  flex-direction: column;
+  align-items: flex-end;
+  margin-bottom: 120px;
+}
+
+/* Title left, description bottom-aligned on the right */
+.bannerRow {
+  width: 100%;
+  display: flex;
   justify-content: space-between;
-  z-index: 10;
+  align-items: flex-end;
+  gap: 60px;
 }
 
-.sidebarContent {
+.bannerLeft {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  min-width: 0;
 }
 
-.title {
-  font-family: var(--font-anton), var(--font-sans), sans-serif;
-  font-size: clamp(56px, 6vw, 72px);
-  font-weight: 400;
-  letter-spacing: -2px;
-  margin: 0;
-  line-height: 1;
-}
-
-.titleLine {
-  display: inline;
-}
-
-.subtitle {
-  font-size: 16px;
-  line-height: 1.7;
-  color: var(--fg-muted);
-  margin: 0;
-  max-width: 280px;
-  letter-spacing: 0.2px;
-}
-
-.projectCount {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  margin-top: 40px;
-  padding-top: 30px;
-  border-top: 1px solid var(--border-default);
-}
-
-.countNumber {
-  font-size: 48px;
-  font-weight: 300;
-  letter-spacing: -2px;
-  color: var(--accent);
-}
-
-.countLabel {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--fg-muted);
-}
-
-/* Scrollable Projects List */
-.projectsList {
-  margin-left: auto;
-  margin-right: 40px;
-  padding: 130px 0 80px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 50px;
-  width: 58vw;
-  max-width: 920px;
-  min-width: 500px;
-}
-
-/* Loading, Error, Empty States */
-.loadingMessage,
-.errorMessage,
-.emptyMessage {
-  padding: 60px 20px;
-  text-align: center;
-  font-size: 16px;
-  letter-spacing: 1px;
-}
-
-.loadingMessage {
+.bannerText {
+  flex-shrink: 0;
+  max-width: 340px;
+  margin: 0 0 12px 0;
+  font-size: 17px;
+  line-height: 1.6;
   color: var(--fg-secondary);
 }
 
-.errorMessage {
-  color: #ef4444;
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid #ef4444;
-  border-radius: 4px;
-}
-
-.emptyMessage {
-  color: rgba(255, 255, 255, 0.4);
-}
-
-/* Project Card */
-.projectCard {
-  display: grid;
-  grid-template-columns: 40px 1fr;
-  gap: 16px;
-  text-decoration: none;
-  color: inherit;
-  position: relative;
-}
-
-.projectIndex {
-  font-size: 11px;
-  color: var(--fg-subtle);
-  letter-spacing: 1px;
-  padding-top: 8px;
-  font-family: var(--font-geist-mono), monospace;
-}
-
-.projectImageWrapper {
-  position: relative;
-  width: 100%;
-  border-radius: 6px;
-  overflow: hidden;
-  cursor: pointer;
-  aspect-ratio: 16 / 10;
-}
-
-.projectImage {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  background-color: var(--bg-elevated);
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.projectOverlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+/* Eyebrow row with animated decor line (same format as homepage / about) */
+.eyebrowRow {
   display: flex;
   align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  gap: 16px;
+  margin-bottom: 28px;
 }
 
-.projectCard:hover .projectOverlay {
-  opacity: 1;
+.decorLine {
+  width: 60px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: lineGrow 1s var(--ease-out-expo) 0.3s forwards;
 }
 
-.projectCard:hover .projectImage {
-  transform: scale(1.05);
+@keyframes lineGrow {
+  to { transform: scaleX(1); }
 }
 
-.viewText {
-  font-size: 12px;
-  letter-spacing: 3px;
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 13px;
+  letter-spacing: 4px;
+  color: var(--fg-muted);
+  text-transform: uppercase;
+}
+
+.bannerTitle {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  line-height: 0.9;
+}
+
+.bannerStrong {
+  font-family: var(--font-anton), var(--font-sans), sans-serif;
+  font-size: clamp(3.5rem, 11vw, 9rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
   color: var(--fg-primary);
-  padding: 12px 24px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  transition: all 0.3s ease;
 }
 
-.projectCard:hover .viewText {
-  background: var(--fg-primary);
-  color: var(--bg-primary);
-  border-color: var(--fg-primary);
+.bannerSoft {
+  margin-top: 8px;
+  font-family: var(--font-sans), sans-serif;
+  font-size: clamp(2.4rem, 8vw, 6.5rem);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--fg-primary);
 }
 
-.projectInfo {
-  padding: 20px 0 30px 0;
-  border-bottom: 1px solid var(--border-subtle);
-  grid-column: 2;
-}
-
-.projectHeader {
+/* ============================================
+   PROJECTS STACK
+   ============================================ */
+.projects {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 12px;
+  flex-direction: column;
+  gap: 140px;
 }
 
-.projectTitle {
-  font-size: 26px;
-  font-weight: 500;
-  letter-spacing: -0.5px;
-  margin: 0;
-  transition: color 0.3s ease;
+/* Asymmetric row: large standalone picture + text/meta side */
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1fr);
+  gap: 56px;
+  align-items: stretch;
 }
 
-.projectCard:hover .projectTitle {
+/* Alternate: picture moves to the right (still the wide column), text/meta to the left */
+.row.reversed {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.1fr);
+}
+
+.row.reversed .mediaLink {
+  order: 2;
+}
+
+.row.reversed .info {
+  order: 1;
+}
+
+/* --- Standalone picture --- */
+.mediaLink {
+  display: block;
+  text-decoration: none;
+}
+
+.media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: #000;
+  /* #1 — clip-path wipe reveal (top → bottom) when the row scrolls in */
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.row.revealed .media {
+  clip-path: inset(0 0 0 0);
+}
+
+.mediaInner {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mediaLink:hover .mediaInner {
+  transform: scale(1.04);
+}
+
+/* Videos fit fully inside the tile (no crop); images still cover it */
+video.mediaInner {
+  object-fit: contain;
+}
+
+.company {
+  font-family: var(--font-anton), var(--font-sans), sans-serif;
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  margin: 0 0 16px 0;
+  color: var(--fg-primary);
+  transition: color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Row-level hover affordance: title shifts to accent */
+.row:hover .company {
   color: var(--accent);
 }
 
-.projectYear {
-  font-size: 13px;
-  color: var(--fg-muted);
+.description {
+  font-size: 17px;
+  line-height: 1.6;
+  color: rgba(250, 250, 250, 0.88);
+  max-width: 40ch;
+  margin: 8px 0 24px 0;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-geist-mono), monospace;
-}
-
-.projectDescription {
-  font-size: 14px;
-  line-height: 1.7;
-  color: var(--fg-secondary);
-  margin: 0 0 16px 0;
-  max-width: 500px;
-}
-
-.projectServices {
-  font-size: 11px;
-  text-transform: uppercase;
+  font-size: 13px;
   letter-spacing: 2px;
-  color: var(--fg-muted);
+  text-transform: uppercase;
+  color: var(--fg-primary);
+  text-decoration: none;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border-strong);
+  transition: color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Responsive Design */
-@media (max-width: 1200px) {
-  .sidebar {
-    width: 300px;
-    padding: 130px 30px 40px 40px;
+.cta:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.ctaArrow {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cta:hover .ctaArrow {
+  transform: translateX(6px);
+}
+
+/* --- Text + meta column (opposite the picture) --- */
+.info {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+}
+
+/* Editorial index numeral */
+.bigIndex {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 1px;
+  color: var(--fg-primary);
+  margin-bottom: 4px;
+}
+
+/* #3 — choreographed reveal: index → title/desc → meta → CTA, in sequence */
+.bigIndex,
+.infoHead,
+.metaList,
+.cta {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.row.revealed .bigIndex,
+.row.revealed .infoHead,
+.row.revealed .metaList,
+.row.revealed .cta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.row.revealed .bigIndex { transition-delay: 0.15s; }
+.row.revealed .infoHead { transition-delay: 0.28s; }
+.row.revealed .metaList { transition-delay: 0.42s; }
+.row.revealed .cta { transition-delay: 0.54s; }
+
+/* Accessibility: skip the reveal choreography for reduced-motion users */
+@media (prefers-reduced-motion: reduce) {
+  .media {
+    clip-path: none;
+    transition: none;
   }
 
-  .projectsList {
-    margin-left: 320px;
-    padding: 130px 30px 60px 0;
-    max-width: 550px;
-  }
-
-  .title {
-    font-size: clamp(38px, 5vw, 48px);
+  .bigIndex,
+  .infoHead,
+  .metaList,
+  .cta {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
 
+.infoHead {
+  max-width: 420px;
+}
+
+.metaList {
+  margin: 0;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.metaLabel {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--fg-subtle);
+  margin: 0;
+}
+
+.metaValue {
+  font-size: 16px;
+  line-height: 1.3;
+  color: var(--fg-primary);
+  margin: 0;
+}
+
+/* CTA pinned to the very bottom of the column */
+.cta {
+  margin-top: auto;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
 @media (max-width: 900px) {
-  .main {
+  .pageMain {
+    padding: 130px var(--gutter) 80px;
+  }
+
+  .banner {
+    min-height: auto;
+    margin-bottom: 80px;
+  }
+
+  /* Stack: description drops below the title */
+  .bannerRow {
     flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
   }
 
-  .sidebar {
-    position: relative;
-    width: 100%;
-    height: auto;
-    padding: 120px 40px 50px 40px;
-  }
-
-  .sidebarContent {
-    gap: 20px;
-  }
-
-  .title {
-    font-size: clamp(48px, 12vw, 72px);
-  }
-
-  .titleLine {
-    display: inline;
-  }
-
-  .projectCount {
-    margin-top: 20px;
-    padding-top: 20px;
-  }
-
-  .countNumber {
-    font-size: 36px;
-  }
-
-  .projectsList {
-    margin-left: 0;
-    padding: 0 40px 60px 40px;
-    gap: 40px;
+  .bannerText {
     max-width: 100%;
+    margin-bottom: 0;
   }
 
-  .projectCard {
-    grid-template-columns: 40px 1fr;
-    gap: 16px;
+  .projects {
+    gap: 90px;
+  }
+
+  /* Stack picture over text; keep natural order regardless of parity */
+  .row,
+  .row.reversed {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+
+  .row.reversed .mediaLink { order: 1; }
+  .row.reversed .info { order: 2; }
+
+  /* CTA no longer needs to stretch to the bottom on stacked mobile layout */
+  .cta {
+    margin-top: 8px;
   }
 }
 
-@media (max-width: 600px) {
-  .sidebar {
-    padding: 100px 24px 40px 24px;
+@media (max-width: 480px) {
+  .pageMain {
+    padding: 110px var(--gutter) 60px;
   }
 
-  .subtitle {
-    max-width: 100%;
-  }
-
-  .projectsList {
-    padding: 0 24px 50px 24px;
-    gap: 35px;
-  }
-
-  .projectCard {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .projectIndex {
-    padding-top: 0;
-  }
-
-  .projectInfo {
-    grid-column: 1;
-    padding: 16px 0 24px 0;
-  }
-
-  .projectTitle {
-    font-size: 22px;
-  }
-
-  .projectDescription {
-    font-size: 13px;
+  .description {
+    font-size: 16px;
   }
 }

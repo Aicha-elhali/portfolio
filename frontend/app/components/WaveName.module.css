@@ -19,6 +19,12 @@
   width: 0.3em;
 }
 
+/* Optical alignment: trim the extra left side-bearing on the second line's
+   first glyph so "EL HALI" lines up under the "A" of "AICHA". Tweak if needed. */
+.line:last-child .letter:first-child {
+  margin-left: -0.09em;
+}
+
 .letter {
   display: inline-block;
   font-size: clamp(5rem, 20vw, 20rem);

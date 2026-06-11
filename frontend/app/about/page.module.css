@@ -16,7 +16,8 @@
   z-index: 2;
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: var(--space-32) var(--container-padding) 0;
+  /* shared gutter — keeps content aligned with the background grid line */
+  padding: 0 var(--gutter);
 }
 
 /* Shared */
@@ -34,9 +35,11 @@
 /* ============================================
    HERO
    ============================================ */
+/* Sits in the normal gutter column so the decor line aligns exactly with the
+   background grid (no 100vw breakout, which overshoots by the scrollbar width) */
 .hero {
+  padding: var(--space-24) 0 0;
   margin-bottom: var(--space-20);
-  padding-top: var(--space-16);
 }
 
 .heroDecor {
@@ -50,6 +53,14 @@
   width: 60px;
   height: 1px;
   background: var(--accent);
+  /* grow-in on load, same as the homepage decor line */
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: lineGrow 1s var(--ease-out-expo) 0.3s forwards;
+}
+
+@keyframes lineGrow {
+  to { transform: scaleX(1); }
 }
 
 .decorText {
@@ -113,7 +124,6 @@
 .introImageWrapper {
   position: relative;
   aspect-ratio: 3 / 3;
-  border-radius: var(--radius-md);
   overflow: hidden;
   background: var(--bg-elevated);
 }
@@ -132,7 +142,6 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
-  padding-top: var(--space-4);
 }
 
 .introBody {
@@ -145,7 +154,8 @@
 .introTitle {
   display: flex;
   flex-direction: column;
-  margin: 0 0 var(--space-8) 0;
+  /* negative top trims Anton's cap-leading so the title aligns with the image top */
+  margin: -0.12em 0 var(--space-8) 0;
   line-height: 0.88;
 }
 

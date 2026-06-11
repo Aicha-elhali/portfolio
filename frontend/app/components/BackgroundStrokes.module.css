@@ -13,7 +13,7 @@
   display: flex;
   pointer-events: none;
   z-index: 1;
-  padding: 0 40px;
+  padding: 0 var(--gutter);
 }
 
 .column {
@@ -63,6 +63,6 @@
 /* Responsive */
 @media (max-width: 480px) {
   .backgroundStrokes {
-    padding: 0 24px;
+    padding: 0 var(--gutter);
   }
 }
