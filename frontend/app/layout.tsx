@@ -24,10 +24,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   // Base URL used to resolve relative OG/Twitter image paths to absolute URLs.
-  // TODO: set NEXT_PUBLIC_SITE_URL to your production domain when you deploy.
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  // Override with NEXT_PUBLIC_SITE_URL once a custom domain is set up.
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://aicha-el-hali.pages.dev"),
   title: "Aicha El Hali - Portfolio",
-  description: "Portfolio von Aicha El Hali - UX Design & Frontend Development",
+  description: "Portfolio of Aicha El Hali - UX Design & Frontend Development",
 };
 
 export default function RootLayout({

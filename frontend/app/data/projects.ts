@@ -3,13 +3,9 @@
  * Used by both the projects overview (/projects) and the detail pages (/projects/[slug]).
  * Author: Aicha El Hali
  *
- * NOTE (placeholders to edit yourself):
- *  - `semester` / `duration` are best-effort guesses, not confirmed data.
- *  - HARIBO's `typeface` / `palette` are sample values — replace with the real ones.
  */
 
 export type PaletteColor = { name: string; hex: string };
-export type Typeface = { name: string; styles: string; sample?: string };
 export type Font = { name: string; description: string; image?: string };
 
 // A 3-up grid of text cards (e.g. BMW's "What Success Looks Like").
@@ -75,9 +71,7 @@ export type Project = {
   problem: string;
   solution: string;
   tools: string[];
-  gallery: string[];
-  // Optional "Visual Identity" block (Typeface + Palette)
-  typeface?: Typeface;
+  // Optional "Visual Identity" block (Palette)
   palette?: PaletteColor[];
   // Visual Identity: a description + a big palette image
   paletteNote?: string;
@@ -127,7 +121,6 @@ export const projects: Project[] = [
     solution:
       'A token pipeline closes that gap: a designer selects a Figma frame and runs the pipeline. A Token Extractor parses the design tokens (colour, type, spacing, radius), an AI model classifies the content and applies BMW’s design guidelines automatically, and ==the system outputs a functional prototype with the correct structure and styling==, ready to test on the display. The human keeps creative control (wireframing, prompting, evaluating, safeguarding brand consistency) while the AI handles the repetitive transformation and generates variations, making prototyping faster, less manual and scalable across the team.',
     tools: ['Figma', 'React', 'Node.js', 'Git'],
-    gallery: ['/images/fluid-prototyping.jpg'],
     highlightsTitle: 'What Success Looks Like',
     highlights: [
       {
@@ -217,7 +210,6 @@ export const projects: Project[] = [
     solution:
       'A content automation system that runs from Slack to LinkedIn. A team member triggers a request in Slack, an intelligent router sends it to the right specialised agent (recruitment, product showcase or employee engagement), and the agent drafts a post in a structured, predictable format. The draft comes back into Slack for human review, where it can be approved, edited, regenerated or rejected, and only approved posts get published. The system is built on n8n with Airtable as a single source of truth, and it separates content generation from the approval process so it stays maintainable and reliable. The result: ==repetition is automated while strategy stays human==, with faster production, consistent branding, and a setup that scales across multiple post types in parallel.',
     tools: ['n8n', 'Slack', 'Airtable', 'LinkedIn'],
-    gallery: ['/images/atolls.jpg'],
     highlightsTitle: 'What This Delivers',
     highlights: [
       {
@@ -287,7 +279,6 @@ export const projects: Project[] = [
     solution:
       'An analog-first anchor in the streetscape. A physical board (Tafel) placed at each historic site is the anchor; a QR code on it is the key that opens a bundled digital layer, audio diaries, visuals and archive material, ==without forcing anyone to install an app==. A compartment holds the printed “Echoes” brochure for those who prefer paper, and the same anchor doubles as a working tool for city guides and the museum. Built on participation, it invites residents to add their own memories, keeping the project alive and independent of any single institution.',
     tools: ['Figma', 'Illustrator', 'After Effects'],
-    gallery: ['/images/moosburg.jpg'],
     highlightsTitle: 'The Challenge',
     highlights: [
       {
@@ -394,7 +385,6 @@ export const projects: Project[] = [
     solution:
       'An interactive, scroll-driven web app, built in Svelte, that walks through the footprint from five angles: a 3D globe of every route, a 2D map from Munich, a timeline colour-coded by reason, a bar chart that sets my 7 tonnes against climate benchmarks, and a photo archive that gives the numbers a human face. Data was hand-collected from every ticket and emissions estimated with the ICAO methodology. ==The narrative moves from global scale to personal memory==, keeping the data emotionally accessible while leaving the central question deliberately open.',
     tools: ['Svelte', 'Three.js', 'Vite'],
-    gallery: ['/images/spacey.jpg'],
     highlightsTitle: 'By the Numbers',
     highlights: [
       {
@@ -472,9 +462,6 @@ export const projects: Project[] = [
     solution:
       'The solution embraced the 80s aesthetic with bold neon colors, geometric patterns, and retro typography. The iconic HARIBO bear was reimagined as a muscular fitness mascot. Product packaging features vibrant gradients and chrome effects typical of 80s design, while maintaining the playful spirit that makes HARIBO beloved worldwide.',
     tools: ['Figma', 'Photoshop', 'Illustrator'],
-    gallery: ['/images/font.jpg', '/images/haribo_products.jpg', '/images/palette.jpg'],
-    // TODO: replace with the real typeface / hex values from your design file
-    typeface: { name: 'Anton', styles: 'Display · Regular · Bold', sample: 'Aa' },
     palette: [
       { name: 'Orange Red', hex: '#FF4500' },
       { name: 'Blue', hex: '#0638D2' },
@@ -531,7 +518,6 @@ export const projects: Project[] = [
     solution:
       'We answered the constraint with a tight prototyping loop in Figma and a ==social, two-sided idea==. Owners list the empty spaces they have, people who need somewhere to set up browse and book them, and the app even surfaces ideas for what a given space could become. Spacey is also about people: you create an account, join or start ==clubs==, and invite each other to events held in real spaces. We diverged on ideas, converged fast, and built a clickable prototype of the full flow. ==Speed was the point==, the value was in committing to decisions and shipping something testable within the two days.',
     tools: ['Figma'],
-    gallery: ['/images/spacey.jpg'],
     highlightsTitle: 'What Spacey Does',
     highlights: [
       {

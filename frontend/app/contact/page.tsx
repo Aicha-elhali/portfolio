@@ -68,6 +68,10 @@ export default function Contact() {
     const subject = encodeURIComponent(`Message from ${formData.name}`);
     const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`);
     window.location.href = `mailto:aicha.el_hali@hm.edu?subject=${subject}&body=${body}`;
+
+    // Confirm to the user once their mail client has been opened.
+    setIsSubmitted(true);
+    setFormData({ name: "", email: "", message: "" });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
