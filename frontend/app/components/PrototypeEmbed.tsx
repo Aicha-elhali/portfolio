@@ -45,6 +45,9 @@ export default function PrototypeEmbed({ url, title }: PrototypeEmbedProps) {
         className={styles.frame}
         src={`https://www.figma.com/embed?embed_host=share&url=${encodeURIComponent(url)}`}
         title={title}
+        // Defer Figma's heavy embed until the user scrolls near it (it sits below
+        // the fold), so it doesn't compete with the hero on initial page load.
+        loading="lazy"
         allowFullScreen
       />
       {!loaded && (
