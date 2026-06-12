@@ -6,10 +6,13 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import styles from "./Footer.module.css";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const pathname = usePathname() || "/";
+  const onContactPage = pathname.startsWith("/contact");
 
   return (
     <footer className={styles.footer}>
@@ -38,26 +41,29 @@ export default function Footer() {
                 </span>
               </a>
 
-              <a 
-                href="https://github.com/aichaelhali" 
-                target="_blank" 
+              <a
+                href="https://github.com/aicha-elhali"
+                target="_blank"
                 rel="noopener noreferrer"
                 className={styles.ctaLink}
               >
                 <span className={styles.ctaLinkLabel}>GITHUB</span>
                 <span className={styles.ctaLinkValue}>
-                  @aichaelhali
+                  @aicha-elhali
                   <span className={styles.ctaLinkArrow}>→</span>
                 </span>
               </a>
 
-              <Link href="/contact" className={styles.ctaLink}>
-                <span className={styles.ctaLinkLabel}>CONTACT</span>
-                <span className={styles.ctaLinkValue}>
-                  Send a message
-                  <span className={styles.ctaLinkArrow}>→</span>
-                </span>
-              </Link>
+              {/* Already on /contact — no point linking back to it */}
+              {!onContactPage && (
+                <Link href="/contact" className={styles.ctaLink}>
+                  <span className={styles.ctaLinkLabel}>CONTACT</span>
+                  <span className={styles.ctaLinkValue}>
+                    Send a message
+                    <span className={styles.ctaLinkArrow}>→</span>
+                  </span>
+                </Link>
+              )}
             </div>
           </div>
         </div>
