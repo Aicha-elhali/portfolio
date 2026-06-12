@@ -80,10 +80,7 @@
   letter-spacing: -0.02em;
   text-transform: uppercase;
   margin: 0;
-  background: linear-gradient(180deg, var(--fg-primary) 0%, rgba(250, 250, 250, 0.7) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #fff;
   opacity: 0;
   transform: translateY(60px);
   transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
