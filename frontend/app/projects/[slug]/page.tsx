@@ -264,7 +264,9 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           {project.prototype ? (
             <div className={styles.prototypeLabel}>
               <span className={styles.prototypeLine} aria-hidden="true" />
-              <h2 className={styles.prototypeTitle}>Test it yourself</h2>
+              <h2 className={styles.prototypeTitle}>
+                {project.prototypeTitle ?? 'Test it yourself'}
+              </h2>
             </div>
           ) : project.showcaseImage ? (
             <div className={styles.prototypeLabel}>

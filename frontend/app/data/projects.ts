@@ -49,6 +49,8 @@ export type Project = {
   heroVideo?: string;
   // Optional Figma prototype — paste the prototype's "Share" URL; embedded in the Visuals section.
   prototype?: string;
+  // Optional heading shown above the prototype (defaults to "Test it yourself").
+  prototypeTitle?: string;
   // Set true when the prototype is a phone/iPhone (portrait) flow — renders it in a
   // centered, phone-shaped frame instead of the default 16:9 landscape one.
   prototypeMobile?: boolean;
@@ -453,14 +455,15 @@ export const projects: Project[] = [
     description: 'Redesign of a candy company, turning it into an 80s supplement provider.',
     image: '/images/haribo.jpg',
     prototype: 'https://www.figma.com/proto/F9UyULUPknaSLhSGaHspLA/Untitled?node-id=29-131&t=J3T4M7D1qa3hqoil-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=29%3A131&show-proto-sidebar=1&hide-ui=1',
+    prototypeTitle: 'Click on the pill and start scrolling!',
     semester: 'SS 2025',
     duration: '1 semester',
     context:
-      'HARIBO, the iconic candy brand known for its gummy bears, undergoes a radical transformation in this concept project. The redesign reimagines the brand as a premium 80s-inspired supplement provider, blending nostalgia with modern wellness trends. The project explores how a beloved confectionery brand could pivot to the health and fitness market while maintaining its playful essence.',
+      'HARIBO, the iconic candy brand known for its gummy bears, undergoes a radical transformation in this concept project. ==The redesign reimagines the brand as a premium 80s-inspired supplement provider==, blending nostalgia with modern wellness trends. The project explores how a beloved confectionery brand could pivot to the health and fitness market while maintaining its playful essence.',
     problem:
-      'The main challenge was to preserve the recognizable HARIBO brand identity while completely shifting its market positioning. How do you take a brand synonymous with sugary treats and make it credible in the health supplement space? The design needed to bridge the gap between indulgence and wellness.',
+      'The main challenge was to preserve the recognizable HARIBO brand identity while completely shifting its market positioning. ==How do you take a brand synonymous with sugary treats and make it credible in the health supplement space?== The design needed to bridge the gap between indulgence and wellness.',
     solution:
-      'The solution embraced the 80s aesthetic with bold neon colors, geometric patterns, and retro typography. The iconic HARIBO bear was reimagined as a muscular fitness mascot. Product packaging features vibrant gradients and chrome effects typical of 80s design, while maintaining the playful spirit that makes HARIBO beloved worldwide.',
+      'The solution embraced the 80s aesthetic with bold neon colors, geometric patterns, and retro typography. ==The iconic HARIBO bear was reimagined as a muscular fitness mascot.== Product packaging features vibrant gradients and chrome effects typical of 80s design, while maintaining the playful spirit that makes HARIBO beloved worldwide.',
     tools: ['Figma', 'Photoshop', 'Illustrator'],
     palette: [
       { name: 'Orange Red', hex: '#FF4500' },
