@@ -25,8 +25,8 @@ interface SocialLinksProps {
 const defaultLinks: SocialLink[] = [
   {
     label: "Email",
-    href: "mailto:a.elhali03@gmail.com",
-    displayText: "A.ELHALI03@GMAIL.COM"
+    href: "mailto:aicha.el_hali@hm.edu",
+    displayText: "AICHA.EL_HALI@HM.EDU"
   },
   {
     label: "LinkedIn",

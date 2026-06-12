@@ -149,11 +149,11 @@ export default function About() {
           <span className={styles.sectionLabel}>MY JOURNEY</span>
           <div className={styles.journeyTimeline}>
             <div className={styles.journeyItem}>
-              <span className={styles.journeyDate}>PRE-2022</span>
+              <span className={styles.journeyDate}>2024 to 2027</span>
               <div className={styles.journeyContent}>
-                <h3 className={styles.journeyTitle}>Real-World Experience</h3>
+                <h3 className={styles.journeyTitle}>B.Sc. Computer Science &amp; Design</h3>
                 <p className={styles.journeyText}>
-                  Insurance, law, and gastronomy. Working across industries before tech taught me how different people interact with systems and services.
+                  At Hochschule München, I made the jump into tech, combining code with design to build products that actually work for people.
                 </p>
               </div>
             </div>
@@ -167,11 +167,11 @@ export default function About() {
               </div>
             </div>
             <div className={styles.journeyItem}>
-              <span className={styles.journeyDate}>2024 to 2027</span>
+              <span className={styles.journeyDate}>PRE-2022</span>
               <div className={styles.journeyContent}>
-                <h3 className={styles.journeyTitle}>B.Sc. Computer Science &amp; Design</h3>
+                <h3 className={styles.journeyTitle}>Real-World Experience</h3>
                 <p className={styles.journeyText}>
-                  At Hochschule München, I made the jump into tech, combining code with design to build products that actually work for people.
+                  Insurance, law, and gastronomy. Working across industries before tech taught me how different people interact with systems and services.
                 </p>
               </div>
             </div>

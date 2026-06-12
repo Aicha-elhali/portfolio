@@ -67,7 +67,7 @@ export default function Contact() {
 
     const subject = encodeURIComponent(`Message from ${formData.name}`);
     const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`);
-    window.location.href = `mailto:a.elhali03@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:aicha.el_hali@hm.edu?subject=${subject}&body=${body}`;
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
