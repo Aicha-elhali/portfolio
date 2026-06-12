@@ -48,6 +48,22 @@
   margin-left: 6px; /* optical centering of the triangle */
 }
 
+/* Shown while the video is downloading for seek-safe playback */
+.spinner {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @keyframes pulse {
   0% {
     transform: scale(1);
