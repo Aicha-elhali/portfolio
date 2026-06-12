@@ -10,7 +10,6 @@ import SiteHeader from '../../components/SiteHeader'
 import Footer from '../../components/Footer'
 import PrototypeEmbed from '../../components/PrototypeEmbed'
 import ShowcaseVideo from '../../components/ShowcaseVideo'
-import ScrollToTop from '../../components/ScrollToTop'
 import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
@@ -181,9 +180,6 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
   return (
     <div className={styles.page}>
-      {/* Always land at the top when navigating to a project */}
-      <ScrollToTop />
-
       {/* Header Component */}
       <SiteHeader darkOverHero={project.heroDarkHeader} />
 

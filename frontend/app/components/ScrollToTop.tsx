@@ -1,25 +1,29 @@
-'use client'
+"use client";
 
 /**
  * ScrollToTop
- * Forces the window to the top whenever the path changes (or on first mount),
- * so revisiting a project page always starts from the beginning instead of
- * restoring the previous scroll position.
+ * Snaps to the top of the page on every route change (and first mount), so
+ * navigating to a page always starts at the beginning instead of restoring the
+ * previous scroll position. Resets the Lenis smooth-scroll instance too.
  */
 
-import { useEffect } from 'react'
-import { usePathname } from 'next/navigation'
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
+import type Lenis from "lenis";
 
 export default function ScrollToTop() {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   useEffect(() => {
-    // Disable the browser's automatic scroll restoration for this view.
-    if ('scrollRestoration' in window.history) {
-      window.history.scrollRestoration = 'manual'
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
     }
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
-  }, [pathname])
+    const lenis = (window as Window & { __lenis?: Lenis }).__lenis;
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    }
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
-  return null
+  return null;
 }

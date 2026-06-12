@@ -279,7 +279,7 @@ export const projects: Project[] = [
     prototype: 'https://www.figma.com/proto/HLSnM72ozwVSgzZgtxMIwb/Moosburg-Prototype?node-id=1221-1395&p=f&t=i2lkoN1OjzqoQmdD-0&scaling=scale-down-width&content-scaling=fixed&page-id=535%3A985&starting-point-node-id=1221%3A1395&hide-ui=1',
     prototypeMobile: true,
     semester: 'WS 2025/26',
-    duration: '6 months',
+    duration: '1 semester',
     context:
       'Moosburg was home to Stalag VII-A, one of the largest German prisoner-of-war camps of the Second World War, where tens of thousands of POWs were held. As the last eyewitnesses pass away, ==that memory is slowly disappearing from the city==. The history still survives, across a museum, archives and guided tours, but those offerings are scattered and hard to find, so most residents and visitors walk straight past it without ever knowing it is there.',
     problem:
@@ -386,7 +386,7 @@ export const projects: Project[] = [
     heroNoScrim: true,
     showcaseVideo: '/images/projects/flight_website.mp4',
     semester: 'WS 2025/26',
-    duration: '6 months',
+    duration: '2 months',
     context:
       'Flight Footprint is a personal data-visualization project from my Information Design course at Hochschule München. It turns my own flight history from 2024 and 2025 into an interactive web experience: ==25 flights, 44,138 kilometres and an estimated 7 tonnes of CO₂==. Every trip was driven by something human, a long-distance relationship, family, or education, which makes the footprint feel personal rather than abstract.',
     problem:
@@ -464,7 +464,7 @@ export const projects: Project[] = [
     image: '/images/haribo.jpg',
     prototype: 'https://www.figma.com/proto/F9UyULUPknaSLhSGaHspLA/Untitled?node-id=29-131&t=J3T4M7D1qa3hqoil-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=29%3A131&show-proto-sidebar=1&hide-ui=1',
     semester: 'SS 2025',
-    duration: '6 weeks',
+    duration: '1 semester',
     context:
       'HARIBO, the iconic candy brand known for its gummy bears, undergoes a radical transformation in this concept project. The redesign reimagines the brand as a premium 80s-inspired supplement provider, blending nostalgia with modern wellness trends. The project explores how a beloved confectionery brand could pivot to the health and fitness market while maintaining its playful essence.',
     problem:

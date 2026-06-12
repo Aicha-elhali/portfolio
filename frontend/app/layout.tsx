@@ -3,6 +3,7 @@ import { Inter, Anton, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./components/Providers";
 import SmoothScroll from "./components/SmoothScroll";
+import ScrollToTop from "./components/ScrollToTop";
 
 
 const inter = Inter({
@@ -39,6 +40,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${anton.variable} ${geistMono.variable}`}>
         <Providers>
           <SmoothScroll>
+            <ScrollToTop />
             {children}
           </SmoothScroll>
         </Providers>
