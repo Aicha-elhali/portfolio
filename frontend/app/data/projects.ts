@@ -433,16 +433,16 @@ export const projects: Project[] = [
         layout: 'imageRight',
       },
     ],
-    // TODO: hex values are approximate — replace with the real timeline colours.
     paletteNote:
       'The timeline and routes are colour-coded by the reason behind each trip, the emotional key that runs through the whole story.',
     paletteImage: '/images/projects/palette_flight_data.jpg',
     paletteImageContain: true,
     palette: [
-      { name: 'Relationship', hex: '#FF4D8D' },
-      { name: 'Family', hex: '#FF8A3D' },
-      { name: 'Summer School', hex: '#FFD23F' },
-      { name: 'Vacation', hex: '#2EC4B6' },
+      { name: 'Relationship', hex: '#FE6A89' },
+      { name: 'Family', hex: '#FFA64C' },
+      { name: 'Summer School', hex: '#ABCE00' },
+      { name: 'Vacation', hex: '#4BC8BF' },
+      { name: 'Base', hex: '#000000' },
     ],
   },
   {
