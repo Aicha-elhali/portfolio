@@ -512,7 +512,7 @@ export const projects: Project[] = [
     semester: 'SS 2025',
     duration: '2 days',
     context:
-      'Spacey is a hackathon project focused on a single question: ==what do we do with all the empty spaces in Munich?== The idea grew out of real places we kept walking past, like the emptied-out Karstadt at Stachus on Karlsplatz, alongside shuttered shops, unused lots and idle rooms sitting dead in the middle of the city. Working in a ==small team of two to three==, I contributed across the whole project, from the idea to the UX to the Figma prototype. From the start we wanted Spacey to be a ==universal solution, open to everyone and not just a young crowd==, and the whole concept was built in ==two days==, so the real subject was as much the way we worked as the idea itself.',
+      'Spacey is a project from the Prototyping Hackathon, focused on a single question: ==what do we do with all the empty spaces in Munich?== The idea grew out of real places we kept walking past, like the emptied-out Karstadt at Stachus on Karlsplatz, alongside shuttered shops, unused lots and idle rooms sitting dead in the middle of the city. Working in a ==small team of two to three==, I contributed across the whole project, from the idea to the UX to the Figma prototype. From the start we wanted Spacey to be a ==universal solution, open to everyone and not just a young crowd==, and the whole concept was built in ==two days==, so the real subject was as much the way we worked as the idea itself.',
     problem:
       'A hackathon is a constraint, not a brief. The challenge was to ==brainstorm and deliver fast==, to stop planning and get into doing. With two days on the clock we had to move from a blank canvas to a working prototype without getting stuck polishing or over-thinking it.',
     solution:
@@ -554,8 +554,7 @@ export const projects: Project[] = [
       {
         label: 'Outcome',
         title: 'Shipped in 48 Hours',
-        // TODO: add the hackathon name (and any placement) once confirmed.
-        note: 'By the end of the hackathon we had a working, clickable prototype of the full Spacey flow: proof that the idea held up and that a tight, decision-first process can turn a blank canvas into something testable in two days.',
+        note: 'By the end of the Prototyping Hackathon we had a working, clickable prototype of the full Spacey flow: proof that the idea held up and that a tight, decision-first process can turn a blank canvas into something testable in two days.',
       },
     ],
     paletteNote:
