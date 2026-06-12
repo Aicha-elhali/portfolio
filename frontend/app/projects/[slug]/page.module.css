@@ -31,8 +31,9 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.25) 0%,
-    rgba(0, 0, 0, 0) 35%,
+    rgba(0, 0, 0, 0.6) 0%,
+    rgba(0, 0, 0, 0.15) 22%,
+    rgba(0, 0, 0, 0) 42%,
     rgba(0, 0, 0, 0.7) 100%
   );
   z-index: 1;
@@ -133,7 +134,7 @@
   font-family: var(--font-anton), var(--font-sans), sans-serif;
   font-size: clamp(3.5rem, 9vw, 9rem);
   font-weight: 400;
-  line-height: 0.82;
+  line-height: 0.92;
   letter-spacing: -0.03em;
   text-transform: uppercase;
   margin: 0;
@@ -353,6 +354,18 @@
   max-width: 1100px;
 }
 
+/* Highlighter-style marker for the key phrase in a story block.
+   Solid accent fill with near-black text for contrast on the bold colour. */
+.mark {
+  background: var(--accent);
+  color: var(--bg-primary);
+  padding: 0.04em 0.18em;
+  border-radius: 2px;
+  /* keep the highlight intact when the phrase wraps across lines */
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
 /* ============================================
    SHOWCASE — "screenshot / mockup" gallery
    ============================================ */
@@ -443,11 +456,30 @@
   margin-bottom: var(--space-16);
 }
 
+/* Phone-shaped frame for portrait/iPhone prototypes — centered, constrained width.
+   No border/background so the iPhone fills the frame with no surrounding margin. */
+.phoneBlock {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 390 / 844;
+  margin: 0 auto var(--space-16);
+  overflow: hidden;
+}
+
 .video {
   width: 100%;
   height: 100%;
   object-fit: contain;
   display: block;
+}
+
+/* Still image in the Visuals slot — full width, natural ratio (no crop) */
+.showcaseImg {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: var(--space-16);
 }
 
 .videoPlaceholder {
@@ -497,6 +529,61 @@
 }
 
 /* ============================================
+   HIGHLIGHTS — 3-up text cards
+   ============================================ */
+.highlights {
+  margin-bottom: var(--space-40);
+}
+
+.highlightsGrid {
+  display: grid;
+  /* auto-fit so the grid handles 3 cards (BMW, Atolls) and 4 (Moosburg) */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-10);
+  align-items: start;
+}
+
+.highlightCard {
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border-default);
+}
+
+.highlightNum {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  color: var(--accent);
+  margin-bottom: var(--space-5);
+}
+
+.highlightTitle {
+  font-family: var(--font-anton), var(--font-sans), sans-serif;
+  text-transform: uppercase;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  margin: 0 0 var(--space-4) 0;
+  color: var(--fg-primary);
+}
+
+.highlightText {
+  font-size: var(--text-lg);
+  line-height: 1.55;
+  color: var(--fg-secondary);
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .highlightsGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+  }
+}
+
+/* ============================================
    TYPOGRAPHY — font specimens (image + title + description)
    ============================================ */
 .fonts {
@@ -513,6 +600,28 @@
 .fontCard {
   display: flex;
   flex-direction: column;
+}
+
+/* Image pair — a large image beside a smaller one. Natural aspect, no crop.
+   Default: large left (1.6fr) + small right (1fr). `Right` variant mirrors it. */
+.imagePairGrid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: var(--space-10);
+  align-items: start;
+}
+
+.imagePairGridRight {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: var(--space-10);
+  align-items: start;
+}
+
+.imagePairImg {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .fontImage {
@@ -580,7 +689,9 @@
 }
 
 @media (max-width: 700px) {
-  .fontsGrid {
+  .fontsGrid,
+  .imagePairGrid,
+  .imagePairGridRight {
     grid-template-columns: 1fr;
     gap: var(--space-12);
   }
@@ -628,6 +739,11 @@
    ============================================ */
 .identity {
   margin-bottom: var(--space-40);
+}
+
+/* Tighter gap when an image pair is anchored directly after this section */
+.identityTightBottom {
+  margin-bottom: var(--space-16);
 }
 
 .identityHead {
@@ -751,6 +867,24 @@
   background: var(--bg-elevated);
 }
 
+/* Video wells use the page background so `contain` letterbox bars blend in
+   (instead of the grey --bg-elevated used for image wells). */
+.mediaVideoWell {
+  background: var(--bg-primary);
+}
+
+/* Video in the same media well as .paletteImage (fill is image-only).
+   `contain` so device-mockup videos aren't cropped at the top/bottom. */
+.sectionVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
 /* Typeface card */
 .typeCard {
   background: var(--bg-secondary);
@@ -862,60 +996,67 @@
 }
 
 /* ============================================
-   META — Tools + Live link
+   TOOLS — fav-stack style (big centered icons)
    ============================================ */
-.meta {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: var(--space-8);
+.stack {
   padding: var(--space-16) 0;
   border-top: 1px solid var(--border-default);
   border-bottom: 1px solid var(--border-default);
   margin-bottom: var(--space-16);
+  text-align: center;
 }
 
-.metaTitle {
+.stackLabel {
+  display: block;
+  font-family: var(--font-geist-mono), monospace;
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-widest);
   color: var(--fg-muted);
-  margin: 0 0 var(--space-5) 0;
-  font-weight: 500;
-  font-family: var(--font-geist-mono), monospace;
+  margin-bottom: var(--space-10);
 }
 
-.toolsList {
+.stackGrid {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-3);
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-8);
 }
 
-.toolTag {
-  display: inline-flex;
+.stackItem {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   gap: var(--space-3);
-  padding: var(--space-2) var(--space-4);
-  background: var(--border-subtle);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-full);
-  font-size: var(--text-sm);
-  color: var(--fg-secondary);
-  transition: all 0.3s ease;
 }
 
-.toolIcon {
-  width: 20px;
-  height: 20px;
+.stackIcon {
+  width: 64px;
+  height: 64px;
   object-fit: contain;
-  flex-shrink: 0;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+  transition: transform var(--duration-base, 0.4s) var(--ease-out-expo);
 }
 
-.toolTag:hover {
-  background: var(--accent-glow);
-  border-color: var(--accent-glow-strong);
-  color: var(--accent);
+.stackItem:hover .stackIcon {
+  transform: scale(1.12) rotate(-5deg);
+}
+
+.stackName {
+  font-family: var(--font-anton), var(--font-sans), sans-serif;
+  font-size: var(--text-base);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--fg-primary);
+}
+
+.stackPlus {
+  font-family: var(--font-anton), var(--font-sans), sans-serif;
+  font-size: 1.6rem;
+  color: var(--fg-subtle);
+  font-weight: 400;
 }
 
 /* Closing call-to-action — final presentation link, centered at the bottom */
