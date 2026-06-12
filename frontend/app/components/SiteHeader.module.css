@@ -24,7 +24,13 @@
   text-transform: uppercase;
   color: #fff;
   text-decoration: none;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+/* Dark header text for light hero images (toggled while over the hero) */
+.dark .logo,
+.dark .navLink {
+  color: #000;
 }
 
 .logo:hover {
@@ -46,7 +52,7 @@
   text-decoration: none;
   letter-spacing: 1px;
   text-transform: uppercase;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, color 0.3s ease;
 }
 
 .navLink:hover {

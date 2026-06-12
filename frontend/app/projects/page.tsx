@@ -160,7 +160,7 @@ export default function ProjectsPage() {
               </h1>
             </div>
             <p className={styles.bannerText}>
-              A selection of projects from my studies and side work — across brand,
+              A selection of projects from my studies and side work, across brand,
               product, UI and a bit of code. Each one pushed me to dig a little deeper.
             </p>
           </div>

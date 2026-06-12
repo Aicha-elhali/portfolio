@@ -158,7 +158,7 @@ export default function About() {
               </div>
             </div>
             <div className={styles.journeyItem}>
-              <span className={styles.journeyDate}>2022 — 2024</span>
+              <span className={styles.journeyDate}>2022 to 2024</span>
               <div className={styles.journeyContent}>
                 <h3 className={styles.journeyTitle}>Abitur · International Economy</h3>
                 <p className={styles.journeyText}>
@@ -167,7 +167,7 @@ export default function About() {
               </div>
             </div>
             <div className={styles.journeyItem}>
-              <span className={styles.journeyDate}>2024 — 2027</span>
+              <span className={styles.journeyDate}>2024 to 2027</span>
               <div className={styles.journeyContent}>
                 <h3 className={styles.journeyTitle}>B.Sc. Computer Science &amp; Design</h3>
                 <p className={styles.journeyText}>

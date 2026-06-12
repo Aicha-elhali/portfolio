@@ -22,9 +22,9 @@ import SkillsGrid from "./components/SkillsGrid";
 // ===========================================
 
 const projects = [
-  { id: "01", name: "HARIBO", tags: ["BRANDING", "REDESIGN"], year: "2025", image: "/images/haribo.jpg" /* TODO: re-enable video once added to public — video: "/images/flight_data.mp4" */ },
-  { id: "02", name: "StyleMate", tags: ["UI/UX", "CHATBOT"], year: "2024", image: "/images/stylemate.jpg" },
-  { id: "03", name: "Spacey", tags: ["PRODUCT", "UI"], year: "2025", image: "/images/spacey.jpg" },
+  { id: "01", slug: "social-media-agents", name: "Social Media Agents", tags: ["AGENTS", "N8N"], year: "2025", image: "/images/projects/atoll_landing.jpg" },
+  { id: "02", slug: "moosburg", name: "Moosburg", tags: ["CONCEPT", "RESEARCH"], year: "2025", image: "/images/projects/landing_moosburg.jpg" },
+  { id: "03", slug: "flight-footprint", name: "Flight Footprint", tags: ["DATA VIZ", "INFO DESIGN"], year: "2025", image: "/images/projects/flight_poster.jpg" },
 ];
 
 // ===========================================
@@ -248,7 +248,7 @@ export default function Home() {
           <div ref={projectsGrid.ref} className={styles.projectsGrid}>
             {projects.map((project, index) => (
               <Link 
-                href={`/projects/${project.name.toLowerCase().replace(' ', '-')}`} 
+                href={`/projects/${project.slug}`}
                 key={project.id} 
                 className={`
                   ${styles.projectCard} 

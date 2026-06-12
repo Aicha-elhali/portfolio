@@ -25,6 +25,16 @@
   overflow: hidden;
 }
 
+/* Full-screen hero video — fills the hero like the cover image */
+.heroVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 /* Darkening so the overlay text + scroll cue stay legible */
 .heroScrim {
   position: absolute;
@@ -467,6 +477,17 @@
   overflow: hidden;
 }
 
+/* Smaller, centered video box for the Visuals slot — fits the whole frame on desktop */
+.videoBlockSmall {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  aspect-ratio: 16 / 9;
+  margin: 0 auto var(--space-16);
+  overflow: hidden;
+  background: var(--bg-primary);
+}
+
 .video {
   width: 100%;
   height: 100%;
@@ -602,6 +623,14 @@
   flex-direction: column;
 }
 
+/* Single font: specimen image on the left, name + description on the right */
+.fontSoloGrid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+
 /* Image pair — a large image beside a smaller one. Natural aspect, no crop.
    Default: large left (1.6fr) + small right (1fr). `Right` variant mirrors it. */
 .imagePairGrid {
@@ -690,6 +719,7 @@
 
 @media (max-width: 700px) {
   .fontsGrid,
+  .fontSoloGrid,
   .imagePairGrid,
   .imagePairGridRight {
     grid-template-columns: 1fr;
@@ -865,6 +895,12 @@
   height: 100%;
   overflow: hidden;
   background: var(--bg-elevated);
+}
+
+/* For `contain` palette images: no well background, so the letterbox blends
+   into the page instead of showing a grey border. */
+.paletteImageBare {
+  background: transparent;
 }
 
 /* Video wells use the page background so `contain` letterbox bars blend in

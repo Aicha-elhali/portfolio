@@ -9,6 +9,8 @@ import styles from './page.module.css'
 import SiteHeader from '../../components/SiteHeader'
 import Footer from '../../components/Footer'
 import PrototypeEmbed from '../../components/PrototypeEmbed'
+import ShowcaseVideo from '../../components/ShowcaseVideo'
+import ScrollToTop from '../../components/ScrollToTop'
 import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
@@ -40,6 +42,9 @@ const TOOL_ICONS: Record<string, string> = {
   'Adobe Illustrator': '/icons/illustrator.svg',
   Blender: 'https://cdn.simpleicons.org/blender/E87D0D',
   React: 'https://cdn.simpleicons.org/react/61DAFB',
+  Svelte: 'https://cdn.simpleicons.org/svelte/FF3E00',
+  'Three.js': 'https://cdn.simpleicons.org/threedotjs/FFFFFF',
+  Vite: 'https://cdn.simpleicons.org/vite/646CFF',
   'Next.js': 'https://cdn.simpleicons.org/nextdotjs/FFFFFF',
   'Node.js': 'https://cdn.simpleicons.org/nodedotjs/5FA04E',
   JavaScript: 'https://cdn.simpleicons.org/javascript/F7DF1E',
@@ -176,19 +181,34 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
   return (
     <div className={styles.page}>
+      {/* Always land at the top when navigating to a project */}
+      <ScrollToTop />
+
       {/* Header Component */}
-      <SiteHeader />
+      <SiteHeader darkOverHero={project.heroDarkHeader} />
 
       {/* Fixed full-screen hero image — the content slides up over it on scroll */}
       <header className={styles.heroMedia}>
-        <Image
-          src={project.image}
-          alt={`${project.title} — cover`}
-          fill
-          sizes="100vw"
-          style={{ objectFit: 'cover' }}
-          priority
-        />
+        {project.heroVideo ? (
+          <video
+            className={styles.heroVideo}
+            src={project.heroVideo}
+            poster={project.image}
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+        ) : (
+          <Image
+            src={project.image}
+            alt={`${project.title} — cover`}
+            fill
+            sizes="100vw"
+            style={{ objectFit: 'cover' }}
+            priority
+          />
+        )}
         {!project.heroNoScrim && <div className={styles.heroScrim} />}
         <span className={styles.scrollCue} aria-hidden="true">↓</span>
       </header>
@@ -255,6 +275,11 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
               <span className={styles.prototypeLine} aria-hidden="true" />
               <h2 className={styles.prototypeTitle}>But first, a selfie</h2>
             </div>
+          ) : project.showcaseVideo ? (
+            <div className={styles.prototypeLabel}>
+              <span className={styles.prototypeLine} aria-hidden="true" />
+              <h2 className={styles.prototypeTitle}>Take a look at the result</h2>
+            </div>
           ) : (
             <div className={styles.sectionLabel}>
               <span className={styles.sectionLabelNum}>—</span>
@@ -271,6 +296,14 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
               sizes="100vw"
               className={styles.showcaseImg}
             />
+          ) : project.showcaseVideo && !project.prototype ? (
+            // Showcase video — smaller centered box, whole frame visible (no crop)
+            <div className={styles.videoBlockSmall}>
+              <ShowcaseVideo
+                src={project.showcaseVideo}
+                title={`${project.title} — result walkthrough`}
+              />
+            </div>
           ) : (
             <div
               className={
@@ -470,13 +503,20 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                 )}
               </div>
               {project.paletteImage && (
-                <div className={styles.paletteImage}>
+                <div
+                  className={`${styles.paletteImage} ${
+                    project.paletteImageContain ? styles.paletteImageBare : ''
+                  }`}
+                >
                   <Image
                     src={project.paletteImage}
                     alt={`${project.title} — colour palette`}
                     fill
                     sizes="(max-width: 900px) 100vw, 60vw"
-                    style={{ objectFit: 'cover', objectPosition: 'center' }}
+                    style={{
+                      objectFit: project.paletteImageContain ? 'contain' : 'cover',
+                      objectPosition: 'center',
+                    }}
                   />
                 </div>
               )}
@@ -484,41 +524,74 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           </section>
         )}
 
-        {/* Typography — font specimens (image placeholders) + title & description */}
-        {hasFonts && (
-          <section className={styles.fonts}>
-            <div className={styles.sectionLabel}>
-              <span className={styles.sectionLabelNum}>—</span>
-              <span>Typography</span>
-            </div>
-            <div className={styles.fontsGrid}>
-              {project.fonts!.map((font, index) => (
-                <article key={index} className={styles.fontCard}>
-                  <div className={styles.fontImage}>
-                    {font.image ? (
-                      <Image
-                        src={font.image}
-                        alt={`${project.title} — ${font.name} specimen`}
-                        fill
-                        sizes="(max-width: 900px) 100vw, 50vw"
-                        style={{ objectFit: 'cover', objectPosition: 'center' }}
-                      />
-                    ) : (
-                      <div className={styles.fontPlaceholder}>
-                        <span className={styles.fontPlaceholderGlyph}>Aa</span>
-                      </div>
-                    )}
-                  </div>
+        {/* Typography — font specimens (image placeholders) + title & description.
+            A single font lays out image-left / text-right; multiple fonts use cards. */}
+        {hasFonts &&
+          (project.fonts!.length === 1 ? (
+            <section className={styles.fonts}>
+              <div className={styles.sectionLabel}>
+                <span className={styles.sectionLabelNum}>—</span>
+                <span>Typography</span>
+              </div>
+              <div className={styles.fontSoloGrid}>
+                <div className={styles.fontImage}>
+                  {project.fonts![0].image ? (
+                    <Image
+                      src={project.fonts![0].image!}
+                      alt={`${project.title} — ${project.fonts![0].name} specimen`}
+                      fill
+                      sizes="(max-width: 900px) 100vw, 60vw"
+                      style={{ objectFit: 'cover', objectPosition: 'center' }}
+                    />
+                  ) : (
+                    <div className={styles.fontPlaceholder}>
+                      <span className={styles.fontPlaceholderGlyph}>Aa</span>
+                    </div>
+                  )}
+                </div>
+                <div className={styles.paletteInfo}>
                   <div className={styles.fontHead}>
-                    <h3 className={styles.fontName}>{font.name}</h3>
+                    <h3 className={styles.fontName}>{project.fonts![0].name}</h3>
                     <span className={styles.fontTag}>Font</span>
                   </div>
-                  <p className={styles.fontDesc}>{font.description}</p>
-                </article>
-              ))}
-            </div>
-          </section>
-        )}
+                  <p className={styles.fontDesc}>{project.fonts![0].description}</p>
+                </div>
+              </div>
+            </section>
+          ) : (
+            <section className={styles.fonts}>
+              <div className={styles.sectionLabel}>
+                <span className={styles.sectionLabelNum}>—</span>
+                <span>Typography</span>
+              </div>
+              <div className={styles.fontsGrid}>
+                {project.fonts!.map((font, index) => (
+                  <article key={index} className={styles.fontCard}>
+                    <div className={styles.fontImage}>
+                      {font.image ? (
+                        <Image
+                          src={font.image}
+                          alt={`${project.title} — ${font.name} specimen`}
+                          fill
+                          sizes="(max-width: 900px) 100vw, 50vw"
+                          style={{ objectFit: 'cover', objectPosition: 'center' }}
+                        />
+                      ) : (
+                        <div className={styles.fontPlaceholder}>
+                          <span className={styles.fontPlaceholderGlyph}>Aa</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className={styles.fontHead}>
+                      <h3 className={styles.fontName}>{font.name}</h3>
+                      <span className={styles.fontTag}>Font</span>
+                    </div>
+                    <p className={styles.fontDesc}>{font.description}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+          ))}
 
         {/* Logo — image left, description right */}
         {hasLogo && (

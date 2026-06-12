@@ -126,7 +126,8 @@
   display: grid;
   grid-template-columns: minmax(0, 2.1fr) minmax(0, 1fr);
   gap: 56px;
-  align-items: stretch;
+  /* Center the text beside the picture so every row lines up the same way */
+  align-items: center;
 }
 
 /* Alternate: picture moves to the right (still the wide column), text/meta to the left */
@@ -151,7 +152,9 @@
 .media {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  /* 16:9 matches the media (logos, screen recordings) so nothing is cropped
+     to odd edges or letterboxed with thick bars. */
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background-color: #000;
   /* #1 — clip-path wipe reveal (top → bottom) when the row scrolls in */
@@ -178,9 +181,9 @@
   transform: scale(1.04);
 }
 
-/* Videos fit fully inside the tile (no crop); images still cover it */
+/* Videos fill the 16:9 tile like images — no thick letterbox bars */
 video.mediaInner {
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .company {
@@ -239,7 +242,6 @@ video.mediaInner {
 
 /* --- Text + meta column (opposite the picture) --- */
 .info {
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

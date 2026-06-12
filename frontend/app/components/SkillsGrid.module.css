@@ -11,13 +11,15 @@
    GRID
    ============================================ */
 .grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: var(--space-2);
-  padding: var(--space-8);
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-6) var(--space-4);
+}
+
+/* Space between the two rows (top 7 / bottom 3) */
+.grid + .grid {
+  margin-top: var(--space-6);
 }
 
 /* ============================================
@@ -29,6 +31,10 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-3);
+  flex: 0 0 auto;
+  /* Sized so the 7 top-row icons sit on one line; the bottom row (Node.js,
+     Python, Git) is its own centered row. */
+  width: clamp(96px, calc((100% - (6 * var(--space-4))) / 7), 150px);
   padding: var(--space-6) var(--space-3);
   border-radius: var(--radius-md);
   cursor: pointer;
@@ -185,33 +191,10 @@
    RESPONSIVE
    ============================================ */
 
-@media (max-width: 1200px) {
-  .grid {
-    grid-template-columns: repeat(5, 1fr);
-  }
-}
-
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-1);
-    padding: var(--space-6);
-  }
-}
-
 @media (max-width: 700px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
   .skillsFooter {
     flex-direction: column;
     gap: var(--space-4);
     align-items: flex-start;
-  }
-}
-
-@media (max-width: 480px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
   }
 }

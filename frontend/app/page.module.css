@@ -585,7 +585,9 @@
 
 .projectImageWrapper {
   position: relative;
-  aspect-ratio: 16 / 11;
+  /* 16:9 matches the project posters so edge content (e.g. Flight's headline)
+     isn't cropped out by the cover fit. */
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   margin-bottom: var(--space-3);
   background: var(--bg-elevated);
