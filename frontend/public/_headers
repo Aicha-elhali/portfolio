@@ -1,0 +1,4 @@
+# Long-cache static media. Caching at Cloudflare's edge also lets it serve HTTP
+# range requests, which makes the showcase videos seekable (scrub/forward/back).
+/images/*
+  Cache-Control: public, max-age=2592000

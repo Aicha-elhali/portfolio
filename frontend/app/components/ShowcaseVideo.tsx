@@ -31,7 +31,9 @@ export default function ShowcaseVideo({ src, title }: ShowcaseVideoProps) {
         src={src}
         controls={started}
         playsInline
-        preload="metadata"
+        // Once playing, buffer the whole file so scrubbing works even though
+        // Cloudflare Pages doesn't serve HTTP range requests.
+        preload={started ? 'auto' : 'metadata'}
         onPlay={() => setStarted(true)}
       />
       {!started && (
